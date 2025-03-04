@@ -6,7 +6,7 @@ import com.umairansariii.campusconnect.data.local.enums.UserRole
 import com.umairansariii.campusconnect.data.local.enums.UserStatus
 
 @Entity
-data class UserEntity(
+data class User(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val firstName: String,
