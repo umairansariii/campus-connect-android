@@ -4,11 +4,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.umairansariii.campusconnect.data.local.enums.UserRole
 import com.umairansariii.campusconnect.data.local.enums.UserStatus
+import java.util.Date
 
-@Entity
+@Entity(tableName = "user")
 data class User(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val createdAt: Date,
     val firstName: String,
     val lastName: String,
     val email: String,
