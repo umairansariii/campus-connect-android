@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    // Navigation
+    alias(libs.plugins.kotlin.serialization)
     // Dagger Hilt
     alias(libs.plugins.google.dagger.hilt)
     // KSP + Kapt
@@ -62,6 +64,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.kotlinx.serialization.json)
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
