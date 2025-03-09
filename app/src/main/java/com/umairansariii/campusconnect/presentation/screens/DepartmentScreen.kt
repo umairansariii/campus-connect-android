@@ -26,7 +26,7 @@ fun DepartmentScreen() {
         modifier = Modifier.fillMaxWidth(),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -43,14 +43,14 @@ fun DepartmentScreen() {
         OutlinedTextField(
             value = "",
             onValueChange = { /* Handle change */ },
-            modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 40.dp),
+            modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 28.dp),
             placeholder = { Text(text = "Search") },
             leadingIcon = {
                 Icon(Icons.Outlined.Search, contentDescription = "department-search-icon")
             },
         )
         LazyColumn(
-            Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            Modifier.fillMaxWidth().padding(start = 20.dp, end = 4.dp),
         ) {
             items(5) { item ->
                 DepartmentCard()
