@@ -11,13 +11,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
-import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
+import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
+import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
     Scaffold(
+        topBar = {
+            TopNavigationBar()
+        },
         bottomBar = {
             if (shouldShowBottomBar(navController = navController)) {
                 BottomNavigationBar()
@@ -43,7 +47,7 @@ fun AppNavigation() {
                 route = "app", startDestination = "home"
             ) {
                 composable(route = "home") {
-                    DepartmentScreen()
+                    CampusScreen()
                 }
             }
         }
