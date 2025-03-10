@@ -17,7 +17,7 @@ interface DepartmentDao {
     suspend fun updateDepartment(department: Department)
 
     @Query("SELECT * FROM department WHERE id = :id")
-    fun getDepartmentById(id: Int): Flow<Department>
+    suspend fun getDepartmentById(id: Int): Department
 
     @Query("""
         SELECT * FROM department 

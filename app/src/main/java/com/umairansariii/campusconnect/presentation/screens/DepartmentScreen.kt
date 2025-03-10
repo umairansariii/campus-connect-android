@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.presentation.components.DepartmentCard
-import com.umairansariii.campusconnect.presentation.dialogs.DepartmentUpdate
+import com.umairansariii.campusconnect.presentation.dialogs.DepartmentDialog
 import com.umairansariii.campusconnect.presentation.events.DepartmentFormEvent
 import com.umairansariii.campusconnect.viewmodel.DepartmentViewModel
 
@@ -71,6 +71,6 @@ fun DepartmentScreen() {
                 DepartmentCard(department)
             }
         }
-        DepartmentUpdate()
+        DepartmentDialog()
     }
 }

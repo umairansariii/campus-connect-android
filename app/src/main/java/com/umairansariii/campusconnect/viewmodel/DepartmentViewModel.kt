@@ -28,11 +28,14 @@ class DepartmentViewModel @Inject constructor(
         when(event) {
             is DepartmentFormEvent.ShowDialog -> {
                 if (event.id !== null) {
-                    state = state.copy(
-                        showDialog = true,
-                        showDialogId = event.id,
-                        departmentTitle = "Untitled"
-                    )
+                    viewModelScope.launch {
+                        val department = departmentDao.getDepartmentById(event.id)
+                        state = state.copy(
+                            showDialog = true,
+                            showDialogId = event.id,
+                            departmentTitle = department.title
+                        )
+                    }
                 } else {
                     state = state.copy(showDialog = true)
                 }
@@ -55,22 +58,37 @@ class DepartmentViewModel @Inject constructor(
                 state = state.copy(departmentQuery = event.departmentQuery)
             }
 
-            is DepartmentFormEvent.Create -> {
-                createDepartment(event.universityId)
+            is DepartmentFormEvent.Submit -> {
+                submit(event.universityId)
             }
         }
     }
 
-    private fun createDepartment(universityId: Int) {
+    private fun submit(universityId: Int) {
         viewModelScope.launch {
-            departmentDao.insertDepartment(
-                Department(
-                    universityId = universityId,
-                    title = state.departmentTitle
+            if (state.showDialogId !== null) {
+                departmentDao.updateDepartment(
+                    Department(
+                        id = state.showDialogId!!,
+                        universityId = universityId,
+                        title = state.departmentTitle
+                    )
                 )
-            )
+            } else {
+                departmentDao.insertDepartment(
+                    Department(
+                        universityId = universityId,
+                        title = state.departmentTitle
+                    )
+                )
+            }
         }
 
-        state = state.copy(showDialog = false, departmentTitle = "")
+        state = state.copy(
+            showDialog = false,
+            showDialogId = null,
+            departmentTitle = "",
+            departmentTitleError = null
+        )
     }
 }

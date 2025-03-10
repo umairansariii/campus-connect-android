@@ -26,7 +26,6 @@ import com.umairansariii.campusconnect.viewmodel.DepartmentViewModel
 @Composable
 fun DepartmentCard(department: Department) {
     val viewModel: DepartmentViewModel = hiltViewModel()
-    val state = viewModel.state
     var expanded by remember { mutableStateOf(false) }
 
     Row(
@@ -48,10 +47,6 @@ fun DepartmentCard(department: Department) {
                     onClick = {
                         viewModel.onEvent(DepartmentFormEvent.ShowDialog(department.id))
                     },
-                )
-                DropdownMenuItem(
-                    text = { Text(text = "Archive") },
-                    onClick = { /* Do something... */ }
                 )
             }
         }
