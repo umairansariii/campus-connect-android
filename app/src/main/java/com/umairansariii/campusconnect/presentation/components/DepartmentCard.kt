@@ -18,9 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.data.local.entities.Department
+import com.umairansariii.campusconnect.presentation.events.DepartmentFormEvent
+import com.umairansariii.campusconnect.viewmodel.DepartmentViewModel
 
 @Composable
-fun DepartmentCard() {
+fun DepartmentCard(department: Department) {
+    val viewModel: DepartmentViewModel = hiltViewModel()
     var expanded by remember { mutableStateOf(false) }
 
     Row(
@@ -28,7 +33,7 @@ fun DepartmentCard() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(text = "Computer Science")
+        Text(text = department.title)
         Box {
             IconButton(onClick = { expanded = !expanded }) {
                 Icon(Icons.Filled.MoreVert, contentDescription = "department-options-icon")
@@ -39,11 +44,9 @@ fun DepartmentCard() {
             ) {
                 DropdownMenuItem(
                     text = { Text(text = "Edit") },
-                    onClick = { /* Do something... */ },
-                )
-                DropdownMenuItem(
-                    text = { Text(text = "Archive") },
-                    onClick = { /* Do something... */ }
+                    onClick = {
+                        viewModel.onEvent(DepartmentFormEvent.ShowDialog(department.id))
+                    },
                 )
             }
         }

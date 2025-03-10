@@ -7,7 +7,7 @@ import com.umairansariii.campusconnect.data.local.enums.UserStatus
 import java.util.Date
 
 @Entity(tableName = "user")
-data class User(
+data class User (
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val createdAt: Date,
     val firstName: String,
