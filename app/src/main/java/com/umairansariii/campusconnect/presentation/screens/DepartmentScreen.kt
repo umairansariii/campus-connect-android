@@ -63,6 +63,7 @@ fun DepartmentScreen() {
             leadingIcon = {
                 Icon(Icons.Outlined.Search, contentDescription = "department-search-icon")
             },
+            shape = MaterialTheme.shapes.medium,
         )
         LazyColumn(
             Modifier.fillMaxWidth().padding(start = 20.dp, end = 4.dp),

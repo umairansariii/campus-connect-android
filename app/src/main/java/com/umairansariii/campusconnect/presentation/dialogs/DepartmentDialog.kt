@@ -55,7 +55,13 @@ fun DepartmentDialog() {
                         onValueChange = {
                             viewModel.onEvent(DepartmentFormEvent.DepartmentTitleChanged(it))
                         },
-                        label = { Text(text = "Department") },
+                        label = { Text(text = "Title") },
+                        supportingText = {
+                            if (state.departmentTitleError != null) {
+                                Text(text = state.departmentTitleError)
+                            }
+                        },
+                        isError = state.departmentTitleError != null,
                         singleLine = true,
                     )
                     Row(
