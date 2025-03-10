@@ -20,7 +20,7 @@ import com.umairansariii.campusconnect.presentation.events.DepartmentFormEvent
 import com.umairansariii.campusconnect.viewmodel.DepartmentViewModel
 
 @Composable
-fun DepartmentUpdate() {
+fun DepartmentDialog() {
     val viewModel: DepartmentViewModel = hiltViewModel()
     val state = viewModel.state
 
@@ -64,7 +64,7 @@ fun DepartmentUpdate() {
                     ) {
                         Button(
                             onClick = {
-                                viewModel.onEvent(DepartmentFormEvent.Create(universityId = 1))
+                                viewModel.onEvent(DepartmentFormEvent.Submit(universityId = 1))
                             }
                         ) {
                             if (state.showDialogId !== null) {
