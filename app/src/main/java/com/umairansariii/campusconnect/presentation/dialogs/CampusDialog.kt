@@ -16,13 +16,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.events.CampusFormEvent
+import com.umairansariii.campusconnect.presentation.events.DepartmentFormEvent
+import com.umairansariii.campusconnect.viewmodel.CampusViewModel
 
 @Composable
 fun CampusDialog() {
+    val viewModel: CampusViewModel = hiltViewModel()
+    val state = viewModel.state
 
-    if (false) {
+    if (state.showDialog) {
         Dialog(
-            onDismissRequest = { /**/ }
+            onDismissRequest = {
+                viewModel.onEvent(CampusFormEvent.DismissDialog())
+            }
         ) {
             Surface(
                 modifier = Modifier.wrapContentSize(),
@@ -33,45 +41,76 @@ fun CampusDialog() {
                     modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    Text(
-                        text = "Create Campus",
-                        style = MaterialTheme.typography.titleLarge,
-                    )
+                    if (state.showDialogId !== null) {
+                        Text(
+                            text = "Update Campus",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    } else {
+                        Text(
+                            text = "Create Campus",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    }
                     Column {
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = { /* Handle change */ },
+                            value = state.campusTitle,
+                            onValueChange = {
+                                viewModel.onEvent(CampusFormEvent.CampusTitleChanged(it))
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Title") },
-                            supportingText = { /* Handle error */ },
-                            isError = false,
+                            supportingText = {
+                                if (state.campusTitleError != null) {
+                                    Text(text = state.campusTitleError)
+                                }
+                            },
+                            isError = state.campusTitleError != null,
                             singleLine = true,
                         )
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = { /* Handle change */ },
+                            value = state.campusCode,
+                            onValueChange = {
+                                viewModel.onEvent(CampusFormEvent.CampusCodeChanged(it))
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Campus Code") },
-                            supportingText = { /* Handle error */ },
-                            isError = false,
+                            supportingText = {
+                                if (state.campusCodeError != null) {
+                                    Text(text = state.campusCodeError)
+                                }
+                            },
+                            isError = state.campusCodeError != null,
                             singleLine = true,
                         )
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = { /* Handle change */ },
+                            value = state.campusLatitude,
+                            onValueChange = {
+                                viewModel.onEvent(CampusFormEvent.CampusLatitudeChanged(it))
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Latitude") },
-                            supportingText = { /* Handle error */ },
-                            isError = false,
+                            supportingText = {
+                                if (state.campusLatitudeError != null) {
+                                    Text(text = state.campusLatitudeError)
+                                }
+                            },
+                            isError = state.campusLatitudeError != null,
                             singleLine = true,
                         )
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = { /* Handle change */ },
+                            value = state.campusLongitude,
+                            onValueChange = {
+                                viewModel.onEvent(CampusFormEvent.CampusLongitudeChanged(it))
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Longitude") },
-                            supportingText = { /* Handle error */ },
-                            isError = false,
+                            supportingText = {
+                                if (state.campusLongitudeError != null) {
+                                    Text(text = state.campusLongitudeError)
+                                }
+                            },
+                            isError = state.campusLongitudeError != null,
                             singleLine = true,
                         )
                     }
@@ -80,10 +119,16 @@ fun CampusDialog() {
                         horizontalArrangement = Arrangement.End
                     ) {
                         Button(
-                            onClick = { /* Handle click */ },
+                            onClick = {
+                                viewModel.onEvent(CampusFormEvent.Submit(universityId = 1))
+                            },
                             modifier = Modifier.fillMaxWidth().height(50.dp)
                         ) {
-                            Text(text = "Create", style = MaterialTheme.typography.titleMedium)
+                            if (state.showDialogId !== null) {
+                                Text(text = "Update", style = MaterialTheme.typography.titleMedium)
+                            } else {
+                                Text(text = "Create", style = MaterialTheme.typography.titleMedium)
+                            }
                         }
                     }
                 }

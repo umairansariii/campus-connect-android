@@ -26,9 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.data.local.entities.Campus
+import com.umairansariii.campusconnect.presentation.events.CampusFormEvent
+import com.umairansariii.campusconnect.viewmodel.CampusViewModel
 
 @Composable
-fun CampusCard() {
+fun CampusCard(campus: Campus) {
+    val viewModel: CampusViewModel = hiltViewModel()
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -46,8 +51,8 @@ fun CampusCard() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column {
-                Text(text = "Nazimabad Campus")
-                Text(text = "VUKHI02", color = MaterialTheme.colorScheme.secondary)
+                Text(text = campus.title)
+                Text(text = campus.campusCode, color = MaterialTheme.colorScheme.secondary)
             }
             Box {
                 IconButton(onClick = { expanded = !expanded }) {
@@ -59,7 +64,9 @@ fun CampusCard() {
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "Edit") },
-                        onClick = { /* Handle click */ },
+                        onClick = {
+                            viewModel.onEvent(CampusFormEvent.ShowDialog(id = campus.id))
+                        },
                     )
                 }
             }

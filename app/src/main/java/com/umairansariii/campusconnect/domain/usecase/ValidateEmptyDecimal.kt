@@ -1,6 +1,6 @@
 package com.umairansariii.campusconnect.domain.usecase
 
-class ValidateEmptyAlpha {
+class ValidateEmptyDecimal {
     fun execute(value: String, fieldName: String): ValidationResult {
         if (value.isBlank()) {
             return ValidationResult(
@@ -9,12 +9,12 @@ class ValidateEmptyAlpha {
             )
         }
 
-        val isAlphaOrSpace = value.all { it.isLetter() || it.isWhitespace() }
+        val decimalRegex = "-?\\d+(\\.\\d+)?".toRegex()
 
-        if (!isAlphaOrSpace) {
+        if (!value.matches(decimalRegex)) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "$fieldName must contain only letters",
+                errorMessage = "$fieldName must be decimal number",
             )
         }
 
