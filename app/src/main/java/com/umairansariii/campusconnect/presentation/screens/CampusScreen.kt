@@ -1,19 +1,26 @@
 package com.umairansariii.campusconnect.presentation.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.umairansariii.campusconnect.presentation.components.CampusCard
+import com.umairansariii.campusconnect.presentation.dialogs.CampusDialog
 
 @Composable
 fun CampusScreen() {
@@ -22,20 +29,35 @@ fun CampusScreen() {
             FloatingActionButton(
                 onClick = { /* Handle click */ },
             ) {
-                Icon(Icons.Filled.Add, "Floating action button.")
+                Icon(Icons.Filled.Add, "campus-add-icon")
             }
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
+            Spacer(modifier = Modifier.height(10.dp))
+            OutlinedTextField(
+                value = "",
+                onValueChange = { /* Handle change */ },
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                placeholder = { Text(text = "Search") },
+                leadingIcon = {
+                    Icon(Icons.Outlined.Search, contentDescription = "campus-search-icon")
+                },
+                shape = MaterialTheme.shapes.medium,
+            )
             LazyColumn(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
             ) {
-                items(10) {
+                item {
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+                items(2) {
                     CampusCard()
                 }
             }
+            CampusDialog()
         }
     }
 }

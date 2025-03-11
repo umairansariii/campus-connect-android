@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -33,7 +34,7 @@ fun CampusCard() {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ),
     ) {
         Row(
@@ -46,11 +47,11 @@ fun CampusCard() {
         ) {
             Column {
                 Text(text = "Nazimabad Campus")
-                Text(text = "VUKHI02")
+                Text(text = "VUKHI02", color = MaterialTheme.colorScheme.secondary)
             }
             Box {
                 IconButton(onClick = { expanded = !expanded }) {
-                    Icon(Icons.Filled.MoreVert, contentDescription = "department-options-icon")
+                    Icon(Icons.Filled.MoreVert, contentDescription = "campus-options-icon")
                 }
                 DropdownMenu(
                     expanded = expanded,
@@ -58,13 +59,11 @@ fun CampusCard() {
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "Edit") },
-                        onClick = {
-                            /* Handle click */
-                        },
+                        onClick = { /* Handle click */ },
                     )
                 }
             }
         }
     }
-    Spacer(modifier = Modifier.padding(8.dp))
+    Spacer(modifier = Modifier.height(10.dp))
 }
