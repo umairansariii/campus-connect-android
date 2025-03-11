@@ -11,4 +11,5 @@ data class CampusFormState (
     val campusLatitudeError: String? = null,
     val campusLongitude: String = "",
     val campusLongitudeError: String? = null,
+    val campusQuery: String = "",
 )
