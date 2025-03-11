@@ -1,20 +1,20 @@
 package com.umairansariii.campusconnect.domain.usecase
 
 class ValidateEmptyAlpha {
-    fun execute(value: String): ValidationResult {
+    fun execute(value: String, fieldName: String): ValidationResult {
         if (value.isBlank()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "is required",
+                errorMessage = "$fieldName is required",
             )
         }
 
-        val isAlpha = value.all { it.isLetter() }
+        val isAlphaOrSpace = value.all { it.isLetter() || it.isWhitespace() }
 
-        if (!isAlpha) {
+        if (!isAlphaOrSpace) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "must contain only letters",
+                errorMessage = "$fieldName must contain only letters",
             )
         }
 

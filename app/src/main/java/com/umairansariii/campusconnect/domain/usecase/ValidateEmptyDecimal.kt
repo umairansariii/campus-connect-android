@@ -1,20 +1,20 @@
 package com.umairansariii.campusconnect.domain.usecase
 
-class ValidateEmptyInt {
-    fun execute(value: String): ValidationResult {
+class ValidateEmptyDecimal {
+    fun execute(value: String, fieldName: String): ValidationResult {
         if (value.isBlank()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "is required",
+                errorMessage = "$fieldName is required",
             )
         }
 
-        val isInteger = value.all { it.isDigit() }
+        val decimalRegex = "-?\\d+(\\.\\d+)?".toRegex()
 
-        if (!isInteger) {
+        if (!value.matches(decimalRegex)) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "must contain only digits",
+                errorMessage = "$fieldName must be decimal number",
             )
         }
 
