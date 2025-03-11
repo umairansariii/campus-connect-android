@@ -9,7 +9,7 @@ import com.umairansariii.campusconnect.data.local.dao.CampusDao
 import com.umairansariii.campusconnect.data.local.entities.Campus
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmpty
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyAlpha
-import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyInt
+import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyDecimal
 import com.umairansariii.campusconnect.presentation.events.CampusFormEvent
 import com.umairansariii.campusconnect.presentation.states.CampusFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ class CampusViewModel @Inject constructor(
     private val campusDao: CampusDao,
 ): ViewModel() {
     private val validateEmptyAlpha = ValidateEmptyAlpha()
-    private val validateEmptyInt = ValidateEmptyInt()
+    private val validateEmptyDecimal = ValidateEmptyDecimal()
     private val validateEmpty = ValidateEmpty()
     var state by mutableStateOf(CampusFormState())
 
@@ -92,10 +92,10 @@ class CampusViewModel @Inject constructor(
     }
 
     private fun submit(universityId: Int) {
-        val titleResult = validateEmptyAlpha.execute(value = state.campusTitle)
-        val codeResult = validateEmpty.execute(value = state.campusCode)
-        val latitudeResult = validateEmptyInt.execute(value = state.campusLatitude)
-        val longitudeResult = validateEmptyInt.execute(value = state.campusLongitude)
+        val titleResult = validateEmptyAlpha.execute(value = state.campusTitle, fieldName = "Title")
+        val codeResult = validateEmpty.execute(value = state.campusCode, fieldName = "Code")
+        val latitudeResult = validateEmptyDecimal.execute(value = state.campusLatitude, fieldName = "Latitude")
+        val longitudeResult = validateEmptyDecimal.execute(value = state.campusLongitude, fieldName = "Longitude")
 
         val hasError = listOf(
             titleResult,
@@ -106,10 +106,10 @@ class CampusViewModel @Inject constructor(
 
         if (hasError) {
             state = state.copy(
-                campusTitleError = "Title " + titleResult.errorMessage,
-                campusCodeError = "Code " + codeResult.errorMessage,
-                campusLatitudeError = "Latitude " + latitudeResult.errorMessage,
-                campusLongitudeError = "Longitude " + longitudeResult.errorMessage,
+                campusTitleError = titleResult.errorMessage,
+                campusCodeError = codeResult.errorMessage,
+                campusLatitudeError = latitudeResult.errorMessage,
+                campusLongitudeError = longitudeResult.errorMessage,
             )
             return
         }
