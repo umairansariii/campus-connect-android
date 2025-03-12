@@ -4,11 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ImportContacts
@@ -37,11 +38,11 @@ fun UniversityCard() {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Row(
@@ -92,10 +93,10 @@ fun UniversityCard() {
             ) {
                 OutlinedButton(
                     onClick = { /* Handle click */ },
-                    modifier = Modifier.padding(end = 10.dp),
                 ) {
                     Text(text = "Edit")
                 }
+                Spacer(modifier = Modifier.width(10.dp))
                 Button(
                     onClick = { /* Handle click */ },
                 ) {
@@ -104,4 +105,5 @@ fun UniversityCard() {
             }
         }
     }
+    Spacer(modifier = Modifier.height(10.dp))
 }
