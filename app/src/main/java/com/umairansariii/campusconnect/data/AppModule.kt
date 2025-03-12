@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.umairansariii.campusconnect.data.local.AppDatabase
 import com.umairansariii.campusconnect.data.local.dao.CampusDao
 import com.umairansariii.campusconnect.data.local.dao.DepartmentDao
+import com.umairansariii.campusconnect.data.local.dao.UniversityDao
 import com.umairansariii.campusconnect.data.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -29,6 +30,11 @@ object AppModule {
     @Provides
     fun provideUserDao(database: AppDatabase): UserDao {
         return database.userDao()
+    }
+
+    @Provides
+    fun provideUniversityDao(database: AppDatabase): UniversityDao {
+        return database.universityDao()
     }
 
     @Provides
