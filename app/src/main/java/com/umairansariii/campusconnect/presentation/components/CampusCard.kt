@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -52,22 +53,32 @@ fun CampusCard(campus: Campus) {
         ) {
             Column {
                 Text(text = campus.title)
-                Text(text = campus.campusCode, color = MaterialTheme.colorScheme.secondary)
+                Text(
+                    text = campus.campusCode,
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
             }
-            Box {
-                IconButton(onClick = { expanded = !expanded }) {
-                    Icon(Icons.Filled.MoreVert, contentDescription = "campus-options-icon")
-                }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    DropdownMenuItem(
-                        text = { Text(text = "Edit") },
-                        onClick = {
-                            viewModel.onEvent(CampusFormEvent.ShowDialog(id = campus.id))
-                        },
-                    )
+            Row {
+                DeepLinkIconButton(
+                    url = "https://www.google.com/maps/place/${campus.latitude},${campus.longitude}",
+                    icon = Icons.Outlined.LocationOn
+                )
+                Box {
+                    IconButton(onClick = { expanded = !expanded }) {
+                        Icon(Icons.Filled.MoreVert, contentDescription = "campus-options-icon")
+                    }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = "Edit") },
+                            onClick = {
+                                viewModel.onEvent(CampusFormEvent.ShowDialog(id = campus.id))
+                            },
+                        )
+                    }
                 }
             }
         }

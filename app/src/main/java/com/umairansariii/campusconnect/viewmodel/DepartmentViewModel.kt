@@ -75,7 +75,7 @@ class DepartmentViewModel @Inject constructor(
 
         if (hasError) {
             state = state.copy(
-                departmentTitleError = "Title " + emptyAlphaResult.errorMessage,
+                departmentTitleError = emptyAlphaResult.errorMessage,
             )
             return
         }

@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.presentation.events.CampusFormEvent
-import com.umairansariii.campusconnect.presentation.events.DepartmentFormEvent
 import com.umairansariii.campusconnect.viewmodel.CampusViewModel
 
 @Composable
@@ -116,7 +115,6 @@ fun CampusDialog() {
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
                     ) {
                         Button(
                             onClick = {
