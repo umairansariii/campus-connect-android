@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
@@ -36,7 +37,7 @@ fun DepartmentDialog() {
                 tonalElevation = 6.dp
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     if (state.showDialogId !== null) {
@@ -50,33 +51,36 @@ fun DepartmentDialog() {
                             style = MaterialTheme.typography.titleLarge,
                         )
                     }
-                    OutlinedTextField(
-                        value = state.departmentTitle,
-                        onValueChange = {
-                            viewModel.onEvent(DepartmentFormEvent.DepartmentTitleChanged(it))
-                        },
-                        label = { Text(text = "Title") },
-                        supportingText = {
-                            if (state.departmentTitleError != null) {
-                                Text(text = state.departmentTitleError)
-                            }
-                        },
-                        isError = state.departmentTitleError != null,
-                        singleLine = true,
-                    )
+                    Column {
+                        OutlinedTextField(
+                            value = state.departmentTitle,
+                            onValueChange = {
+                                viewModel.onEvent(DepartmentFormEvent.DepartmentTitleChanged(it))
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            label = { Text(text = "Title") },
+                            supportingText = {
+                                if (state.departmentTitleError != null) {
+                                    Text(text = state.departmentTitleError)
+                                }
+                            },
+                            isError = state.departmentTitleError != null,
+                            singleLine = true,
+                        )
+                    }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
                     ) {
                         Button(
                             onClick = {
                                 viewModel.onEvent(DepartmentFormEvent.Submit(universityId = 1))
-                            }
+                            },
+                            modifier = Modifier.fillMaxWidth().height(50.dp)
                         ) {
                             if (state.showDialogId !== null) {
-                                Text(text = "Update")
+                                Text(text = "Update", style = MaterialTheme.typography.titleMedium)
                             } else {
-                                Text(text = "Create")
+                                Text(text = "Create", style = MaterialTheme.typography.titleMedium)
                             }
                         }
                     }
