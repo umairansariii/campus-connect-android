@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
-import com.umairansariii.campusconnect.presentation.screens.UniversityScreen
+import com.umairansariii.campusconnect.presentation.screens.StudentScreen
 
 @Composable
 fun AppNavigation() {
@@ -48,7 +48,7 @@ fun AppNavigation() {
                 route = "app", startDestination = "home"
             ) {
                 composable(route = "home") {
-                    UniversityScreen()
+                    StudentScreen()
                 }
             }
         }
