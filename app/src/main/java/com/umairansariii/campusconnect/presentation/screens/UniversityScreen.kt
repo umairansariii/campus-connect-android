@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.umairansariii.campusconnect.presentation.components.UniversityCard
+import com.umairansariii.campusconnect.presentation.dialogs.UniversityDialog
 
 @Composable
 fun UniversityScreen() {
@@ -41,6 +42,7 @@ fun UniversityScreen() {
                     UniversityCard()
                 }
             }
+            UniversityDialog()
         }
     }
 }
