@@ -31,10 +31,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.R
+import com.umairansariii.campusconnect.data.local.entities.University
+import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
+import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 
 @Composable
-fun UniversityCard() {
+fun UniversityCard(university: University) {
+    val viewModel: UniversityViewModel = hiltViewModel()
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -56,7 +62,7 @@ fun UniversityCard() {
                     modifier = Modifier.size(50.dp).clip(CircleShape),
                     contentScale = ContentScale.Crop,
                 )
-                Text(text = "Dawood University of Engineering and Technology", fontSize = 18.sp)
+                Text(text = university.title, fontSize = 18.sp)
             }
             Row(
                 Modifier.fillMaxWidth(),
@@ -92,7 +98,9 @@ fun UniversityCard() {
                 horizontalArrangement = Arrangement.End,
             ) {
                 OutlinedButton(
-                    onClick = { /* Handle click */ },
+                    onClick = {
+                        viewModel.onEvent(UniversityFormEvent.ShowDialog(id = university.id))
+                    },
                 ) {
                     Text(text = "Edit")
                 }

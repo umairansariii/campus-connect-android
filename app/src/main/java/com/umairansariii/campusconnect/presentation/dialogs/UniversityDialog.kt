@@ -16,13 +16,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
+import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 
 @Composable
 fun UniversityDialog() {
+    val viewModel: UniversityViewModel = hiltViewModel()
+    val state = viewModel.state
 
-    if (true) {
+    if (state.showDialog) {
         Dialog(
-            onDismissRequest = { /* Handle dismiss */ }
+            onDismissRequest = {
+                viewModel.onEvent(UniversityFormEvent.DismissDialog())
+            }
         ) {
             Surface(
                 modifier = Modifier.wrapContentSize(),
@@ -33,7 +40,7 @@ fun UniversityDialog() {
                     modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    if (false) {
+                    if (state.showDialogId !== null) {
                         Text(
                             text = "Update University",
                             style = MaterialTheme.typography.titleLarge,
@@ -46,12 +53,18 @@ fun UniversityDialog() {
                     }
                     Column {
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = { /* Handle change */ },
+                            value = state.universityTitle,
+                            onValueChange = {
+                                viewModel.onEvent(UniversityFormEvent.UniversityTitleChanged(it))
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Title") },
-                            supportingText = { /* Handle error */ },
-                            isError = false,
+                            supportingText = {
+                                if (state.universityTitleError != null) {
+                                    Text(text = state.universityTitleError)
+                                }
+                            },
+                            isError = state.universityTitleError != null,
                             singleLine = true,
                         )
                     }
@@ -59,10 +72,12 @@ fun UniversityDialog() {
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Button(
-                            onClick = { /* Handle click */ },
+                            onClick = {
+                                viewModel.onEvent(UniversityFormEvent.Submit(adminId = 1))
+                            },
                             modifier = Modifier.fillMaxWidth().height(50.dp)
                         ) {
-                            if (false) {
+                            if (state.showDialogId !== null) {
                                 Text(text = "Update", style = MaterialTheme.typography.titleMedium)
                             } else {
                                 Text(text = "Create", style = MaterialTheme.typography.titleMedium)
