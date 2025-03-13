@@ -64,35 +64,35 @@ fun UniversityCard(university: University) {
                 )
                 Text(text = university.title, fontSize = 18.sp)
             }
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.School,
-                    contentDescription = "university-card-stats-icon",
-                )
-                Text(text = "4800+", fontSize = 18.sp)
-                VerticalDivider(
-                    modifier = Modifier.height(12.dp),
-                    thickness = 2.dp,
-                )
-                Icon(
-                    imageVector = Icons.Outlined.ImportContacts,
-                    contentDescription = "university-card-stats-icon",
-                )
-                Text(text = "24", fontSize = 18.sp)
-                VerticalDivider(
-                    modifier = Modifier.height(12.dp),
-                    thickness = 2.dp,
-                )
-                Icon(
-                    imageVector = Icons.Outlined.LocationOn,
-                    contentDescription = "university-card-stats-icon",
-                )
-                Text(text = "14", fontSize = 18.sp)
-            }
+//            Row(
+//                Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.spacedBy(10.dp),
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Outlined.School,
+//                    contentDescription = "university-card-stats-icon",
+//                )
+//                Text(text = "4800+", fontSize = 18.sp)
+//                VerticalDivider(
+//                    modifier = Modifier.height(12.dp),
+//                    thickness = 2.dp,
+//                )
+//                Icon(
+//                    imageVector = Icons.Outlined.ImportContacts,
+//                    contentDescription = "university-card-stats-icon",
+//                )
+//                Text(text = "24", fontSize = 18.sp)
+//                VerticalDivider(
+//                    modifier = Modifier.height(12.dp),
+//                    thickness = 2.dp,
+//                )
+//                Icon(
+//                    imageVector = Icons.Outlined.LocationOn,
+//                    contentDescription = "university-card-stats-icon",
+//                )
+//                Text(text = "14", fontSize = 18.sp)
+//            }
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
