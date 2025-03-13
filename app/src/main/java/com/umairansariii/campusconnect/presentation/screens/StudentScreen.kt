@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.umairansariii.campusconnect.presentation.components.StudentCard
+import com.umairansariii.campusconnect.presentation.dialogs.StudentApproveDialog
 import com.umairansariii.campusconnect.presentation.dialogs.StudentUpdateDialog
 import com.umairansariii.campusconnect.presentation.dialogs.StudentViewDialog
 
@@ -48,5 +49,6 @@ fun StudentScreen() {
         }
         StudentViewDialog()
         StudentUpdateDialog()
+        StudentApproveDialog()
     }
 }
