@@ -4,11 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ImportContacts
@@ -30,18 +31,24 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.R
+import com.umairansariii.campusconnect.data.local.entities.University
+import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
+import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 
 @Composable
-fun UniversityCard() {
+fun UniversityCard(university: University) {
+    val viewModel: UniversityViewModel = hiltViewModel()
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Row(
@@ -55,47 +62,49 @@ fun UniversityCard() {
                     modifier = Modifier.size(50.dp).clip(CircleShape),
                     contentScale = ContentScale.Crop,
                 )
-                Text(text = "Dawood University of Engineering and Technology", fontSize = 18.sp)
+                Text(text = university.title, fontSize = 18.sp)
             }
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.School,
-                    contentDescription = "university-card-stats-icon",
-                )
-                Text(text = "4800+", fontSize = 18.sp)
-                VerticalDivider(
-                    modifier = Modifier.height(12.dp),
-                    thickness = 2.dp,
-                )
-                Icon(
-                    imageVector = Icons.Outlined.ImportContacts,
-                    contentDescription = "university-card-stats-icon",
-                )
-                Text(text = "24", fontSize = 18.sp)
-                VerticalDivider(
-                    modifier = Modifier.height(12.dp),
-                    thickness = 2.dp,
-                )
-                Icon(
-                    imageVector = Icons.Outlined.LocationOn,
-                    contentDescription = "university-card-stats-icon",
-                )
-                Text(text = "14", fontSize = 18.sp)
-            }
+//            Row(
+//                Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.spacedBy(10.dp),
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Outlined.School,
+//                    contentDescription = "university-card-stats-icon",
+//                )
+//                Text(text = "4800+", fontSize = 18.sp)
+//                VerticalDivider(
+//                    modifier = Modifier.height(12.dp),
+//                    thickness = 2.dp,
+//                )
+//                Icon(
+//                    imageVector = Icons.Outlined.ImportContacts,
+//                    contentDescription = "university-card-stats-icon",
+//                )
+//                Text(text = "24", fontSize = 18.sp)
+//                VerticalDivider(
+//                    modifier = Modifier.height(12.dp),
+//                    thickness = 2.dp,
+//                )
+//                Icon(
+//                    imageVector = Icons.Outlined.LocationOn,
+//                    contentDescription = "university-card-stats-icon",
+//                )
+//                Text(text = "14", fontSize = 18.sp)
+//            }
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
             ) {
                 OutlinedButton(
-                    onClick = { /* Handle click */ },
-                    modifier = Modifier.padding(end = 10.dp),
+                    onClick = {
+                        viewModel.onEvent(UniversityFormEvent.ShowDialog(id = university.id))
+                    },
                 ) {
                     Text(text = "Edit")
                 }
+                Spacer(modifier = Modifier.width(10.dp))
                 Button(
                     onClick = { /* Handle click */ },
                 ) {
@@ -104,4 +113,5 @@ fun UniversityCard() {
             }
         }
     }
+    Spacer(modifier = Modifier.height(10.dp))
 }
