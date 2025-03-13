@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
+import com.umairansariii.campusconnect.presentation.screens.LoginScreen
 import com.umairansariii.campusconnect.presentation.screens.RegisterScreen
 import com.umairansariii.campusconnect.presentation.screens.StudentScreen
 
@@ -36,10 +37,10 @@ fun AppNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             navigation(
-                route = "auth", startDestination = "register"
+                route = "auth", startDestination = "login"
             ) {
                 composable(route = "login") {
-
+                    LoginScreen()
                 }
                 composable(route = "register") {
                     RegisterScreen()
