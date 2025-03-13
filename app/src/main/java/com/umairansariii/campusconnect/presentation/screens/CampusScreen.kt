@@ -41,7 +41,7 @@ fun CampusScreen() {
                     viewModel.onEvent(CampusFormEvent.ShowDialog(id = null))
                 },
             ) {
-                Icon(Icons.Filled.Add, "campus-add-icon")
+                Icon(Icons.Filled.Add,  contentDescription = "campus-add-icon")
             }
         }
     ) { innerPadding ->

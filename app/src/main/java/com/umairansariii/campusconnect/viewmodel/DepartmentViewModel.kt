@@ -67,15 +67,15 @@ class DepartmentViewModel @Inject constructor(
     }
 
     private fun submit(universityId: Int) {
-        val emptyAlphaResult = validateEmptyAlpha.execute(value = state.departmentTitle, fieldName = "Title")
+        val titleResult = validateEmptyAlpha.execute(value = state.departmentTitle, fieldName = "Title")
 
         val hasError = listOf(
-            emptyAlphaResult,
+            titleResult,
         ).any { !it.successful }
 
         if (hasError) {
             state = state.copy(
-                departmentTitleError = emptyAlphaResult.errorMessage,
+                departmentTitleError = titleResult.errorMessage,
             )
             return
         }
