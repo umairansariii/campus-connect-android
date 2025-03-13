@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
+import com.umairansariii.campusconnect.presentation.screens.RegisterScreen
 import com.umairansariii.campusconnect.presentation.screens.StudentScreen
 
 @Composable
@@ -21,7 +22,7 @@ fun AppNavigation() {
 
     Scaffold(
         topBar = {
-            TopNavigationBar()
+//            TopNavigationBar()
         },
         bottomBar = {
             if (shouldShowBottomBar(navController = navController)) {
@@ -31,17 +32,17 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = "app",
+            startDestination = "auth",
             modifier = Modifier.padding(innerPadding)
         ) {
             navigation(
-                route = "auth", startDestination = "login"
+                route = "auth", startDestination = "register"
             ) {
                 composable(route = "login") {
 
                 }
                 composable(route = "register") {
-
+                    RegisterScreen()
                 }
             }
             navigation(
