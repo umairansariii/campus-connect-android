@@ -31,9 +31,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.events.RegisterFormEvent
+import com.umairansariii.campusconnect.viewmodel.RegisterViewModel
 
 @Composable
 fun RegisterScreen() {
+    val viewModel: RegisterViewModel = hiltViewModel()
+    val state = viewModel.state
     val focusRequester = remember {
         FocusRequester()
     }
@@ -49,13 +54,19 @@ fun RegisterScreen() {
             verticalArrangement = Arrangement.Center,
         ) {
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.firstName,
+                onValueChange = {
+                    viewModel.onEvent(RegisterFormEvent.FirstNameChanged(it))
+                },
                 label = {
                     Text(text = "First Name")
                 },
-                supportingText = { /* Handle error */ },
-                isError = false,
+                supportingText = {
+                    if (state.firstNameError != null) {
+                        Text(text = state.firstNameError)
+                    }
+                },
+                isError = state.firstNameError != null,
                 modifier = Modifier.fillMaxWidth(0.8f).focusRequester(focusRequester),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
@@ -69,13 +80,19 @@ fun RegisterScreen() {
                 singleLine = true,
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.lastName,
+                onValueChange = {
+                    viewModel.onEvent(RegisterFormEvent.LastNameChanged(it))
+                },
                 label = {
                     Text(text = "Last Name")
                 },
-                supportingText = { /* Handle error */ },
-                isError = false,
+                supportingText = {
+                    if (state.lastNameError != null) {
+                        Text(text = state.lastNameError)
+                    }
+                },
+                isError = state.lastNameError != null,
                 modifier = Modifier.fillMaxWidth(0.8f),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
@@ -89,13 +106,19 @@ fun RegisterScreen() {
                 singleLine = true,
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.email,
+                onValueChange = {
+                    viewModel.onEvent(RegisterFormEvent.EmailChanged(it))
+                },
                 label = {
                     Text(text = "Email")
                 },
-                supportingText = { /* Handle error */ },
-                isError = false,
+                supportingText = {
+                    if (state.emailError != null) {
+                        Text(text = state.emailError)
+                    }
+                },
+                isError = state.emailError != null,
                 modifier = Modifier.fillMaxWidth(0.8f),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -109,13 +132,19 @@ fun RegisterScreen() {
                 singleLine = true,
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.password,
+                onValueChange = {
+                    viewModel.onEvent(RegisterFormEvent.PasswordChanged(it))
+                },
                 label = {
                     Text(text = "Password")
                 },
-                supportingText = { /* Handle error */ },
-                isError = false,
+                supportingText = {
+                    if (state.passwordError != null) {
+                        Text(text = state.passwordError)
+                    }
+                },
+                isError = state.passwordError != null,
                 modifier = Modifier.fillMaxWidth(0.8f),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -136,20 +165,28 @@ fun RegisterScreen() {
                 }
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.repeatedPassword,
+                onValueChange = {
+                    viewModel.onEvent(RegisterFormEvent.RepeatedPasswordChanged(it))
+                },
                 label = {
                     Text(text = "Confirm Password")
                 },
-                supportingText = { /* Handle error */ },
-                isError = false,
+                supportingText = {
+                    if (state.repeatedPasswordError != null) {
+                        Text(text = state.repeatedPasswordError)
+                    }
+                },
+                isError = state.repeatedPasswordError != null,
                 modifier = Modifier.fillMaxWidth(0.8f),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done,
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = { /* Handle submit */ }
+                    onDone = {
+                        viewModel.onEvent(RegisterFormEvent.Submit())
+                    }
                 ),
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
@@ -158,7 +195,9 @@ fun RegisterScreen() {
             Button(
                 modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = { /* Handle register */ },
+                onClick = {
+                    viewModel.onEvent(RegisterFormEvent.Submit())
+                },
             ) {
                 Text(text = "Register")
             }
@@ -167,7 +206,7 @@ fun RegisterScreen() {
                 modifier = Modifier.fillMaxWidth(0.4f)
             )
             TextButton(
-                onClick = { /* Handle click */ }
+                onClick = { /* Handle navigation */ }
             ) {
                 Text(text = "Already have an account? Login")
             }
