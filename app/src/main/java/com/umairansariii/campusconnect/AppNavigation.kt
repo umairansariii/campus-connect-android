@@ -37,7 +37,7 @@ fun AppNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             navigation(
-                route = "auth", startDestination = "login"
+                route = "auth", startDestination = "register"
             ) {
                 composable(route = "login") {
                     LoginScreen()
