@@ -15,58 +15,30 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.umairansariii.campusconnect.data.local.entities.Campus
-import com.umairansariii.campusconnect.data.local.entities.Department
-import com.umairansariii.campusconnect.data.local.entities.University
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.data.local.enums.UserGender
 import com.umairansariii.campusconnect.presentation.components.DateSelector
 import com.umairansariii.campusconnect.presentation.components.SheetSelector
+import com.umairansariii.campusconnect.presentation.events.EnrollmentFormEvent
+import com.umairansariii.campusconnect.viewmodel.EnrollmentViewModel
 
 @Composable
 fun EnrollmentScreen() {
-    val focusRequester = remember {
-        FocusRequester()
-    }
+    val viewModel: EnrollmentViewModel = hiltViewModel()
+    val state = viewModel.state
     val focusManager = LocalFocusManager.current
 
-    val universities = listOf(
-        University(
-            id = 1,
-            adminId = 1,
-            title = "Virtual University",
-            avatarUrl = ""
-        ),
-    )
-
-    val campuses = listOf(
-        Campus(
-            id = 1,
-            universityId = 1,
-            title = "Nazimabad Campus",
-            campusCode = "VUKHI02",
-            latitude = "24.1234",
-            longitude = "67.1234",
-        )
-    )
-
-    val departments = listOf(
-        Department(
-            id = 1,
-            universityId = 1,
-            title = "Computer Science",
-        )
-    )
-
+    val universities = viewModel.getUniversities().collectAsState(initial = emptyList()).value
+    val campuses = viewModel.getCampuses().collectAsState(initial = emptyList()).value
+    val departments = viewModel.getDepartments().collectAsState(initial = emptyList()).value
     val genders = listOf(
         UserGender.Male,
         UserGender.Female,
@@ -85,39 +57,61 @@ fun EnrollmentScreen() {
                 label = "University",
                 options = universities,
                 itemToString = { it.title },
-                onItemSelected = { /* Handle item selection */ },
+                onItemSelected = {
+                    viewModel.onEvent(EnrollmentFormEvent.UniversityChanged(it.id))
+                },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                supportingText = state.universityIdError,
+                isError = state.universityIdError != null,
             )
             SheetSelector(
                 label = "Campus",
                 options = campuses,
                 itemToString = { it.title },
-                onItemSelected = { /* Handle item selection */ },
+                onItemSelected = {
+                    viewModel.onEvent(EnrollmentFormEvent.CampusChanged(it.id))
+                },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                supportingText = state.campusIdError,
+                isError = state.campusIdError != null,
             )
             SheetSelector(
                 label = "Department",
                 options = departments,
                 itemToString = { it.title },
-                onItemSelected = { /* Handle item selection */ },
+                onItemSelected = {
+                    viewModel.onEvent(EnrollmentFormEvent.DepartmentChanged(it.id))
+                },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                supportingText = state.departmentIdError,
+                isError = state.departmentIdError != null,
             )
             SheetSelector(
                 label = "Gender",
                 options = genders,
                 itemToString = { it.name },
-                onItemSelected = { /* Handle item selection */ },
+                onItemSelected = {
+                    viewModel.onEvent(EnrollmentFormEvent.GenderChanged(it))
+                },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                supportingText = state.genderError,
+                isError = state.genderError != null,
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.rollNo,
+                onValueChange = {
+                    viewModel.onEvent(EnrollmentFormEvent.RollNoChanged(it))
+                },
                 label = {
                     Text(text = "Roll No")
                 },
-                supportingText = { /* Handle error */ },
-                isError = false,
-                modifier = Modifier.fillMaxWidth(0.8f).focusRequester(focusRequester),
+                supportingText = {
+                    if (state.rollNoError != null) {
+                        Text(text = state.rollNoError)
+                    }
+                },
+                isError = state.rollNoError != null,
+                modifier = Modifier.fillMaxWidth(0.8f),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
@@ -131,14 +125,20 @@ fun EnrollmentScreen() {
             )
             DateSelector(
                 label = "Date of Birth",
-                onDateSelected = { /* Handle date selection */ },
+                onDateSelected = {
+                    viewModel.onEvent(EnrollmentFormEvent.DobChanged(it))
+                },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                supportingText = state.dobError,
+                isError = state.dobError != null,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Button(
                 modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
                 shape = RoundedCornerShape(8.dp),
-                onClick = { /* Handle submit */ },
+                onClick = {
+                    viewModel.onEvent(EnrollmentFormEvent.Submit(studentId = 1))
+                },
             ) {
                 Text(text = "Submit")
             }
