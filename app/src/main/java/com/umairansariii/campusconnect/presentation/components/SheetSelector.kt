@@ -19,6 +19,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,10 @@ fun <T> SheetSelector(
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false,
     )
+
+    LaunchedEffect(options) {
+        selectedItem = null
+    }
 
     Column(
         modifier = modifier
