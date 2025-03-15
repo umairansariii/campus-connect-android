@@ -27,7 +27,7 @@ import java.util.Locale
 @Composable
 fun DateSelector(
     label: String,
-    onDateSelected: (Long?) -> Unit,
+    onDateSelected: (Date) -> Unit,
     modifier: Modifier = Modifier,
     supportingText: String? = null,
     isError: Boolean = false,
@@ -72,8 +72,10 @@ fun DateSelector(
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            selectedDateMillis = datePickerState.selectedDateMillis
-                            onDateSelected(datePickerState.selectedDateMillis)
+                            datePickerState.selectedDateMillis?.let { millis ->
+                                selectedDateMillis = millis
+                                onDateSelected(Date(millis))
+                            }
                             showDialog = false
                         }
                     ) {
