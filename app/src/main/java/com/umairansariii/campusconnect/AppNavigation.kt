@@ -13,9 +13,11 @@ import androidx.navigation.compose.rememberNavController
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
+import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
 import com.umairansariii.campusconnect.presentation.screens.LoginScreen
 import com.umairansariii.campusconnect.presentation.screens.RegisterScreen
 import com.umairansariii.campusconnect.presentation.screens.StudentScreen
+import com.umairansariii.campusconnect.presentation.screens.UniversityScreen
 
 @Composable
 fun AppNavigation() {
@@ -37,7 +39,7 @@ fun AppNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             navigation(
-                route = "auth", startDestination = "register"
+                route = "auth", startDestination = "enrollment"
             ) {
                 composable(route = "login") {
                     LoginScreen()
@@ -45,12 +47,15 @@ fun AppNavigation() {
                 composable(route = "register") {
                     RegisterScreen()
                 }
+                composable(route = "enrollment") {
+                    EnrollmentScreen()
+                }
             }
             navigation(
                 route = "app", startDestination = "home"
             ) {
                 composable(route = "home") {
-                    StudentScreen()
+                    UniversityScreen()
                 }
             }
         }
