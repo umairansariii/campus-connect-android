@@ -19,13 +19,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.umairansariii.campusconnect.presentation.components.UniversityCard
 import com.umairansariii.campusconnect.presentation.dialogs.UniversityDialog
 import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
 import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 
 @Composable
-fun UniversityScreen() {
+fun UniversityScreen(navController: NavController) {
     val viewModel: UniversityViewModel = hiltViewModel()
     val state = viewModel.state
     val universities by viewModel.getUniversitiesByAdmin().collectAsState(initial = emptyList())

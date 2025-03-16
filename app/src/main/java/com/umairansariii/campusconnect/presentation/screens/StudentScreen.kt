@@ -16,13 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.umairansariii.campusconnect.presentation.components.StudentCard
 import com.umairansariii.campusconnect.presentation.dialogs.StudentApproveDialog
 import com.umairansariii.campusconnect.presentation.dialogs.StudentUpdateDialog
 import com.umairansariii.campusconnect.presentation.dialogs.StudentViewDialog
 
 @Composable
-fun StudentScreen() {
+fun StudentScreen(navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {

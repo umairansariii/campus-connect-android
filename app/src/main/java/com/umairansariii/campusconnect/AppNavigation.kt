@@ -16,6 +16,7 @@ import com.umairansariii.campusconnect.presentation.components.BottomNavigationB
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
+import com.umairansariii.campusconnect.presentation.screens.HomeScreen
 import com.umairansariii.campusconnect.presentation.screens.LoginScreen
 import com.umairansariii.campusconnect.presentation.screens.RegisterScreen
 import com.umairansariii.campusconnect.presentation.screens.StudentScreen
@@ -27,7 +28,9 @@ fun AppNavigation() {
 
     Scaffold(
         topBar = {
-//            TopNavigationBar()
+            if (shouldShowTopBar(navController = navController)) {
+                TopNavigationBar(navController = navController)
+            }
         },
         bottomBar = {
             if (shouldShowBottomBar(navController = navController)) {
@@ -37,7 +40,7 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = "auth",
+            startDestination = "app",
             modifier = Modifier.padding(innerPadding)
         ) {
             navigation(
@@ -64,7 +67,13 @@ fun AppNavigation() {
                 route = "app", startDestination = "home"
             ) {
                 composable(route = "home") {
-                    UniversityScreen()
+                    HomeScreen(navController = navController)
+                }
+                composable(route = "university") {
+                    UniversityScreen(navController = navController)
+                }
+                composable(route = "student") {
+                    StudentScreen(navController = navController)
                 }
             }
         }
@@ -74,5 +83,18 @@ fun AppNavigation() {
 @Composable
 fun shouldShowBottomBar(navController: NavController): Boolean {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-    return currentRoute in listOf("home")
+    return currentRoute in listOf(
+        "home",
+        "university",
+        "student",
+    )
+}
+
+@Composable
+fun shouldShowTopBar(navController: NavController): Boolean {
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    return currentRoute in listOf(
+        "university",
+        "student",
+    )
 }
