@@ -16,7 +16,9 @@ import com.umairansariii.campusconnect.domain.usecase.ValidateNull
 import com.umairansariii.campusconnect.presentation.events.EnrollmentFormEvent
 import com.umairansariii.campusconnect.presentation.states.EnrollmentFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -28,6 +30,9 @@ class EnrollmentViewModel @Inject constructor(
     private val validateNull = ValidateNull()
     private val validateEmpty = ValidateEmpty()
     var state by mutableStateOf(EnrollmentFormState())
+
+    private val _validationEventChannel = Channel<ValidationEvent>()
+    val validationEvents = _validationEventChannel.receiveAsFlow()
 
     fun getUniversities(): Flow<List<University>> {
         return enrollmentDao.getUniversities()
@@ -121,6 +126,8 @@ class EnrollmentViewModel @Inject constructor(
                     gender = state.gender?:UserGender.Male,
                 )
             )
+
+            _validationEventChannel.send(ValidationEvent.Success)
         }
 
         state = state.copy(
@@ -137,5 +144,9 @@ class EnrollmentViewModel @Inject constructor(
             dob = null,
             dobError = null,
         )
+    }
+
+    sealed class ValidationEvent {
+        object Success: ValidationEvent()
     }
 }

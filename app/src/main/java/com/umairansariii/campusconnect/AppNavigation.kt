@@ -57,7 +57,7 @@ fun AppNavigation() {
                 ) { backStackEntry ->
                     val userId = backStackEntry.arguments?.getLong("userId") ?: -1L
 
-                    EnrollmentScreen(userId = userId)
+                    EnrollmentScreen(userId = userId, navController = navController)
                 }
             }
             navigation(
