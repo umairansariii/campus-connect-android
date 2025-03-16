@@ -15,11 +15,13 @@ import androidx.navigation.navArgument
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
+import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
 import com.umairansariii.campusconnect.presentation.screens.HomeScreen
 import com.umairansariii.campusconnect.presentation.screens.LoginScreen
 import com.umairansariii.campusconnect.presentation.screens.RegisterScreen
 import com.umairansariii.campusconnect.presentation.screens.StudentScreen
+import com.umairansariii.campusconnect.presentation.screens.UniversityDetailScreen
 import com.umairansariii.campusconnect.presentation.screens.UniversityScreen
 
 @Composable
@@ -72,6 +74,36 @@ fun AppNavigation() {
                 composable(route = "university") {
                     UniversityScreen(navController = navController)
                 }
+                composable(
+                    route = "university-detail/{universityId}",
+                    arguments = listOf(
+                        navArgument(name = "universityId") { type = NavType.IntType }
+                    )
+                ) { backStackEntry ->
+                    val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+                    UniversityDetailScreen(universityId = universityId, navController = navController)
+                }
+                composable(
+                    route = "campus/{universityId}",
+                    arguments = listOf(
+                        navArgument(name = "universityId") { type = NavType.IntType }
+                    )
+                ) { backStackEntry ->
+                    val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+                    CampusScreen(universityId = universityId)
+                }
+                composable(
+                    route = "department/{universityId}",
+                    arguments = listOf(
+                        navArgument(name = "universityId") { type = NavType.IntType }
+                    )
+                ) { backStackEntry ->
+                    val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+                    DepartmentScreen(universityId = universityId)
+                }
                 composable(route = "student") {
                     StudentScreen(navController = navController)
                 }
@@ -86,6 +118,9 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
     return currentRoute in listOf(
         "home",
         "university",
+        "university-detail/{universityId}",
+        "campus/{universityId}",
+        "department/{universityId}",
         "student",
     )
 }
@@ -95,6 +130,9 @@ fun shouldShowTopBar(navController: NavController): Boolean {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     return currentRoute in listOf(
         "university",
+        "university-detail/{universityId}",
+        "campus/{universityId}",
+        "department/{universityId}",
         "student",
     )
 }
