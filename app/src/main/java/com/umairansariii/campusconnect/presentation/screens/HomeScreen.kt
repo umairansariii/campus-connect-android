@@ -48,7 +48,7 @@ fun HomeScreen(navController: NavController) {
                         fontSize = 20.sp,
                     )
                     Text(
-                        text = "Only admin can manage universities, this feature is temporarily available for testing.",
+                        text = "Only admin can manage universities, this feature is temporarily enabled for testing.",
                         color = MaterialTheme.colorScheme.secondary,
                     )
                     Row(
@@ -81,7 +81,7 @@ fun HomeScreen(navController: NavController) {
                         fontSize = 20.sp,
                     )
                     Text(
-                        text = "Only admin can manage students, this feature is temporarily available for testing.",
+                        text = "Only admin can manage students, this feature is temporarily enabled for testing.",
                         color = MaterialTheme.colorScheme.secondary,
                     )
                     Row(
