@@ -28,7 +28,6 @@ import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 @Composable
 fun UniversityScreen(navController: NavController) {
     val viewModel: UniversityViewModel = hiltViewModel()
-    val state = viewModel.state
     val universities by viewModel.getUniversitiesByAdmin().collectAsState(initial = emptyList())
 
     Scaffold(
@@ -52,7 +51,7 @@ fun UniversityScreen(navController: NavController) {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 items(universities) { university ->
-                    UniversityCard(university)
+                    UniversityCard(university, navController)
                 }
             }
             UniversityDialog()
