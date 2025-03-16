@@ -15,15 +15,18 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.umairansariii.campusconnect.data.local.enums.UserGender
 import com.umairansariii.campusconnect.presentation.components.DateSelector
 import com.umairansariii.campusconnect.presentation.components.SheetSelector
@@ -31,10 +34,11 @@ import com.umairansariii.campusconnect.presentation.events.EnrollmentFormEvent
 import com.umairansariii.campusconnect.viewmodel.EnrollmentViewModel
 
 @Composable
-fun EnrollmentScreen() {
+fun EnrollmentScreen(userId: Long, navController: NavController) {
     val viewModel: EnrollmentViewModel = hiltViewModel()
     val state = viewModel.state
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
 
     val universities = viewModel.getUniversities().collectAsState(initial = emptyList()).value
     val campuses = viewModel.getCampuses().collectAsState(initial = emptyList()).value
@@ -43,6 +47,17 @@ fun EnrollmentScreen() {
         UserGender.Male,
         UserGender.Female,
     )
+
+    LaunchedEffect(key1 = context) {
+        viewModel.validationEvents.collect { event ->
+            when(event) {
+                is EnrollmentViewModel.ValidationEvent.Success -> {
+                    focusManager.clearFocus()
+                    navController.navigate("app")
+                }
+            }
+        }
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -137,7 +152,7 @@ fun EnrollmentScreen() {
                 modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
-                    viewModel.onEvent(EnrollmentFormEvent.Submit(studentId = 1))
+                    viewModel.onEvent(EnrollmentFormEvent.Submit(studentId = userId))
                 },
             ) {
                 Text(text = "Submit")

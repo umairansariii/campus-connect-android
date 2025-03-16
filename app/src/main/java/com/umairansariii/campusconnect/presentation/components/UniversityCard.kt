@@ -32,13 +32,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.umairansariii.campusconnect.R
 import com.umairansariii.campusconnect.data.local.entities.University
 import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
 import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 
 @Composable
-fun UniversityCard(university: University) {
+fun UniversityCard(university: University, navController: NavController) {
     val viewModel: UniversityViewModel = hiltViewModel()
 
     Card(
@@ -49,7 +50,7 @@ fun UniversityCard(university: University) {
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Row(
                 Modifier.fillMaxWidth(),
@@ -106,7 +107,9 @@ fun UniversityCard(university: University) {
                 }
                 Spacer(modifier = Modifier.width(10.dp))
                 Button(
-                    onClick = { /* Handle click */ },
+                    onClick = {
+                        navController.navigate("university-detail/${university.id}")
+                    },
                 ) {
                     Text(text = "Manage")
                 }

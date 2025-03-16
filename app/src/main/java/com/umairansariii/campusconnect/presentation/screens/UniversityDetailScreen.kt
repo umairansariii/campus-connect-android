@@ -17,13 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun UniversityDetailScreen(universityId: Int, navController: NavController) {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -33,22 +32,7 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "Campus Connect",
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-            )
             Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Welcome to Campus Connect, a platform to connect students and universities, this project is developed by Muhammad Umair (BC210402929).",
-                color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -60,12 +44,8 @@ fun HomeScreen(navController: NavController) {
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     Text(
-                        text = "Manage University",
+                        text = "Manage Campuses",
                         fontSize = 20.sp,
-                    )
-                    Text(
-                        text = "Only admin can manage universities, this feature is temporarily enabled for testing.",
-                        color = MaterialTheme.colorScheme.secondary,
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -73,7 +53,7 @@ fun HomeScreen(navController: NavController) {
                     ) {
                         Button(
                             onClick = {
-                                navController.navigate("university")
+                                navController.navigate("campus/$universityId")
                             }
                         ) {
                             Text(text = "Manage")
@@ -93,12 +73,8 @@ fun HomeScreen(navController: NavController) {
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     Text(
-                        text = "Manage Students",
+                        text = "Manage Departments",
                         fontSize = 20.sp,
-                    )
-                    Text(
-                        text = "Only admin can manage students, this feature is temporarily enabled for testing.",
-                        color = MaterialTheme.colorScheme.secondary,
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -106,7 +82,7 @@ fun HomeScreen(navController: NavController) {
                     ) {
                         Button(
                             onClick = {
-                                navController.navigate("student")
+                                navController.navigate("department/$universityId")
                             }
                         ) {
                             Text(text = "Manage")
