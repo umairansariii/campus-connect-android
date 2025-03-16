@@ -31,9 +31,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     val focusRequester = remember {
         FocusRequester()
     }
@@ -106,7 +107,9 @@ fun LoginScreen() {
                 modifier = Modifier.fillMaxWidth(0.4f)
             )
             TextButton(
-                onClick = { /* Handle register */ },
+                onClick = {
+                    navController.navigate("register")
+                },
             ) {
                 Text(text = "Don't have an account? Register")
             }
