@@ -29,10 +29,10 @@ import com.umairansariii.campusconnect.presentation.events.DepartmentFormEvent
 import com.umairansariii.campusconnect.viewmodel.DepartmentViewModel
 
 @Composable
-fun DepartmentScreen() {
+fun DepartmentScreen(universityId: Int) {
     val viewModel: DepartmentViewModel = hiltViewModel()
     val state = viewModel.state
-    val departments by viewModel.getDepartmentsByUniversity().collectAsState(initial = emptyList())
+    val departments by viewModel.getDepartmentsByUniversity(universityId).collectAsState(initial = emptyList())
 
     Scaffold(
         floatingActionButton = {
@@ -71,7 +71,7 @@ fun DepartmentScreen() {
                     DepartmentCard(department)
                 }
             }
-            DepartmentDialog()
+            DepartmentDialog(universityId = universityId)
         }
     }
 }

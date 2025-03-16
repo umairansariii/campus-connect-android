@@ -22,8 +22,8 @@ class DepartmentViewModel @Inject constructor(
     private val validateEmptyAlpha = ValidateEmptyAlpha()
     var state by mutableStateOf(DepartmentFormState())
 
-    fun getDepartmentsByUniversity(): Flow<List<Department>> {
-        return departmentDao.getDepartmentsByUniversity(1, state.departmentQuery)
+    fun getDepartmentsByUniversity(universityId: Int): Flow<List<Department>> {
+        return departmentDao.getDepartmentsByUniversity(universityId, state.departmentQuery)
     }
 
     fun onEvent(event: DepartmentFormEvent) {
