@@ -26,8 +26,8 @@ class CampusViewModel @Inject constructor(
     private val validateEmpty = ValidateEmpty()
     var state by mutableStateOf(CampusFormState())
 
-    fun getCampusesByUniversity(): Flow<List<Campus>> {
-        return campusDao.getCampusesByUniversity(1, state.campusQuery)
+    fun getCampusesByUniversity(universityId: Int): Flow<List<Campus>> {
+        return campusDao.getCampusesByUniversity(universityId, state.campusQuery)
     }
 
     fun onEvent(event: CampusFormEvent) {

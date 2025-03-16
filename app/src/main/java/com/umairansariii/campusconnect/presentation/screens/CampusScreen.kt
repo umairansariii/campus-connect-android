@@ -29,10 +29,10 @@ import com.umairansariii.campusconnect.presentation.events.CampusFormEvent
 import com.umairansariii.campusconnect.viewmodel.CampusViewModel
 
 @Composable
-fun CampusScreen() {
+fun CampusScreen(universityId: Int) {
     val viewModel: CampusViewModel = hiltViewModel()
     val state = viewModel.state
-    val campuses by viewModel.getCampusesByUniversity().collectAsState(initial = emptyList())
+    val campuses by viewModel.getCampusesByUniversity(universityId).collectAsState(initial = emptyList())
 
     Scaffold(
         floatingActionButton = {
@@ -71,7 +71,7 @@ fun CampusScreen() {
                     CampusCard(campus)
                 }
             }
-            CampusDialog()
+            CampusDialog(universityId = universityId)
         }
     }
 }
