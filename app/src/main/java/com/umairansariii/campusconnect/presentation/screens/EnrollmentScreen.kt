@@ -31,7 +31,7 @@ import com.umairansariii.campusconnect.presentation.events.EnrollmentFormEvent
 import com.umairansariii.campusconnect.viewmodel.EnrollmentViewModel
 
 @Composable
-fun EnrollmentScreen() {
+fun EnrollmentScreen(userId: Long) {
     val viewModel: EnrollmentViewModel = hiltViewModel()
     val state = viewModel.state
     val focusManager = LocalFocusManager.current
@@ -137,7 +137,7 @@ fun EnrollmentScreen() {
                 modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
-                    viewModel.onEvent(EnrollmentFormEvent.Submit(studentId = 1))
+                    viewModel.onEvent(EnrollmentFormEvent.Submit(studentId = userId))
                 },
             ) {
                 Text(text = "Submit")

@@ -80,7 +80,7 @@ class EnrollmentViewModel @Inject constructor(
         }
     }
 
-    private fun submit(studentId: Int) {
+    private fun submit(studentId: Long) {
         val universityResult = validateNull.execute(value = state.universityId, fieldName = "University")
         val campusResult = validateNull.execute(value = state.campusId, fieldName = "Campus")
         val departmentResult = validateNull.execute(value = state.departmentId, fieldName = "Department")
@@ -112,7 +112,7 @@ class EnrollmentViewModel @Inject constructor(
         viewModelScope.launch {
             enrollmentDao.insertEnrollment(
                 Enrollment(
-                    studentId = studentId,
+                    studentId = studentId.toInt(),
                     universityId = state.universityId?:0,
                     campusId = state.campusId?:0,
                     departmentId = state.departmentId?:0,
