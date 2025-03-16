@@ -16,6 +16,8 @@ import com.umairansariii.campusconnect.domain.usecase.ValidateRepeatedPassword
 import com.umairansariii.campusconnect.presentation.events.RegisterFormEvent
 import com.umairansariii.campusconnect.presentation.states.RegisterFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -29,6 +31,9 @@ class RegisterViewModel @Inject constructor (
     private val validatePassword = ValidatePassword()
     private val validateRepeatedPassword = ValidateRepeatedPassword()
     var state by mutableStateOf(RegisterFormState())
+
+    private val _validationEventChannel = Channel<ValidationEvent>()
+    val validationEvents = _validationEventChannel.receiveAsFlow()
 
     fun onEvent(event: RegisterFormEvent) {
         when(event) {
@@ -85,7 +90,7 @@ class RegisterViewModel @Inject constructor (
         }
 
         viewModelScope.launch {
-            userDao.insertUser(
+            val userId = userDao.insertUser(
                 User(
                     createdAt = Date(),
                     firstName = state.firstName,
@@ -96,6 +101,8 @@ class RegisterViewModel @Inject constructor (
                     status = UserStatus.PENDING
                 )
             )
+
+            _validationEventChannel.send(ValidationEvent.Success(userId))
         }
 
         state = state.copy(
@@ -110,5 +117,9 @@ class RegisterViewModel @Inject constructor (
             repeatedPassword = "",
             repeatedPasswordError = null,
         )
+    }
+
+    sealed class ValidationEvent {
+        data class Success(val userId: Long): ValidationEvent()
     }
 }

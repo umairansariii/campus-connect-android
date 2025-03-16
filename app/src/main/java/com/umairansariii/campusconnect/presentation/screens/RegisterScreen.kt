@@ -20,29 +20,45 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.umairansariii.campusconnect.presentation.events.RegisterFormEvent
 import com.umairansariii.campusconnect.viewmodel.RegisterViewModel
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(navController: NavController) {
     val viewModel: RegisterViewModel = hiltViewModel()
     val state = viewModel.state
     val focusRequester = remember {
         FocusRequester()
     }
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = context) {
+        // focusRequester.requestFocus()
+        viewModel.validationEvents.collect { event ->
+            when(event) {
+                is RegisterViewModel.ValidationEvent.Success -> {
+                    focusManager.clearFocus()
+                    navController.navigate("enrollment/${event.userId}")
+                }
+            }
+        }
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -206,7 +222,9 @@ fun RegisterScreen() {
                 modifier = Modifier.fillMaxWidth(0.4f)
             )
             TextButton(
-                onClick = { /* Handle navigation */ }
+                onClick = {
+                    navController.navigate("login")
+                }
             ) {
                 Text(text = "Already have an account? Login")
             }
