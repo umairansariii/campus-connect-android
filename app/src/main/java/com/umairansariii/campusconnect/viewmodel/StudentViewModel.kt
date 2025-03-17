@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.StudentDao
 import com.umairansariii.campusconnect.data.local.dto.UserStudent
+import com.umairansariii.campusconnect.data.local.entities.Academic
 import com.umairansariii.campusconnect.data.local.entities.User
 import com.umairansariii.campusconnect.data.local.enums.UserStatus
 import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
@@ -42,6 +43,8 @@ class StudentViewModel @Inject constructor(
                         departmentName = enrolledStudent.departmentName,
                         campusName = enrolledStudent.campusName,
                         rollNo = enrolledStudent.rollNo,
+                        cgpa = enrolledStudent.cgpa,
+                        semester = enrolledStudent.semester,
                         dob = enrolledStudent.dob,
                         gender = enrolledStudent.gender,
                     )
@@ -60,6 +63,8 @@ class StudentViewModel @Inject constructor(
                     departmentName = "",
                     campusName = "",
                     rollNo = "",
+                    cgpa = null,
+                    semester = null,
                     dob = null,
                     gender = null,
                 )
@@ -104,6 +109,14 @@ class StudentViewModel @Inject constructor(
                     password = student.password,
                     role = student.role,
                     status = UserStatus.ACTIVE,
+                )
+            )
+
+            studentDao.insertAcademic(
+                Academic(
+                    enrollmentId = student.enrollmentId,
+                    cgpa = 0.0,
+                    semester = 0,
                 )
             )
         }
