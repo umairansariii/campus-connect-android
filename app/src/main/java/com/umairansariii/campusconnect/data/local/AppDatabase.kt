@@ -10,6 +10,7 @@ import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
 import com.umairansariii.campusconnect.data.local.dao.StudentDao
 import com.umairansariii.campusconnect.data.local.dao.UniversityDao
 import com.umairansariii.campusconnect.data.local.dao.UserDao
+import com.umairansariii.campusconnect.data.local.entities.Academic
 import com.umairansariii.campusconnect.data.local.entities.Campus
 import com.umairansariii.campusconnect.data.local.entities.Department
 import com.umairansariii.campusconnect.data.local.entities.Enrollment
@@ -21,6 +22,7 @@ import com.umairansariii.campusconnect.data.local.entities.User
     entities = [
         User::class,
         Enrollment::class,
+        Academic::class,
         University::class,
         Department::class,
         Campus::class,
