@@ -104,8 +104,15 @@ fun AppNavigation() {
 
                     DepartmentScreen(universityId = universityId)
                 }
-                composable(route = "student") {
-                    StudentScreen(navController = navController)
+                composable(
+                    route = "student/{universityId}",
+                    arguments = listOf(
+                        navArgument(name = "universityId") { type = NavType.IntType }
+                    )
+                ) { backStackEntry ->
+                    val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+                    StudentScreen(universityId = universityId, navController = navController)
                 }
             }
         }
@@ -121,7 +128,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "university-detail/{universityId}",
         "campus/{universityId}",
         "department/{universityId}",
-        "student",
+        "student/{universityId}",
     )
 }
 
@@ -133,6 +140,6 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "university-detail/{universityId}",
         "campus/{universityId}",
         "department/{universityId}",
-        "student",
+        "student/{universityId}",
     )
 }
