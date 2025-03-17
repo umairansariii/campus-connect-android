@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.data.local.dto.UserStudent
+import com.umairansariii.campusconnect.data.local.enums.UserStatus
 import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
 import com.umairansariii.campusconnect.viewmodel.StudentViewModel
 
@@ -60,12 +61,14 @@ fun StudentCard(student: UserStudent) {
                 )
             }
             Row {
-                SuggestionChip(
-                    onClick = { /* Do nothing */ },
-                    label = {
-                        Text("${student.status}", style = MaterialTheme.typography.bodySmall)
-                    }
-                )
+                if (student.status == UserStatus.PENDING) {
+                    SuggestionChip(
+                        onClick = { /* Do nothing */ },
+                        label = {
+                            Text("${student.status}", style = MaterialTheme.typography.bodySmall)
+                        }
+                    )
+                }
                 Box {
                     IconButton(onClick = { expanded = !expanded }) {
                         Icon(Icons.Filled.MoreVert, contentDescription = "student-options-icon")
@@ -80,13 +83,15 @@ fun StudentCard(student: UserStudent) {
                                 viewModel.onEvent(StudentFormEvent.ShowViewDialog(id = student.id))
                             },
                         )
-                        DropdownMenuItem(
-                            text = { Text(text = "Update") },
-                            onClick = {/* Handle click */},
-                        )
+//                        DropdownMenuItem(
+//                            text = { Text(text = "Update") },
+//                            onClick = {/* Handle click */},
+//                        )
                         DropdownMenuItem(
                             text = { Text(text = "Approve") },
-                            onClick = {/* Handle click */},
+                            onClick = {
+                                viewModel.onEvent(StudentFormEvent.ShowApproveDialog(id = student.id))
+                            },
                         )
                     }
                 }

@@ -1,13 +1,21 @@
 package com.umairansariii.campusconnect.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.umairansariii.campusconnect.data.local.dto.EnrolledStudent
 import com.umairansariii.campusconnect.data.local.dto.UserStudent
+import com.umairansariii.campusconnect.data.local.entities.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StudentDao {
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun approveStudent(user: User)
+
+    @Query("SELECT * FROM user WHERE user.id = :studentId")
+    suspend fun getStudentById(studentId: Int): User
 
     @Query("""
         SELECT

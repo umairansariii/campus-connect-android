@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.StudentDao
 import com.umairansariii.campusconnect.data.local.dto.UserStudent
+import com.umairansariii.campusconnect.data.local.entities.User
+import com.umairansariii.campusconnect.data.local.enums.UserStatus
 import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
 import com.umairansariii.campusconnect.presentation.states.StudentFromState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -63,14 +65,52 @@ class StudentViewModel @Inject constructor(
                 )
             }
 
-            is StudentFormEvent.DismissApproveDialog -> TODO()
+            is StudentFormEvent.ShowApproveDialog -> {
+                state = state.copy(
+                    showApproveDialog = true,
+                    showApproveDialogId = event.id,
+                )
+            }
+
+            is StudentFormEvent.DismissApproveDialog -> {
+                state = state.copy(
+                    showApproveDialog = false,
+                    showApproveDialogId = null,
+                )
+            }
             is StudentFormEvent.DismissUpdateDialog -> TODO()
-            is StudentFormEvent.ShowApproveDialog -> TODO()
             is StudentFormEvent.ShowUpdateDialog -> TODO()
             is StudentFormEvent.StudentCgpaChanged -> TODO()
             is StudentFormEvent.StudentSemesterChanged -> TODO()
-            is StudentFormEvent.SubmitApprove -> TODO()
             is StudentFormEvent.SubmitUpdate -> TODO()
+
+            is StudentFormEvent.SubmitApprove -> {
+                submitApprove(event.studentId)
+            }
         }
+    }
+
+    private fun submitApprove(studentId: Int) {
+        viewModelScope.launch {
+            val student = studentDao.getStudentById(studentId)
+
+            studentDao.approveStudent(
+                User(
+                    id = student.id,
+                    createdAt = student.createdAt,
+                    firstName = student.firstName,
+                    lastName = student.lastName,
+                    email = student.email,
+                    password = student.password,
+                    role = student.role,
+                    status = UserStatus.ACTIVE,
+                )
+            )
+        }
+
+        state = state.copy(
+            showApproveDialog = false,
+            showApproveDialogId = null,
+        )
     }
 }

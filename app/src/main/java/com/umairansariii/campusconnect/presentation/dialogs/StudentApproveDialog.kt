@@ -8,11 +8,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
+import com.umairansariii.campusconnect.viewmodel.StudentViewModel
 
 @Composable
 fun StudentApproveDialog() {
+    val viewModel: StudentViewModel = hiltViewModel()
+    val state = viewModel.state
 
-    if (false) {
+    if (state.showApproveDialog) {
         AlertDialog(
             icon = {
                 Icon(Icons.Outlined.Verified, contentDescription = "student-approve-card-icon")
@@ -24,17 +29,23 @@ fun StudentApproveDialog() {
                     textAlign = TextAlign.Center,
                 )
             },
-            onDismissRequest = { /* Handle dismiss */ },
+            onDismissRequest = {
+                viewModel.onEvent(StudentFormEvent.DismissApproveDialog())
+            },
             confirmButton = {
                 TextButton(
-                    onClick = { /* Handle click */ }
+                    onClick = {
+                        viewModel.onEvent(StudentFormEvent.SubmitApprove(state.showApproveDialogId?: -1))
+                    }
                 ) {
                     Text(text = "Confirm")
                 }
             },
             dismissButton = {
                 TextButton(
-                    onClick = { /* Handle click */ }
+                    onClick = {
+                        viewModel.onEvent(StudentFormEvent.DismissApproveDialog())
+                    }
                 ) {
                     Text(text = "Dismiss")
                 }

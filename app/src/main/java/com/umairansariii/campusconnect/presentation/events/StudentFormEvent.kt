@@ -10,5 +10,5 @@ sealed interface StudentFormEvent {
     data class StudentCgpaChanged(val studentCgpa: Double): StudentFormEvent
     data class StudentSemesterChanged(val studentSemester: Int): StudentFormEvent
     data class SubmitUpdate(val universityId: Int): StudentFormEvent
-    data class SubmitApprove(val universityId: Int): StudentFormEvent
+    data class SubmitApprove(val studentId: Int): StudentFormEvent
 }
