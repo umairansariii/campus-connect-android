@@ -82,12 +82,37 @@ fun HomeScreen(navController: NavController) {
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
-            Button(
-                onClick = {
-                    navController.navigate("register")
-                }
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                ),
             ) {
-                Text(text = "Test Register")
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    Text(
+                        text = "Register Student",
+                        fontSize = 20.sp,
+                    )
+                    Text(
+                        text = "Authentication is under development, this feature is temporarily enabled for testing.",
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
+                    ) {
+                        Button(
+                            onClick = {
+                                navController.navigate("register")
+                            }
+                        ) {
+                            Text(text = "Test Register")
+                        }
+                    }
+                }
             }
         }
     }
