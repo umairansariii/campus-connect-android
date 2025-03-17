@@ -81,6 +81,14 @@ fun HomeScreen(navController: NavController) {
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(10.dp))
+            Button(
+                onClick = {
+                    navController.navigate("register")
+                }
+            ) {
+                Text(text = "Test Register")
+            }
         }
     }
 }

@@ -27,9 +27,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.data.local.dto.UserStudent
+import com.umairansariii.campusconnect.data.local.enums.UserStatus
+import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
+import com.umairansariii.campusconnect.viewmodel.StudentViewModel
 
 @Composable
-fun StudentCard() {
+fun StudentCard(student: UserStudent) {
+    val viewModel: StudentViewModel = hiltViewModel()
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -47,20 +53,22 @@ fun StudentCard() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column {
-                Text(text = "Muhammad Umair")
+                Text(text = "${student.firstName} ${student.lastName}")
                 Text(
-                    text = "BC210402929",
+                    text = student.rollNo,
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
             Row {
-                SuggestionChip(
-                    onClick = { /* Handle click */ },
-                    label = {
-                        Text("Pending", style = MaterialTheme.typography.bodySmall)
-                    }
-                )
+                if (student.status == UserStatus.PENDING) {
+                    SuggestionChip(
+                        onClick = { /* Do nothing */ },
+                        label = {
+                            Text("${student.status}", style = MaterialTheme.typography.bodySmall)
+                        }
+                    )
+                }
                 Box {
                     IconButton(onClick = { expanded = !expanded }) {
                         Icon(Icons.Filled.MoreVert, contentDescription = "student-options-icon")
@@ -71,16 +79,22 @@ fun StudentCard() {
                     ) {
                         DropdownMenuItem(
                             text = { Text(text = "View") },
-                            onClick = {/* Handle click */},
+                            onClick = {
+                                viewModel.onEvent(StudentFormEvent.ShowViewDialog(id = student.id))
+                            },
                         )
-                        DropdownMenuItem(
-                            text = { Text(text = "Update") },
-                            onClick = {/* Handle click */},
-                        )
-                        DropdownMenuItem(
-                            text = { Text(text = "Approve") },
-                            onClick = {/* Handle click */},
-                        )
+//                        DropdownMenuItem(
+//                            text = { Text(text = "Update") },
+//                            onClick = {/* Handle click */},
+//                        )
+                        if (student.status == UserStatus.PENDING) {
+                            DropdownMenuItem(
+                                text = { Text(text = "Approve") },
+                                onClick = {
+                                    viewModel.onEvent(StudentFormEvent.ShowApproveDialog(id = student.id))
+                                },
+                            )
+                        }
                     }
                 }
             }

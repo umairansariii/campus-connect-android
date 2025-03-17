@@ -7,6 +7,7 @@ import com.umairansariii.campusconnect.data.local.converters.DateConverter
 import com.umairansariii.campusconnect.data.local.dao.CampusDao
 import com.umairansariii.campusconnect.data.local.dao.DepartmentDao
 import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
+import com.umairansariii.campusconnect.data.local.dao.StudentDao
 import com.umairansariii.campusconnect.data.local.dao.UniversityDao
 import com.umairansariii.campusconnect.data.local.dao.UserDao
 import com.umairansariii.campusconnect.data.local.entities.Campus
@@ -33,4 +34,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun universityDao(): UniversityDao
     abstract fun departmentDao(): DepartmentDao
     abstract fun campusDao(): CampusDao
+    abstract fun studentDao(): StudentDao
 }
