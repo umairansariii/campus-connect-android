@@ -23,7 +23,7 @@ import com.umairansariii.campusconnect.presentation.dialogs.StudentUpdateDialog
 import com.umairansariii.campusconnect.presentation.dialogs.StudentViewDialog
 
 @Composable
-fun StudentScreen(navController: NavController) {
+fun StudentScreen(universityId: Int, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
