@@ -11,20 +11,21 @@ data class StudentFromState (
     val showUpdateDialogId: Int? = null,
     val showApproveDialog: Boolean = false,
     val showApproveDialogId: Int? = null,
-    // Enrolled Student Data
+    // Student Data
     val firstName: String = "",
     val lastName: String = "",
     val email: String = "",
     val status: UserStatus? = null,
+    // Enrollment Data
     val universityName: String = "",
     val departmentName: String = "",
     val campusName: String = "",
     val rollNo: String = "",
     val dob: Date? = null,
     val gender: UserGender? = null,
-    // Academic Student Data
-    val cgpa: Double = 0.0,
+    // Academic Data
+    val cgpa: Double? = null,
     val cgpaError: String? = null,
-    val semester: Int? = 1,
+    val semester: Int? = null,
     val semesterError: String? = null,
 )
