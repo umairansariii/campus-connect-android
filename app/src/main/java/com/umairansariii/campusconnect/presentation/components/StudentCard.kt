@@ -87,12 +87,14 @@ fun StudentCard(student: UserStudent) {
 //                            text = { Text(text = "Update") },
 //                            onClick = {/* Handle click */},
 //                        )
-                        DropdownMenuItem(
-                            text = { Text(text = "Approve") },
-                            onClick = {
-                                viewModel.onEvent(StudentFormEvent.ShowApproveDialog(id = student.id))
-                            },
-                        )
+                        if (student.status == UserStatus.PENDING) {
+                            DropdownMenuItem(
+                                text = { Text(text = "Approve") },
+                                onClick = {
+                                    viewModel.onEvent(StudentFormEvent.ShowApproveDialog(id = student.id))
+                                },
+                            )
+                        }
                     }
                 }
             }
