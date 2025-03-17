@@ -33,14 +33,14 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(40.dp))
             Text(
                 text = "Campus Connect",
                 style = MaterialTheme.typography.displaySmall,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = "Welcome to Campus Connect, a platform to connect students and universities, this project is developed by Muhammad Umair (BC210402929).",
                 color = MaterialTheme.colorScheme.secondary,
@@ -48,7 +48,7 @@ fun HomeScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(40.dp))
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -74,39 +74,6 @@ fun HomeScreen(navController: NavController) {
                         Button(
                             onClick = {
                                 navController.navigate("university")
-                            }
-                        ) {
-                            Text(text = "Manage")
-                        }
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                ),
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    Text(
-                        text = "Manage Students",
-                        fontSize = 20.sp,
-                    )
-                    Text(
-                        text = "Only admin can manage students, this feature is temporarily enabled for testing.",
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
-                    ) {
-                        Button(
-                            onClick = {
-                                navController.navigate("student")
                             }
                         ) {
                             Text(text = "Manage")
