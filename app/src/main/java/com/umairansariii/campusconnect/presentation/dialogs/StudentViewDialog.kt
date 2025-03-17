@@ -17,13 +17,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
+import com.umairansariii.campusconnect.viewmodel.StudentViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun StudentViewDialog() {
+    val viewModel: StudentViewModel = hiltViewModel()
+    val state = viewModel.state
 
-    if (false) {
+    if (state.showViewDialog) {
         Dialog(
-            onDismissRequest = { /* Handle dismiss */ }
+            onDismissRequest = {
+                viewModel.onEvent(StudentFormEvent.DismissViewDialog())
+            }
         ) {
             Surface(
                 modifier = Modifier.wrapContentSize(),
@@ -44,19 +53,19 @@ fun StudentViewDialog() {
                             style = MaterialTheme.typography.titleLarge,
                         )
                         SuggestionChip(
-                            onClick = { /* Handle click */ },
+                            onClick = { /* Do nothing */ },
                             label = {
-                                Text("Pending", style = MaterialTheme.typography.bodyMedium)
+                                Text("${state.status}", style = MaterialTheme.typography.bodyMedium)
                             }
                         )
                     }
                     Column {
                         Text(
-                            text = "Muhammad Umair",
+                            text = "${state.firstName} ${state.lastName}",
                             style = MaterialTheme.typography.titleMedium,
                         )
                         Text(
-                            text = "Dawood University of Technology and Engineering",
+                            text = state.universityName,
                             color = MaterialTheme.colorScheme.secondary,
                             style = MaterialTheme.typography.bodyMedium,
                         )
@@ -68,7 +77,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "Computer Science",
+                                text = state.departmentName,
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -79,7 +88,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "North Nazimabad Campus",
+                                text = state.campusName,
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -90,7 +99,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "BC210402929",
+                                text = state.rollNo,
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -101,7 +110,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "7",
+                                text = "${state.semester}",
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -112,7 +121,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "2.82",
+                                text = "${state.cgpa}",
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -125,7 +134,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "umairansari.work@gmail.com",
+                                text = state.email,
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -136,7 +145,9 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "06/02/2000",
+                                text = state.dob?.let { date ->
+                                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+                                } ?: "N/A",
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -147,7 +158,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "Male",
+                                text = "${state.gender}",
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -157,7 +168,9 @@ fun StudentViewDialog() {
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Button(
-                            onClick = { /* Handle click */ },
+                            onClick = {
+                                viewModel.onEvent(StudentFormEvent.DismissViewDialog())
+                            },
                             modifier = Modifier.fillMaxWidth().height(45.dp)
                         ) {
                             Text(text = "Close", style = MaterialTheme.typography.titleMedium)
