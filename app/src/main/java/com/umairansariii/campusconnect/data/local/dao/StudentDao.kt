@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.umairansariii.campusconnect.data.local.dto.AcademicStudent
 import com.umairansariii.campusconnect.data.local.dto.EnrolledStudent
 import com.umairansariii.campusconnect.data.local.dto.UserStudent
 import com.umairansariii.campusconnect.data.local.entities.Academic
@@ -17,7 +18,18 @@ interface StudentDao {
     suspend fun insertAcademic(academic: Academic)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateAcademic(academic: Academic)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun approveStudent(user: User)
+
+    @Query("""
+        SELECT u.id as userId, a.* FROM user u
+        JOIN enrollment e ON u.id = e.studentId
+        LEFT JOIN academic a ON e.id = a.enrollmentId
+        WHERE u.id = :studentId
+    """)
+    suspend fun getAcademicByStudentId(studentId: Int): AcademicStudent
 
     @Query("""
         SELECT u.*, e.id as enrollmentId, e.rollNo
