@@ -24,8 +24,8 @@ data class StudentFromState (
     val dob: Date? = null,
     val gender: UserGender? = null,
     // Academic Data
-    val cgpa: Double? = null,
+    val cgpa: String = "",
     val cgpaError: String? = null,
-    val semester: Int? = null,
+    val semester: String = "",
     val semesterError: String? = null,
 )

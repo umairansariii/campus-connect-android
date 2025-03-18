@@ -43,8 +43,8 @@ class StudentViewModel @Inject constructor(
                         departmentName = enrolledStudent.departmentName,
                         campusName = enrolledStudent.campusName,
                         rollNo = enrolledStudent.rollNo,
-                        cgpa = enrolledStudent.cgpa,
-                        semester = enrolledStudent.semester,
+                        cgpa = enrolledStudent.cgpa?.toString()?: "N/A",
+                        semester = enrolledStudent.semester?.toString()?: "N/A",
                         dob = enrolledStudent.dob,
                         gender = enrolledStudent.gender,
                     )
@@ -63,8 +63,8 @@ class StudentViewModel @Inject constructor(
                     departmentName = "",
                     campusName = "",
                     rollNo = "",
-                    cgpa = null,
-                    semester = null,
+                    cgpa = "",
+                    semester = "",
                     dob = null,
                     gender = null,
                 )
@@ -83,14 +83,44 @@ class StudentViewModel @Inject constructor(
                     showApproveDialogId = null,
                 )
             }
-            is StudentFormEvent.DismissUpdateDialog -> TODO()
-            is StudentFormEvent.ShowUpdateDialog -> TODO()
-            is StudentFormEvent.StudentCgpaChanged -> TODO()
-            is StudentFormEvent.StudentSemesterChanged -> TODO()
-            is StudentFormEvent.SubmitUpdate -> TODO()
+
+            is StudentFormEvent.ShowUpdateDialog -> {
+                viewModelScope.launch {
+                    val academic = studentDao.getAcademicByStudentId(event.id)
+                    state = state.copy(
+                        showUpdateDialog = true,
+                        showUpdateDialogId = event.id,
+                        semester = academic.semester.toString(),
+                        cgpa = academic.cgpa.toString(),
+                    )
+                }
+            }
+
+            is StudentFormEvent.DismissUpdateDialog -> {
+                state = state.copy(
+                    showUpdateDialog = false,
+                    showUpdateDialogId = null,
+                    semester = "",
+                    semesterError = null,
+                    cgpa = "",
+                    cgpaError = null,
+                )
+            }
+
+            is StudentFormEvent.StudentCgpaChanged -> {
+                state = state.copy(cgpa = event.studentCgpa, cgpaError = null)
+            }
+
+            is StudentFormEvent.StudentSemesterChanged -> {
+                state = state.copy(semester = event.studentSemester, semesterError = null)
+            }
 
             is StudentFormEvent.SubmitApprove -> {
                 submitApprove(event.studentId)
+            }
+
+            is StudentFormEvent.SubmitUpdate -> {
+                submitUpdate(event.studentId, state.cgpa, state.semester)
             }
         }
     }
@@ -124,6 +154,30 @@ class StudentViewModel @Inject constructor(
         state = state.copy(
             showApproveDialog = false,
             showApproveDialogId = null,
+        )
+    }
+
+    private fun submitUpdate(studentId: Int, cgpa: String, semester: String) {
+        viewModelScope.launch {
+            val academic = studentDao.getAcademicByStudentId(studentId)
+
+            studentDao.updateAcademic(
+                Academic(
+                    id = academic.id?:0,
+                    enrollmentId = academic.enrollmentId?:0,
+                    semester = semester.toInt(),
+                    cgpa = cgpa.toDouble(),
+                )
+            )
+        }
+
+        state = state.copy(
+            showUpdateDialog = false,
+            showUpdateDialogId = null,
+            cgpa = "",
+            cgpaError = null,
+            semester = "",
+            semesterError = null,
         )
     }
 }

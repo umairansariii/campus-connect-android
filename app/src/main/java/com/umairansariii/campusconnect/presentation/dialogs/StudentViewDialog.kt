@@ -110,7 +110,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = state.semester?.toString()?: "N/A",
+                                text = state.semester,
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -121,7 +121,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = state.cgpa?.toString()?: "N/A",
+                                text = state.cgpa,
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
