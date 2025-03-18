@@ -4,6 +4,6 @@ data class AcademicStudent (
     val userId: Int,
     val enrollmentId: Int?,
     val id: Int?,
-    val semester: String?,
-    val cgpa: String?,
+    val semester: Int?,
+    val cgpa: Double?,
 )
