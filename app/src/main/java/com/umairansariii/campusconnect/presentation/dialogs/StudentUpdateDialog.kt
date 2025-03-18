@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -14,15 +15,23 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
+import com.umairansariii.campusconnect.viewmodel.StudentViewModel
 
 @Composable
 fun StudentUpdateDialog() {
+    val viewModel: StudentViewModel = hiltViewModel()
+    val state = viewModel.state
 
-    if (false) {
+    if (state.showUpdateDialog) {
         Dialog(
-            onDismissRequest = { /* Handle dismiss */ }
+            onDismissRequest = {
+                viewModel.onEvent(StudentFormEvent.DismissUpdateDialog())
+            }
         ) {
             Surface(
                 modifier = Modifier.wrapContentSize(),
@@ -39,21 +48,39 @@ fun StudentUpdateDialog() {
                     )
                     Column {
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = { /* Handle change */ },
+                            value = state.cgpa,
+                            onValueChange = {
+                                viewModel.onEvent(StudentFormEvent.StudentCgpaChanged(it))
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Cgpa") },
-                            supportingText = { /* Handle error */ },
-                            isError = false,
+                            supportingText = {
+                                if (state.cgpaError != null) {
+                                    Text(text = state.cgpaError)
+                                }
+                            },
+                            isError = state.cgpaError != null,
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Decimal,
+                            ),
                             singleLine = true,
                         )
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = { /* Handle change */ },
+                            value = state.semester,
+                            onValueChange = {
+                                viewModel.onEvent(StudentFormEvent.StudentSemesterChanged(it))
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Semester") },
-                            supportingText = { /* Handle error */ },
-                            isError = false,
+                            supportingText = {
+                                if (state.semesterError != null) {
+                                    Text(text = state.semesterError)
+                                }
+                            },
+                            isError = state.semesterError != null,
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                            ),
                             singleLine = true,
                         )
                     }
@@ -61,8 +88,12 @@ fun StudentUpdateDialog() {
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Button(
-                            onClick = { /* Handle click */ },
-                            modifier = Modifier.fillMaxWidth().height(50.dp)
+                            onClick = {
+                                viewModel.onEvent(StudentFormEvent.SubmitUpdate(state.showUpdateDialogId?: -1))
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
                         ) {
                             Text(text = "Update", style = MaterialTheme.typography.titleMedium)
                         }

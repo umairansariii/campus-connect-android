@@ -7,8 +7,8 @@ sealed interface StudentFormEvent {
     class DismissUpdateDialog: StudentFormEvent
     data class ShowApproveDialog(val id: Int): StudentFormEvent
     class DismissApproveDialog: StudentFormEvent
-    data class StudentCgpaChanged(val studentCgpa: Double): StudentFormEvent
-    data class StudentSemesterChanged(val studentSemester: Int): StudentFormEvent
-    data class SubmitUpdate(val universityId: Int): StudentFormEvent
+    data class StudentCgpaChanged(val studentCgpa: String): StudentFormEvent
+    data class StudentSemesterChanged(val studentSemester: String): StudentFormEvent
+    data class SubmitUpdate(val studentId: Int): StudentFormEvent
     data class SubmitApprove(val studentId: Int): StudentFormEvent
 }

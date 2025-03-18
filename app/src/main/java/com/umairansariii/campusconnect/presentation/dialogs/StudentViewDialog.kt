@@ -110,7 +110,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "${state.semester}",
+                                text = state.semester,
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -121,7 +121,7 @@ fun StudentViewDialog() {
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                             Text(
-                                text = "${state.cgpa}",
+                                text = state.cgpa,
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -171,7 +171,9 @@ fun StudentViewDialog() {
                             onClick = {
                                 viewModel.onEvent(StudentFormEvent.DismissViewDialog())
                             },
-                            modifier = Modifier.fillMaxWidth().height(45.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(45.dp)
                         ) {
                             Text(text = "Close", style = MaterialTheme.typography.titleMedium)
                         }

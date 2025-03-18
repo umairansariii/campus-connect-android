@@ -17,5 +17,7 @@ data class EnrolledStudent (
     val gender: UserGender,
     val universityName: String,
     val campusName: String,
-    val departmentName: String
+    val departmentName: String,
+    val cgpa: Double?,
+    val semester: Int?,
 )
