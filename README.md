@@ -14,7 +14,7 @@ Virtual University of Pakistan
 
 The Campus Connect is a mobile application that aims to enhance campus life and improve engagement for undergraduate students. It provides a centralized, user-friendly platform where students can access essential campus resources, events, and student services. The app enables students to engage in discussions on various topics, subjects, and activities. Students are also facilitated to communicate and join clubs to stay updated.
 
-## Features
+## Functional Requirements
 
 - **Student Registration** – Students must register an account to use the app.
 - **Student Enrollment** – Students provide academic details and faculty information after registration.
