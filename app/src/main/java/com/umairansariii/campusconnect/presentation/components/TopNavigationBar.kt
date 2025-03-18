@@ -12,10 +12,23 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopNavigationBar(navController: NavController) {
+    val route = navController.currentBackStackEntryAsState().value?.destination?.route
+
+    val title = when {
+        route == "home" -> "Home"
+        route == "university" -> "University"
+        route?.startsWith("university-detail") == true -> "University Detail"
+        route?.startsWith("campus") == true -> "Campus"
+        route?.startsWith("department") == true -> "Department"
+        route?.startsWith("student") == true -> "Student"
+        else -> "Untitled"
+    }
+
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -23,7 +36,7 @@ fun TopNavigationBar(navController: NavController) {
         ),
         title = {
             Text(
-                text = "Untitled",
+                text = title,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
