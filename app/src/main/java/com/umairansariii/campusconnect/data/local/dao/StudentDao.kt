@@ -61,7 +61,10 @@ interface StudentDao {
         SELECT u.*, e.id as enrollmentId, e.rollNo
         FROM user u
         JOIN enrollment e ON u.id = e.studentId
-        WHERE e.universityId = :universityId;
+        WHERE e.universityId = :universityId
+        AND (u.firstName LIKE '%' || :searchQuery || '%'
+        OR u.lastName LIKE '%' || :searchQuery || '%'
+        OR e.rollNo LIKE '%' || :searchQuery || '%');
     """)
-    fun getStudentsByUniversity(universityId: Int): Flow<List<UserStudent>>
+    fun getStudentsByUniversity(universityId: Int, searchQuery: String): Flow<List<UserStudent>>
 }

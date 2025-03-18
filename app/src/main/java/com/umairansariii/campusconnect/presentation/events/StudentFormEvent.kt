@@ -9,6 +9,7 @@ sealed interface StudentFormEvent {
     class DismissApproveDialog: StudentFormEvent
     data class StudentCgpaChanged(val studentCgpa: String): StudentFormEvent
     data class StudentSemesterChanged(val studentSemester: String): StudentFormEvent
+    data class StudentQueryChanged(val studentQuery: String): StudentFormEvent
     data class SubmitUpdate(val studentId: Int): StudentFormEvent
     data class SubmitApprove(val studentId: Int): StudentFormEvent
 }

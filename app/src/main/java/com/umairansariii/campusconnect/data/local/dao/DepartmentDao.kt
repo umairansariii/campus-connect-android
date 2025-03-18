@@ -23,7 +23,6 @@ interface DepartmentDao {
         SELECT * FROM department 
         WHERE universityId = :universityId
         AND (:searchQuery IS NULL OR title LIKE '%' || :searchQuery || '%')
-        LIMIT 5
         """)
     fun getDepartmentsByUniversity(universityId: Int, searchQuery: String): Flow<List<Department>>
 }
