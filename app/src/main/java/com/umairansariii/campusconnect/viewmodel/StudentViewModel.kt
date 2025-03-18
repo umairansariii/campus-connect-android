@@ -10,6 +10,8 @@ import com.umairansariii.campusconnect.data.local.dto.UserStudent
 import com.umairansariii.campusconnect.data.local.entities.Academic
 import com.umairansariii.campusconnect.data.local.entities.User
 import com.umairansariii.campusconnect.data.local.enums.UserStatus
+import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyDecimal
+import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyInteger
 import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
 import com.umairansariii.campusconnect.presentation.states.StudentFromState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +23,8 @@ import javax.inject.Inject
 class StudentViewModel @Inject constructor(
     private val studentDao: StudentDao
 ): ViewModel() {
+    private val validateEmptyInteger = ValidateEmptyInteger()
+    private val validateEmptyDecimal = ValidateEmptyDecimal()
     var state by mutableStateOf(StudentFromState())
 
     fun getStudentsByUniversity(universityId: Int): Flow<List<UserStudent>> {
@@ -158,6 +162,22 @@ class StudentViewModel @Inject constructor(
     }
 
     private fun submitUpdate(studentId: Int, cgpa: String, semester: String) {
+        val cgpaResult = validateEmptyDecimal.execute(value = cgpa, fieldName = "Cgpa")
+        val semesterResult = validateEmptyInteger.execute(value = semester, fieldName = "Semester")
+
+        val hasError = listOf(
+            cgpaResult,
+            semesterResult,
+        ).any { !it.successful }
+
+        if (hasError) {
+            state = state.copy(
+                cgpaError = cgpaResult.errorMessage,
+                semesterError = semesterResult.errorMessage,
+            )
+            return
+        }
+
         viewModelScope.launch {
             val academic = studentDao.getAcademicByStudentId(studentId)
 
