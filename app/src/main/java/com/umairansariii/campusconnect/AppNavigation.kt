@@ -112,7 +112,7 @@ fun AppNavigation() {
                 ) { backStackEntry ->
                     val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
 
-                    StudentScreen(universityId = universityId, navController = navController)
+                    StudentScreen(universityId = universityId)
                 }
             }
         }

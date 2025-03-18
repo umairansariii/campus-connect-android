@@ -25,11 +25,13 @@ import com.umairansariii.campusconnect.presentation.components.StudentCard
 import com.umairansariii.campusconnect.presentation.dialogs.StudentApproveDialog
 import com.umairansariii.campusconnect.presentation.dialogs.StudentUpdateDialog
 import com.umairansariii.campusconnect.presentation.dialogs.StudentViewDialog
+import com.umairansariii.campusconnect.presentation.events.StudentFormEvent
 import com.umairansariii.campusconnect.viewmodel.StudentViewModel
 
 @Composable
-fun StudentScreen(universityId: Int, navController: NavController) {
+fun StudentScreen(universityId: Int) {
     val viewModel: StudentViewModel = hiltViewModel()
+    val state = viewModel.state
     val students by viewModel.getStudentsByUniversity(universityId).collectAsState(initial = emptyList())
 
     Column(
@@ -37,8 +39,10 @@ fun StudentScreen(universityId: Int, navController: NavController) {
     ) {
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = { /* Handle change */ },
+            value = state.studentQuery,
+            onValueChange = {
+                viewModel.onEvent(StudentFormEvent.StudentQueryChanged(it))
+            },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
             placeholder = { Text(text = "Search") },
             leadingIcon = {

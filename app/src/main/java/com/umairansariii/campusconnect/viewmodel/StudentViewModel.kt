@@ -28,7 +28,7 @@ class StudentViewModel @Inject constructor(
     var state by mutableStateOf(StudentFromState())
 
     fun getStudentsByUniversity(universityId: Int): Flow<List<UserStudent>> {
-        return studentDao.getStudentsByUniversity(universityId)
+        return studentDao.getStudentsByUniversity(universityId, state.studentQuery)
     }
 
     fun onEvent(event: StudentFormEvent) {
@@ -117,6 +117,10 @@ class StudentViewModel @Inject constructor(
 
             is StudentFormEvent.StudentSemesterChanged -> {
                 state = state.copy(semester = event.studentSemester, semesterError = null)
+            }
+
+            is StudentFormEvent.StudentQueryChanged -> {
+                state = state.copy(studentQuery = event.studentQuery)
             }
 
             is StudentFormEvent.SubmitApprove -> {

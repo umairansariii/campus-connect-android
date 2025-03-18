@@ -11,6 +11,7 @@ data class StudentFromState (
     val showUpdateDialogId: Int? = null,
     val showApproveDialog: Boolean = false,
     val showApproveDialogId: Int? = null,
+    val studentQuery: String = "",
     // Student Data
     val firstName: String = "",
     val lastName: String = "",
