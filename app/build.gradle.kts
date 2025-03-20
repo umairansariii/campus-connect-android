@@ -74,6 +74,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    // Data Store
+    implementation(libs.androidx.datastore)
+    implementation(libs.kotlinx.collections.immutable)
     // Dagger Hilt
     implementation(libs.google.dagger.hilt)
     kapt(libs.google.dagger.hilt.compiler)

@@ -1,6 +1,8 @@
 package com.umairansariii.campusconnect.data
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.room.Room
 import com.umairansariii.campusconnect.data.local.AppDatabase
 import com.umairansariii.campusconnect.data.local.dao.CampusDao
@@ -9,6 +11,8 @@ import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
 import com.umairansariii.campusconnect.data.local.dao.StudentDao
 import com.umairansariii.campusconnect.data.local.dao.UniversityDao
 import com.umairansariii.campusconnect.data.local.dao.UserDao
+import com.umairansariii.campusconnect.data.store.auth.AuthSerializer
+import com.umairansariii.campusconnect.data.store.auth.AuthState
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,5 +61,16 @@ object AppModule {
     @Provides
     fun provideStudentDao(database: AppDatabase): StudentDao {
         return database.studentDao()
+    }
+
+    private val Context.authDataStore: DataStore<AuthState> by dataStore(
+        fileName = "auth.pb",
+        serializer = AuthSerializer
+    )
+
+    @Provides
+    @Singleton
+    fun provideAuthDataStore(@ApplicationContext context: Context): DataStore<AuthState> {
+        return context.authDataStore
     }
 }
