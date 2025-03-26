@@ -30,6 +30,12 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             authDataStore.updateData { currentState ->
                 currentState.copy(
+                    id = user.id,
+                    firstName = user.firstName,
+                    lastName = user.lastName,
+                    email = user.email,
+                    role = user.role,
+                    status = user.status,
                     isAuthenticated = true,
                 )
             }
@@ -40,6 +46,12 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             authDataStore.updateData { currentState ->
                 currentState.copy(
+                    id = null,
+                    firstName = "",
+                    lastName = "",
+                    email = "",
+                    role = null,
+                    status = null,
                     isAuthenticated = false,
                 )
             }

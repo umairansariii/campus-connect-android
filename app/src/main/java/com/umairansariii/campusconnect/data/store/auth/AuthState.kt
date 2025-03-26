@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthState (
+    val id: Int? = null,
     val firstName: String = "",
     val lastName: String = "",
     val email: String = "",

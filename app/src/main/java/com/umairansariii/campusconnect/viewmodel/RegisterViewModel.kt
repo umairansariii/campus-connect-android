@@ -102,7 +102,9 @@ class RegisterViewModel @Inject constructor (
                 )
             )
 
-            _validationEventChannel.send(ValidationEvent.Success(userId))
+            val insertedUser = userDao.getUserById(userId.toInt())
+
+            _validationEventChannel.send(ValidationEvent.Success(insertedUser))
         }
 
         state = state.copy(
@@ -120,6 +122,6 @@ class RegisterViewModel @Inject constructor (
     }
 
     sealed class ValidationEvent {
-        data class Success(val userId: Long): ValidationEvent()
+        data class Success(val user: User): ValidationEvent()
     }
 }
