@@ -6,11 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
+import com.umairansariii.campusconnect.data.local.dto.UserStatusUpdate
 import com.umairansariii.campusconnect.data.local.entities.Campus
 import com.umairansariii.campusconnect.data.local.entities.Department
 import com.umairansariii.campusconnect.data.local.entities.Enrollment
 import com.umairansariii.campusconnect.data.local.entities.University
 import com.umairansariii.campusconnect.data.local.enums.UserGender
+import com.umairansariii.campusconnect.data.local.enums.UserStatus
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmpty
 import com.umairansariii.campusconnect.domain.usecase.ValidateNull
 import com.umairansariii.campusconnect.presentation.events.EnrollmentFormEvent
@@ -124,6 +126,13 @@ class EnrollmentViewModel @Inject constructor(
                     rollNo = state.rollNo,
                     dob = state.dob?: Date(),
                     gender = state.gender?:UserGender.Male,
+                )
+            )
+
+            enrollmentDao.updateUserStatus(
+                UserStatusUpdate(
+                    id = studentId.toInt(),
+                    status = UserStatus.ENROLLED,
                 )
             )
 

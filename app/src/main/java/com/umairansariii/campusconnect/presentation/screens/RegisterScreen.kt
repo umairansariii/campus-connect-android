@@ -36,11 +36,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.umairansariii.campusconnect.presentation.events.RegisterFormEvent
+import com.umairansariii.campusconnect.viewmodel.AuthViewModel
 import com.umairansariii.campusconnect.viewmodel.RegisterViewModel
 
 @Composable
 fun RegisterScreen(navController: NavController) {
     val viewModel: RegisterViewModel = hiltViewModel()
+    val authViewModel: AuthViewModel = hiltViewModel()
     val state = viewModel.state
     val focusRequester = remember {
         FocusRequester()
@@ -54,7 +56,8 @@ fun RegisterScreen(navController: NavController) {
             when(event) {
                 is RegisterViewModel.ValidationEvent.Success -> {
                     focusManager.clearFocus()
-                    navController.navigate("enrollment/${event.userId}")
+                    authViewModel.setLoggedIn(user = event.user)
+//                    navController.navigate("enrollment/${event.user.id}")
                 }
             }
         }
