@@ -4,16 +4,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
+import com.umairansariii.campusconnect.data.local.dto.UserStatusUpdate
 import com.umairansariii.campusconnect.data.local.entities.Campus
 import com.umairansariii.campusconnect.data.local.entities.Department
 import com.umairansariii.campusconnect.data.local.entities.Enrollment
 import com.umairansariii.campusconnect.data.local.entities.University
+import com.umairansariii.campusconnect.data.local.entities.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EnrollmentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEnrollment(enrollment: Enrollment)
+
+    @Update(entity = User::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateUserStatus(userStatusUpdate: UserStatusUpdate)
 
     @Query("SELECT * FROM university")
     fun getUniversities(): Flow<List<University>>
