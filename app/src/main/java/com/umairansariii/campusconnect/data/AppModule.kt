@@ -64,7 +64,7 @@ object AppModule {
     }
 
     private val Context.authDataStore: DataStore<AuthState> by dataStore(
-        fileName = "auth.pb",
+        fileName = "auth.json",
         serializer = AuthSerializer
     )
 

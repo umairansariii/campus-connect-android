@@ -1,19 +1,13 @@
 package com.umairansariii.campusconnect
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -24,19 +18,22 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.umairansariii.campusconnect.data.local.enums.UserRole
+import com.umairansariii.campusconnect.data.local.enums.UserStatus
+import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
 import com.umairansariii.campusconnect.presentation.screens.HomeScreen
+import com.umairansariii.campusconnect.presentation.screens.LoadingScreen
 import com.umairansariii.campusconnect.presentation.screens.LoginScreen
 import com.umairansariii.campusconnect.presentation.screens.RegisterScreen
 import com.umairansariii.campusconnect.presentation.screens.StudentScreen
 import com.umairansariii.campusconnect.presentation.screens.UniversityDetailScreen
 import com.umairansariii.campusconnect.presentation.screens.UniversityScreen
 import com.umairansariii.campusconnect.viewmodel.AuthViewModel
-import kotlinx.coroutines.flow.collectLatest
 
 fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation(
@@ -118,6 +115,30 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
 fun AppNavigation() {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = hiltViewModel()
+    val authState by authViewModel.authState.collectAsStateWithLifecycle(initialValue = AuthState())
+
+    LaunchedEffect(authState.isAuthenticated) {
+        if (authState.isAuthenticated) {
+            navController.navigate("app") {
+                popUpTo("loading") { inclusive = true }
+            }
+        }
+
+        if (
+            authState.isAuthenticated &&
+            authState.role == UserRole.STUDENT &&
+            authState.status == UserStatus.PENDING) {
+            navController.navigate("enrollment/${authState.id}") {
+                popUpTo("loading") { inclusive = true }
+            }
+        }
+
+        if (!authState.isAuthenticated) {
+            navController.navigate("auth") {
+                popUpTo("loading") { inclusive = true }
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -137,33 +158,8 @@ fun AppNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(route = "loading") {
-                LaunchedEffect(true) {
-                    authViewModel.authState.collectLatest { state ->
-                        if (state.isAuthenticated) {
-                            navController.navigate("app") {
-                                popUpTo(route = "loading") { inclusive = true }
-                            }
-                        }
-                        if (!state.isAuthenticated) {
-                            navController.navigate("auth") {
-                                popUpTo(route = "loading") { inclusive = true }
-                            }
-                        }
-                    }
-                }
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.width(64.dp),
-                        color = MaterialTheme.colorScheme.secondary,
-                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                    )
-                }
+                LoadingScreen()
             }
-
             authGraph(navController = navController)
             appGraph(navController = navController)
         }
