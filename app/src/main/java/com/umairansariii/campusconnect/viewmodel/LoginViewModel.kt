@@ -76,6 +76,13 @@ class LoginViewModel @Inject constructor(
 
             _validationEventChannel.send(ValidationEvent.Success(user))
         }
+
+        state = state.copy(
+            email = "",
+            emailError = null,
+            password = "",
+            passwordError = null,
+        )
     }
 
     sealed class ValidationEvent {
