@@ -94,6 +94,13 @@ class RegisterViewModel @Inject constructor (
         }
 
         viewModelScope.launch {
+            val user = userDao.getUserByEmail(state.email)
+            
+            if (user != null) {
+                state = state.copy(emailError = "User email already exists")
+                return@launch
+            }
+            
             val userId = userDao.insertUser(
                 User(
                     createdAt = Date(),
@@ -122,6 +129,7 @@ class RegisterViewModel @Inject constructor (
             passwordError = null,
             repeatedPassword = "",
             repeatedPasswordError = null,
+            registerAsAdmin = false,
         )
     }
 
