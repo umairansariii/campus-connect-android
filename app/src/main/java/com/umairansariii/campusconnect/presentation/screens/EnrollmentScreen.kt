@@ -2,18 +2,24 @@ package com.umairansariii.campusconnect.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,11 +37,13 @@ import com.umairansariii.campusconnect.data.local.enums.UserGender
 import com.umairansariii.campusconnect.presentation.components.DateSelector
 import com.umairansariii.campusconnect.presentation.components.SheetSelector
 import com.umairansariii.campusconnect.presentation.events.EnrollmentFormEvent
+import com.umairansariii.campusconnect.viewmodel.AuthViewModel
 import com.umairansariii.campusconnect.viewmodel.EnrollmentViewModel
 
 @Composable
 fun EnrollmentScreen(userId: Long, navController: NavController) {
     val viewModel: EnrollmentViewModel = hiltViewModel()
+    val authViewModel: AuthViewModel = hiltViewModel()
     val state = viewModel.state
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
@@ -68,6 +76,11 @@ fun EnrollmentScreen(userId: Long, navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
+            Text(
+                text = "Enrollment",
+                modifier = Modifier.padding(vertical = 20.dp),
+                style = MaterialTheme.typography.headlineMedium,
+            )
             SheetSelector(
                 label = "University",
                 options = universities,
@@ -147,7 +160,31 @@ fun EnrollmentScreen(userId: Long, navController: NavController) {
                 supportingText = state.dobError,
                 isError = state.dobError != null,
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(0.87f),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Checkbox(
+                    checked = state.acceptTerms,
+                    onCheckedChange = {
+                        viewModel.onEvent(EnrollmentFormEvent.CheckboxChanged(it))
+                    },
+                    colors = if(state.acceptTermsError) {
+                        CheckboxDefaults.colors(uncheckedColor = MaterialTheme.colorScheme.error)
+                    } else {
+                        CheckboxDefaults.colors()
+                    }
+                )
+                Text(
+                    text = "I confirm, all information is accurate.",
+                    color = if (state.acceptTermsError) {
+                        MaterialTheme.colorScheme.error
+                    } else {
+                        MaterialTheme.colorScheme.inverseSurface
+                    },
+                )
+            }
+            Spacer(modifier = Modifier.height(12.dp))
             Button(
                 modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
                 shape = RoundedCornerShape(8.dp),
@@ -156,6 +193,17 @@ fun EnrollmentScreen(userId: Long, navController: NavController) {
                 },
             ) {
                 Text(text = "Submit")
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            HorizontalDivider(
+                modifier = Modifier.fillMaxWidth(0.4f)
+            )
+            TextButton(
+                onClick = {
+                    authViewModel.setLoggedOut()
+                }
+            ) {
+                Text(text = "Submit form later? Logout")
             }
         }
     }
