@@ -57,6 +57,10 @@ class RegisterViewModel @Inject constructor (
                 state = state.copy(repeatedPassword = event.repeatedPassword, repeatedPasswordError = null)
             }
 
+            is RegisterFormEvent.CheckboxChanged -> {
+                state = state.copy(registerAsAdmin = event.registerAsAdmin)
+            }
+
             is RegisterFormEvent.Submit -> {
                 submit()
             }
@@ -97,8 +101,8 @@ class RegisterViewModel @Inject constructor (
                     lastName = state.lastName,
                     email = state.email,
                     password = state.password,
-                    role = UserRole.STUDENT,
-                    status = UserStatus.PENDING
+                    role = if (state.registerAsAdmin) UserRole.ADMIN else UserRole.STUDENT,
+                    status = if (state.registerAsAdmin) UserStatus.ACTIVE else UserStatus.PENDING,
                 )
             )
 
