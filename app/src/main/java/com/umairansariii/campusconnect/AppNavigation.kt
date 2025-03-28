@@ -37,7 +37,7 @@ import com.umairansariii.campusconnect.viewmodel.AuthViewModel
 
 fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation(
-        route = "auth", startDestination = "register"
+        route = "auth", startDestination = "login"
     ) {
         composable(route = "login") {
             LoginScreen(navController = navController)
@@ -118,12 +118,6 @@ fun AppNavigation() {
     val authState by authViewModel.authState.collectAsStateWithLifecycle(initialValue = AuthState())
 
     LaunchedEffect(authState.isAuthenticated) {
-        if (authState.isAuthenticated) {
-            navController.navigate("app") {
-                popUpTo("loading") { inclusive = true }
-            }
-        }
-
         if (
             authState.isAuthenticated &&
             authState.role == UserRole.STUDENT &&
@@ -131,9 +125,11 @@ fun AppNavigation() {
             navController.navigate("enrollment/${authState.id}") {
                 popUpTo("loading") { inclusive = true }
             }
-        }
-
-        if (!authState.isAuthenticated) {
+        } else if (authState.isAuthenticated) {
+            navController.navigate("app") {
+                popUpTo("loading") { inclusive = true }
+            }
+        } else {
             navController.navigate("auth") {
                 popUpTo("loading") { inclusive = true }
             }
