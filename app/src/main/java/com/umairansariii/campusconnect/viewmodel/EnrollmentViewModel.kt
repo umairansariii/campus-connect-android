@@ -81,6 +81,10 @@ class EnrollmentViewModel @Inject constructor(
                 state = state.copy(gender = event.gender, genderError = null)
             }
 
+            is EnrollmentFormEvent.CheckboxChanged -> {
+                state = state.copy(acceptTerms = event.acceptTerms, acceptTermsError = false)
+            }
+
             is EnrollmentFormEvent.Submit -> {
                 submit(event.studentId)
             }
@@ -113,6 +117,11 @@ class EnrollmentViewModel @Inject constructor(
                 dobError = dobResult.errorMessage,
                 genderError = genderResult.errorMessage,
             )
+            return
+        }
+
+        if (!state.acceptTerms) {
+            state = state.copy(acceptTermsError = true)
             return
         }
 
@@ -152,6 +161,8 @@ class EnrollmentViewModel @Inject constructor(
             genderError = null,
             dob = null,
             dobError = null,
+            acceptTerms = false,
+            acceptTermsError = false,
         )
     }
 
