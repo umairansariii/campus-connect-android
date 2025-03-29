@@ -83,7 +83,7 @@ fun StudentCard(student: UserStudent) {
                                 viewModel.onEvent(StudentFormEvent.ShowViewDialog(id = student.id))
                             },
                         )
-                        if (student.status != UserStatus.PENDING) {
+                        if (student.status != UserStatus.ENROLLED) {
                             DropdownMenuItem(
                                 text = { Text(text = "Update") },
                                 onClick = {
@@ -91,7 +91,7 @@ fun StudentCard(student: UserStudent) {
                                 },
                             )
                         }
-                        if (student.status == UserStatus.PENDING) {
+                        if (student.status == UserStatus.ENROLLED) {
                             DropdownMenuItem(
                                 text = { Text(text = "Approve") },
                                 onClick = {

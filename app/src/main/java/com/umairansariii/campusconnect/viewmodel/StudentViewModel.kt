@@ -6,9 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.StudentDao
+import com.umairansariii.campusconnect.data.local.dto.UserStatusUpdate
 import com.umairansariii.campusconnect.data.local.dto.UserStudent
 import com.umairansariii.campusconnect.data.local.entities.Academic
-import com.umairansariii.campusconnect.data.local.entities.User
 import com.umairansariii.campusconnect.data.local.enums.UserStatus
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyDecimal
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyInteger
@@ -137,15 +137,9 @@ class StudentViewModel @Inject constructor(
         viewModelScope.launch {
             val student = studentDao.getStudentById(studentId)
 
-            studentDao.approveStudent(
-                User(
-                    id = student.id,
-                    createdAt = student.createdAt,
-                    firstName = student.firstName,
-                    lastName = student.lastName,
-                    email = student.email,
-                    password = student.password,
-                    role = student.role,
+            studentDao.updateUserStatus(
+                UserStatusUpdate(
+                    id = studentId,
                     status = UserStatus.ACTIVE,
                 )
             )
