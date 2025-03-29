@@ -116,21 +116,21 @@ class RegisterViewModel @Inject constructor (
             val insertedUser = userDao.getUserById(userId.toInt())
 
             _validationEventChannel.send(ValidationEvent.Success(insertedUser))
-        }
 
-        state = state.copy(
-            firstName = "",
-            firstNameError = null,
-            lastName = "",
-            lastNameError = null,
-            email = "",
-            emailError = null,
-            password = "",
-            passwordError = null,
-            repeatedPassword = "",
-            repeatedPasswordError = null,
-            registerAsAdmin = false,
-        )
+            state = state.copy(
+                firstName = "",
+                firstNameError = null,
+                lastName = "",
+                lastNameError = null,
+                email = "",
+                emailError = null,
+                password = "",
+                passwordError = null,
+                repeatedPassword = "",
+                repeatedPasswordError = null,
+                registerAsAdmin = false,
+            )
+        }
     }
 
     sealed class ValidationEvent {
