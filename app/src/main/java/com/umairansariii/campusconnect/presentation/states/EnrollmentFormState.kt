@@ -17,4 +17,6 @@ data class EnrollmentFormState (
     val dobError: String? = null,
     val gender: UserGender? = null,
     val genderError: String? = null,
+    val acceptTerms: Boolean = false,
+    val acceptTermsError: Boolean = false,
 )
