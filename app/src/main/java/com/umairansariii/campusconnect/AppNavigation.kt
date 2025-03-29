@@ -25,6 +25,7 @@ import com.umairansariii.campusconnect.presentation.components.BottomNavigationB
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
+import com.umairansariii.campusconnect.presentation.screens.EnrollPendingScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
 import com.umairansariii.campusconnect.presentation.screens.HomeScreen
 import com.umairansariii.campusconnect.presentation.screens.LoadingScreen
@@ -54,6 +55,9 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
             val userId = backStackEntry.arguments?.getLong("userId") ?: -1L
 
             EnrollmentScreen(userId = userId, navController = navController)
+        }
+        composable(route = "enroll-pending") {
+            EnrollPendingScreen()
         }
     }
 }
@@ -125,7 +129,16 @@ fun AppNavigation() {
             navController.navigate("enrollment/${authState.id}") {
                 popUpTo("loading") { inclusive = true }
             }
-        } else if (authState.isAuthenticated) {
+        } else if (
+            authState.isAuthenticated &&
+            authState.role == UserRole.STUDENT &&
+            authState.status == UserStatus.ENROLLED) {
+            navController.navigate("enroll-pending") {
+                popUpTo("loading") { inclusive = true }
+            }
+        } else if (
+            authState.isAuthenticated &&
+            authState.status == UserStatus.ACTIVE) {
             navController.navigate("app") {
                 popUpTo("loading") { inclusive = true }
             }
