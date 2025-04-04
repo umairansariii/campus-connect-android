@@ -19,16 +19,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.presentation.components.UniversityCard
 import com.umairansariii.campusconnect.presentation.dialogs.UniversityDialog
 import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
+import com.umairansariii.campusconnect.viewmodel.AuthViewModel
 import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 
 @Composable
 fun UniversityScreen(navController: NavController) {
     val viewModel: UniversityViewModel = hiltViewModel()
-    val universities by viewModel.getUniversitiesByAdmin().collectAsState(initial = emptyList())
+    val authViewModel: AuthViewModel = hiltViewModel()
+    val authState by authViewModel.authState.collectAsStateWithLifecycle(initialValue = AuthState())
+    val universities by viewModel.getUniversitiesByAdmin(authState.id).collectAsState(initial = emptyList())
 
     Scaffold(
         floatingActionButton = {
@@ -54,7 +59,7 @@ fun UniversityScreen(navController: NavController) {
                     UniversityCard(university, navController)
                 }
             }
-            UniversityDialog()
+            UniversityDialog(authState.id)
         }
     }
 }

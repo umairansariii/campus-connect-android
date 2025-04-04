@@ -10,5 +10,6 @@ sealed interface EnrollmentFormEvent {
     data class RollNoChanged(val rollNo: String): EnrollmentFormEvent
     data class DobChanged(val dob: Date): EnrollmentFormEvent
     data class GenderChanged(val gender: UserGender): EnrollmentFormEvent
+    data class CheckboxChanged(val acceptTerms: Boolean): EnrollmentFormEvent
     data class Submit(val studentId: Long): EnrollmentFormEvent
 }

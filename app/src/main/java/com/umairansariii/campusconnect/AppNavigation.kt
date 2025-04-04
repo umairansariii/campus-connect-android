@@ -25,6 +25,7 @@ import com.umairansariii.campusconnect.presentation.components.BottomNavigationB
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
+import com.umairansariii.campusconnect.presentation.screens.EnrollPendingScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
 import com.umairansariii.campusconnect.presentation.screens.HomeScreen
 import com.umairansariii.campusconnect.presentation.screens.LoadingScreen
@@ -37,7 +38,7 @@ import com.umairansariii.campusconnect.viewmodel.AuthViewModel
 
 fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation(
-        route = "auth", startDestination = "register"
+        route = "auth", startDestination = "login"
     ) {
         composable(route = "login") {
             LoginScreen(navController = navController)
@@ -53,7 +54,10 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         ) { backStackEntry ->
             val userId = backStackEntry.arguments?.getLong("userId") ?: -1L
 
-            EnrollmentScreen(userId = userId, navController = navController)
+            EnrollmentScreen(userId = userId)
+        }
+        composable(route = "enroll-pending") {
+            EnrollPendingScreen()
         }
     }
 }
@@ -117,13 +121,7 @@ fun AppNavigation() {
     val authViewModel: AuthViewModel = hiltViewModel()
     val authState by authViewModel.authState.collectAsStateWithLifecycle(initialValue = AuthState())
 
-    LaunchedEffect(authState.isAuthenticated) {
-        if (authState.isAuthenticated) {
-            navController.navigate("app") {
-                popUpTo("loading") { inclusive = true }
-            }
-        }
-
+    LaunchedEffect(authState.isAuthenticated, authState.status) {
         if (
             authState.isAuthenticated &&
             authState.role == UserRole.STUDENT &&
@@ -131,9 +129,20 @@ fun AppNavigation() {
             navController.navigate("enrollment/${authState.id}") {
                 popUpTo("loading") { inclusive = true }
             }
-        }
-
-        if (!authState.isAuthenticated) {
+        } else if (
+            authState.isAuthenticated &&
+            authState.role == UserRole.STUDENT &&
+            authState.status == UserStatus.ENROLLED) {
+            navController.navigate("enroll-pending") {
+                popUpTo("loading") { inclusive = true }
+            }
+        } else if (
+            authState.isAuthenticated &&
+            authState.status == UserStatus.ACTIVE) {
+            navController.navigate("app") {
+                popUpTo("loading") { inclusive = true }
+            }
+        } else {
             navController.navigate("auth") {
                 popUpTo("loading") { inclusive = true }
             }

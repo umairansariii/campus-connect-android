@@ -22,8 +22,8 @@ class UniversityViewModel @Inject constructor(
     private val validateEmptyAlpha = ValidateEmptyAlpha()
     var state by mutableStateOf(UniversityFormState())
 
-    fun getUniversitiesByAdmin(): Flow<List<University>> {
-        return universityDao.getUniversitiesByAdmin(1)
+    fun getUniversitiesByAdmin(adminId: Int?): Flow<List<University>> {
+        return universityDao.getUniversitiesByAdmin(adminId?: -1)
     }
 
     fun onEvent(event: UniversityFormEvent) {
@@ -57,7 +57,7 @@ class UniversityViewModel @Inject constructor(
             }
 
             is UniversityFormEvent.Submit -> {
-                submit(event.adminId)
+                submit(event.adminId?: -1)
             }
         }
     }

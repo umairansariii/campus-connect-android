@@ -57,6 +57,10 @@ class RegisterViewModel @Inject constructor (
                 state = state.copy(repeatedPassword = event.repeatedPassword, repeatedPasswordError = null)
             }
 
+            is RegisterFormEvent.CheckboxChanged -> {
+                state = state.copy(registerAsAdmin = event.registerAsAdmin)
+            }
+
             is RegisterFormEvent.Submit -> {
                 submit()
             }
@@ -90,6 +94,13 @@ class RegisterViewModel @Inject constructor (
         }
 
         viewModelScope.launch {
+            val user = userDao.getUserByEmail(state.email)
+            
+            if (user != null) {
+                state = state.copy(emailError = "User email already exists")
+                return@launch
+            }
+            
             val userId = userDao.insertUser(
                 User(
                     createdAt = Date(),
@@ -97,28 +108,29 @@ class RegisterViewModel @Inject constructor (
                     lastName = state.lastName,
                     email = state.email,
                     password = state.password,
-                    role = UserRole.STUDENT,
-                    status = UserStatus.PENDING
+                    role = if (state.registerAsAdmin) UserRole.ADMIN else UserRole.STUDENT,
+                    status = if (state.registerAsAdmin) UserStatus.ACTIVE else UserStatus.PENDING,
                 )
             )
 
             val insertedUser = userDao.getUserById(userId.toInt())
 
             _validationEventChannel.send(ValidationEvent.Success(insertedUser))
-        }
 
-        state = state.copy(
-            firstName = "",
-            firstNameError = null,
-            lastName = "",
-            lastNameError = null,
-            email = "",
-            emailError = null,
-            password = "",
-            passwordError = null,
-            repeatedPassword = "",
-            repeatedPasswordError = null,
-        )
+            state = state.copy(
+                firstName = "",
+                firstNameError = null,
+                lastName = "",
+                lastNameError = null,
+                email = "",
+                emailError = null,
+                password = "",
+                passwordError = null,
+                repeatedPassword = "",
+                repeatedPasswordError = null,
+                registerAsAdmin = false,
+            )
+        }
     }
 
     sealed class ValidationEvent {

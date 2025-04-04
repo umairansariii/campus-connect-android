@@ -21,7 +21,7 @@ import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
 import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 
 @Composable
-fun UniversityDialog() {
+fun UniversityDialog(adminId: Int?) {
     val viewModel: UniversityViewModel = hiltViewModel()
     val state = viewModel.state
 
@@ -73,7 +73,7 @@ fun UniversityDialog() {
                     ) {
                         Button(
                             onClick = {
-                                viewModel.onEvent(UniversityFormEvent.Submit(adminId = 1))
+                                viewModel.onEvent(UniversityFormEvent.Submit(adminId))
                             },
                             modifier = Modifier.fillMaxWidth().height(50.dp)
                         ) {

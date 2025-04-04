@@ -11,6 +11,7 @@ import com.umairansariii.campusconnect.data.local.entities.Campus
 import com.umairansariii.campusconnect.data.local.entities.Department
 import com.umairansariii.campusconnect.data.local.entities.Enrollment
 import com.umairansariii.campusconnect.data.local.entities.University
+import com.umairansariii.campusconnect.data.local.entities.User
 import com.umairansariii.campusconnect.data.local.enums.UserGender
 import com.umairansariii.campusconnect.data.local.enums.UserStatus
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmpty
@@ -81,6 +82,10 @@ class EnrollmentViewModel @Inject constructor(
                 state = state.copy(gender = event.gender, genderError = null)
             }
 
+            is EnrollmentFormEvent.CheckboxChanged -> {
+                state = state.copy(acceptTerms = event.acceptTerms, acceptTermsError = false)
+            }
+
             is EnrollmentFormEvent.Submit -> {
                 submit(event.studentId)
             }
@@ -116,6 +121,11 @@ class EnrollmentViewModel @Inject constructor(
             return
         }
 
+        if (!state.acceptTerms) {
+            state = state.copy(acceptTermsError = true)
+            return
+        }
+
         viewModelScope.launch {
             enrollmentDao.insertEnrollment(
                 Enrollment(
@@ -136,26 +146,30 @@ class EnrollmentViewModel @Inject constructor(
                 )
             )
 
-            _validationEventChannel.send(ValidationEvent.Success)
-        }
+            val updatedUser = enrollmentDao.getUserById(studentId.toInt())
 
-        state = state.copy(
-            universityId = null,
-            universityIdError = null,
-            campusId = null,
-            campusIdError = null,
-            departmentId = null,
-            departmentIdError = null,
-            rollNo = "",
-            rollNoError = null,
-            gender = null,
-            genderError = null,
-            dob = null,
-            dobError = null,
-        )
+            _validationEventChannel.send(ValidationEvent.Success(updatedUser))
+
+            state = state.copy(
+                universityId = null,
+                universityIdError = null,
+                campusId = null,
+                campusIdError = null,
+                departmentId = null,
+                departmentIdError = null,
+                rollNo = "",
+                rollNoError = null,
+                gender = null,
+                genderError = null,
+                dob = null,
+                dobError = null,
+                acceptTerms = false,
+                acceptTermsError = false,
+            )
+        }
     }
 
     sealed class ValidationEvent {
-        object Success: ValidationEvent()
+        data class Success(val user: User): ValidationEvent()
     }
 }
