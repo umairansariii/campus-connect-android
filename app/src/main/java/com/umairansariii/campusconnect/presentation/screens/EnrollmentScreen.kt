@@ -32,7 +32,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.umairansariii.campusconnect.data.local.enums.UserGender
 import com.umairansariii.campusconnect.presentation.components.DateSelector
 import com.umairansariii.campusconnect.presentation.components.SheetSelector
@@ -41,7 +40,7 @@ import com.umairansariii.campusconnect.viewmodel.AuthViewModel
 import com.umairansariii.campusconnect.viewmodel.EnrollmentViewModel
 
 @Composable
-fun EnrollmentScreen(userId: Long, navController: NavController) {
+fun EnrollmentScreen(userId: Long) {
     val viewModel: EnrollmentViewModel = hiltViewModel()
     val authViewModel: AuthViewModel = hiltViewModel()
     val state = viewModel.state
@@ -61,7 +60,7 @@ fun EnrollmentScreen(userId: Long, navController: NavController) {
             when(event) {
                 is EnrollmentViewModel.ValidationEvent.Success -> {
                     focusManager.clearFocus()
-                    navController.navigate("app")
+                    authViewModel.setLoggedIn(user = event.user)
                 }
             }
         }

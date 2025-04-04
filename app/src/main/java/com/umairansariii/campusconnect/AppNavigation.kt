@@ -54,7 +54,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
         ) { backStackEntry ->
             val userId = backStackEntry.arguments?.getLong("userId") ?: -1L
 
-            EnrollmentScreen(userId = userId, navController = navController)
+            EnrollmentScreen(userId = userId)
         }
         composable(route = "enroll-pending") {
             EnrollPendingScreen()
@@ -121,7 +121,7 @@ fun AppNavigation() {
     val authViewModel: AuthViewModel = hiltViewModel()
     val authState by authViewModel.authState.collectAsStateWithLifecycle(initialValue = AuthState())
 
-    LaunchedEffect(authState.isAuthenticated) {
+    LaunchedEffect(authState.isAuthenticated, authState.status) {
         if (
             authState.isAuthenticated &&
             authState.role == UserRole.STUDENT &&

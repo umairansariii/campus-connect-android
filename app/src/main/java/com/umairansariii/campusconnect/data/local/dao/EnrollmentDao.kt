@@ -21,6 +21,9 @@ interface EnrollmentDao {
     @Update(entity = User::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateUserStatus(userStatusUpdate: UserStatusUpdate)
 
+    @Query("SELECT * FROM user WHERE id = :userId")
+    suspend fun getUserById(userId: Int): User
+
     @Query("SELECT * FROM university")
     fun getUniversities(): Flow<List<University>>
 
