@@ -22,6 +22,7 @@ import com.umairansariii.campusconnect.data.local.enums.UserRole
 import com.umairansariii.campusconnect.data.local.enums.UserStatus
 import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
+import com.umairansariii.campusconnect.presentation.components.ProfileBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
@@ -154,6 +155,9 @@ fun AppNavigation() {
             if (shouldShowTopBar(navController = navController)) {
                 TopNavigationBar(navController = navController)
             }
+            if (shouldShowProfileBar(navController = navController)) {
+                ProfileBar()
+            }
         },
         bottomBar = {
             if (shouldShowBottomBar(navController = navController)) {
@@ -197,5 +201,13 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "student/{universityId}",
+    )
+}
+
+@Composable
+fun shouldShowProfileBar(navController: NavController): Boolean {
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    return currentRoute in listOf(
+        "home",
     )
 }
