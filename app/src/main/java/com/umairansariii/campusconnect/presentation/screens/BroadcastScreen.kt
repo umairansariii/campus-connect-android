@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.umairansariii.campusconnect.presentation.components.NotificationCard
 
 @Composable
 fun BroadcastScreen(universityId: Int) {
@@ -52,7 +53,7 @@ fun BroadcastScreen(universityId: Int) {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 items(2) {
-                    /* TODO: NotificationCard */
+                    NotificationCard()
                 }
             }
             /* TODO: NotificationDialog */
