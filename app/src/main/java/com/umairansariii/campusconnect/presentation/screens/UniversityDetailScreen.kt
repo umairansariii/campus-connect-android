@@ -119,6 +119,35 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(10.dp))
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                ),
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    Text(
+                        text = "Manage Notifications",
+                        fontSize = 20.sp,
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
+                    ) {
+                        Button(
+                            onClick = {
+                                navController.navigate("broadcast/$universityId")
+                            }
+                        ) {
+                            Text(text = "Manage")
+                        }
+                    }
+                }
+            }
         }
     }
 }
