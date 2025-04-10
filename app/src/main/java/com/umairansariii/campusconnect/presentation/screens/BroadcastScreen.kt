@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.material.icons.outlined.Search
@@ -17,16 +18,27 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.presentation.components.NotificationCard
+import com.umairansariii.campusconnect.presentation.dialogs.NotificationUpdateDialog
+import com.umairansariii.campusconnect.presentation.events.NotificationFormEvent
+import com.umairansariii.campusconnect.viewmodel.NotificationViewModel
 
 @Composable
 fun BroadcastScreen(universityId: Int) {
+    val viewModel: NotificationViewModel = hiltViewModel()
+    val notifications by viewModel.getNotificationsByUniversity(universityId).collectAsState(initial = emptyList())
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Handle click */ },
+                onClick = {
+                    viewModel.onEvent(NotificationFormEvent.ShowUpdateDialog(id = null))
+                },
             ) {
                 Icon(Icons.Outlined.Mail, contentDescription = "notification-broadcast-icon")
             }
@@ -52,11 +64,11 @@ fun BroadcastScreen(universityId: Int) {
                 item {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
-                items(2) {
-                    NotificationCard()
+                items(notifications) { notification ->
+                    NotificationCard(notification)
                 }
             }
-            /* TODO: NotificationDialog */
+            NotificationUpdateDialog(universityId = universityId)
         }
     }
 }

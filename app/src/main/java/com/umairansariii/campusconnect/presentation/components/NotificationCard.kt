@@ -26,9 +26,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.data.local.entities.Notification
+import com.umairansariii.campusconnect.presentation.events.NotificationFormEvent
+import com.umairansariii.campusconnect.viewmodel.NotificationViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
-fun NotificationCard() {
+fun NotificationCard(notification: Notification) {
+    val viewModel: NotificationViewModel = hiltViewModel()
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -49,11 +56,11 @@ fun NotificationCard() {
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "Spring 2025 Orientation – Welcome to the Virtual University of Pakistan",
+                    text = notification.title,
                     softWrap = true,
                 )
                 Text(
-                    text = "04/09/2025",
+                    text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(notification.createdAt),
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -68,11 +75,15 @@ fun NotificationCard() {
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "View") },
-                        onClick = { /* Handle click */ },
+                        onClick = {
+                            viewModel.onEvent(NotificationFormEvent.ShowViewDialog(notification.id))
+                        },
                     )
                     DropdownMenuItem(
                         text = { Text(text = "Edit") },
-                        onClick = { /* Handle click */ },
+                        onClick = {
+                            viewModel.onEvent(NotificationFormEvent.ShowUpdateDialog(notification.id))
+                        },
                     )
                 }
             }
