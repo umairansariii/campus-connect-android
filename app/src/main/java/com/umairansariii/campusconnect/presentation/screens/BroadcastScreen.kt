@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -23,25 +23,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.umairansariii.campusconnect.presentation.components.CampusCard
-import com.umairansariii.campusconnect.presentation.dialogs.CampusDialog
-import com.umairansariii.campusconnect.presentation.events.CampusFormEvent
-import com.umairansariii.campusconnect.viewmodel.CampusViewModel
+import com.umairansariii.campusconnect.presentation.components.NotificationCard
+import com.umairansariii.campusconnect.presentation.dialogs.NotificationUpdateDialog
+import com.umairansariii.campusconnect.presentation.dialogs.NotificationViewDialog
+import com.umairansariii.campusconnect.presentation.events.NotificationFormEvent
+import com.umairansariii.campusconnect.viewmodel.NotificationViewModel
 
 @Composable
-fun CampusScreen(universityId: Int) {
-    val viewModel: CampusViewModel = hiltViewModel()
-    val state = viewModel.state
-    val campuses by viewModel.getCampusesByUniversity(universityId).collectAsState(initial = emptyList())
+fun BroadcastScreen(universityId: Int) {
+    val viewModel: NotificationViewModel = hiltViewModel()
+    val notifications by viewModel.getNotificationsByUniversity(universityId).collectAsState(initial = emptyList())
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.onEvent(CampusFormEvent.ShowDialog(id = null))
+                    viewModel.onEvent(NotificationFormEvent.ShowUpdateDialog(id = null))
                 },
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "campus-add-icon")
+                Icon(Icons.Outlined.Mail, contentDescription = "notification-broadcast-icon")
             }
         }
     ) { innerPadding ->
@@ -50,14 +50,12 @@ fun CampusScreen(universityId: Int) {
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
-                value = state.campusQuery,
-                onValueChange = {
-                    viewModel.onEvent(CampusFormEvent.CampusQueryChanged(it))
-                },
+                value = "",
+                onValueChange = { /* Handle change */ },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
                 placeholder = { Text(text = "Search") },
                 leadingIcon = {
-                    Icon(Icons.Outlined.Search, contentDescription = "campus-search-icon")
+                    Icon(Icons.Outlined.Search, contentDescription = "notification-search-icon")
                 },
                 shape = MaterialTheme.shapes.medium,
             )
@@ -67,11 +65,12 @@ fun CampusScreen(universityId: Int) {
                 item {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
-                items(campuses) { campus ->
-                    CampusCard(campus)
+                items(notifications) { notification ->
+                    NotificationCard(notification)
                 }
             }
-            CampusDialog(universityId = universityId)
+            NotificationViewDialog()
+            NotificationUpdateDialog(universityId = universityId)
         }
     }
 }

@@ -7,6 +7,7 @@ import com.umairansariii.campusconnect.data.local.converters.DateConverter
 import com.umairansariii.campusconnect.data.local.dao.CampusDao
 import com.umairansariii.campusconnect.data.local.dao.DepartmentDao
 import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
+import com.umairansariii.campusconnect.data.local.dao.NotificationDao
 import com.umairansariii.campusconnect.data.local.dao.StudentDao
 import com.umairansariii.campusconnect.data.local.dao.UniversityDao
 import com.umairansariii.campusconnect.data.local.dao.UserDao
@@ -14,6 +15,7 @@ import com.umairansariii.campusconnect.data.local.entities.Academic
 import com.umairansariii.campusconnect.data.local.entities.Campus
 import com.umairansariii.campusconnect.data.local.entities.Department
 import com.umairansariii.campusconnect.data.local.entities.Enrollment
+import com.umairansariii.campusconnect.data.local.entities.Notification
 import com.umairansariii.campusconnect.data.local.entities.University
 import com.umairansariii.campusconnect.data.local.entities.User
 
@@ -26,6 +28,7 @@ import com.umairansariii.campusconnect.data.local.entities.User
         University::class,
         Department::class,
         Campus::class,
+        Notification::class,
     ],
     version = 1,
     exportSchema = false,
@@ -36,5 +39,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun universityDao(): UniversityDao
     abstract fun departmentDao(): DepartmentDao
     abstract fun campusDao(): CampusDao
+    abstract fun notificationDao(): NotificationDao
     abstract fun studentDao(): StudentDao
 }

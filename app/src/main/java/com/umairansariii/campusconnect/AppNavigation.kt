@@ -24,6 +24,7 @@ import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
 import com.umairansariii.campusconnect.presentation.components.ProfileBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
+import com.umairansariii.campusconnect.presentation.screens.BroadcastScreen
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollPendingScreen
@@ -113,6 +114,16 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
 
             StudentScreen(universityId = universityId)
         }
+        composable(
+            route = "broadcast/{universityId}",
+            arguments = listOf(
+                navArgument(name = "universityId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+            BroadcastScreen(universityId = universityId)
+        }
     }
 }
 
@@ -189,6 +200,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "student/{universityId}",
+        "broadcast/{universityId}",
     )
 }
 
@@ -201,6 +213,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "student/{universityId}",
+        "broadcast/{universityId}",
     )
 }
 
