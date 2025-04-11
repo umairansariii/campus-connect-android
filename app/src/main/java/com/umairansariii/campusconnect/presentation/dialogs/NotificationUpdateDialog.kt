@@ -40,10 +40,17 @@ fun NotificationUpdateDialog(universityId: Int) {
                     modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    Text(
-                        text = "Broadcast Notification",
-                        style = MaterialTheme.typography.titleLarge,
-                    )
+                    if (state.showUpdateDialogId !== null) {
+                        Text(
+                            text = "Update Notification",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    } else {
+                        Text(
+                            text = "Broadcast Notification",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    }
                     Column {
                         OutlinedTextField(
                             value = state.notificationTitle,
@@ -88,7 +95,11 @@ fun NotificationUpdateDialog(universityId: Int) {
                                 .fillMaxWidth()
                                 .height(50.dp)
                         ) {
-                            Text(text = "Broadcast", style = MaterialTheme.typography.titleMedium)
+                            if (state.showUpdateDialogId !== null) {
+                                Text(text = "Update", style = MaterialTheme.typography.titleMedium)
+                            } else {
+                                Text(text = "Broadcast", style = MaterialTheme.typography.titleMedium)
+                            }
                         }
                     }
                 }
