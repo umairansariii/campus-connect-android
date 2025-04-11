@@ -59,6 +59,7 @@ class NotificationViewModel @Inject constructor(
                         state = state.copy(
                             showUpdateDialog = true,
                             showUpdateDialogId = event.id,
+                            createdAt = notification.createdAt,
                             notificationTitle = notification.title,
                             notificationDescription = notification.description,
                         )
@@ -72,17 +73,18 @@ class NotificationViewModel @Inject constructor(
                 state = state.copy(
                     showUpdateDialog = false,
                     showUpdateDialogId = null,
+                    createdAt = null,
                     notificationTitle = "",
                     notificationDescription = "",
                 )
             }
 
             is NotificationFormEvent.NotificationTitleChanged -> {
-                state = state.copy(notificationTitle = event.notificationTitle)
+                state = state.copy(notificationTitle = event.notificationTitle, notificationTitleError = null)
             }
 
             is NotificationFormEvent.NotificationDescriptionChanged -> {
-                state = state.copy(notificationDescription = event.notificationDescription)
+                state = state.copy(notificationDescription = event.notificationDescription, notificationDescriptionError = null)
             }
 
             is NotificationFormEvent.SubmitUpdate -> {
@@ -113,7 +115,7 @@ class NotificationViewModel @Inject constructor(
                 notificationDao.updateNotification(
                     Notification(
                         id = state.showUpdateDialogId!!,
-                        createdAt = Date(),
+                        createdAt = state.createdAt?: Date(),
                         updatedAt = Date(),
                         universityId = universityId,
                         title = state.notificationTitle,
