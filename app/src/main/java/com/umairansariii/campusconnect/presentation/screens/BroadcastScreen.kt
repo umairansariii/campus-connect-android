@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.presentation.components.NotificationCard
 import com.umairansariii.campusconnect.presentation.dialogs.NotificationUpdateDialog
+import com.umairansariii.campusconnect.presentation.dialogs.NotificationViewDialog
 import com.umairansariii.campusconnect.presentation.events.NotificationFormEvent
 import com.umairansariii.campusconnect.viewmodel.NotificationViewModel
 
@@ -68,6 +69,7 @@ fun BroadcastScreen(universityId: Int) {
                     NotificationCard(notification)
                 }
             }
+            NotificationViewDialog()
             NotificationUpdateDialog(universityId = universityId)
         }
     }
