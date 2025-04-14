@@ -24,11 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.viewmodel.AuthViewModel
 
 @Composable
-fun ProfileBar() {
+fun ProfileBar(navController: NavController) {
     val authViewModel: AuthViewModel = hiltViewModel()
     val authState by authViewModel.authState.collectAsStateWithLifecycle(initialValue = AuthState())
 
@@ -68,7 +69,9 @@ fun ProfileBar() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(
-                onClick = { /* Handle click */ }
+                onClick = {
+                    navController.navigate("notification/${authState.id}")
+                }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Notifications,

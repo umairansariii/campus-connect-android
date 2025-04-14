@@ -32,6 +32,7 @@ import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
 import com.umairansariii.campusconnect.presentation.screens.HomeScreen
 import com.umairansariii.campusconnect.presentation.screens.LoadingScreen
 import com.umairansariii.campusconnect.presentation.screens.LoginScreen
+import com.umairansariii.campusconnect.presentation.screens.NotificationScreen
 import com.umairansariii.campusconnect.presentation.screens.RegisterScreen
 import com.umairansariii.campusconnect.presentation.screens.StudentScreen
 import com.umairansariii.campusconnect.presentation.screens.UniversityDetailScreen
@@ -124,6 +125,16 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
 
             BroadcastScreen(universityId = universityId)
         }
+        composable(
+            route = "notification/{studentId}",
+            arguments = listOf(
+                navArgument(name = "studentId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val studentId = backStackEntry.arguments?.getInt("studentId") ?: -1
+
+            NotificationScreen(studentId = studentId)
+        }
     }
 }
 
@@ -167,7 +178,7 @@ fun AppNavigation() {
                 TopNavigationBar(navController = navController)
             }
             if (shouldShowProfileBar(navController = navController)) {
-                ProfileBar()
+                ProfileBar(navController = navController)
             }
         },
         bottomBar = {
@@ -201,6 +212,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "department/{universityId}",
         "student/{universityId}",
         "broadcast/{universityId}",
+        "notification/{studentId}",
     )
 }
 
@@ -214,6 +226,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "department/{universityId}",
         "student/{universityId}",
         "broadcast/{universityId}",
+        "notification/{studentId}",
     )
 }
 
