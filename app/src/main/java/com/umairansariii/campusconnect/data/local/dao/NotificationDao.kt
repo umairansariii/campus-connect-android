@@ -21,4 +21,12 @@ interface NotificationDao {
 
     @Query("SELECT * FROM notification WHERE universityId = :universityId")
     fun getAllNotificationsByUniversity(universityId: Int): Flow<List<Notification>>
+
+    @Query("""
+        SELECT n.*
+        FROM enrollment e
+        JOIN notification n ON e.universityId = n.universityId
+        WHERE e.studentId = :studentId
+    """)
+    fun getNotificationsByStudent(studentId: Int): Flow<List<Notification>>
 }

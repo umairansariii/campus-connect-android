@@ -27,6 +27,10 @@ class NotificationViewModel @Inject constructor(
         return notificationDao.getAllNotificationsByUniversity(universityId)
     }
 
+    fun getNotificationByStudent(studentId: Int): Flow<List<Notification>> {
+        return notificationDao.getNotificationsByStudent(studentId)
+    }
+
     fun onEvent(event: NotificationFormEvent) {
         when(event) {
             is NotificationFormEvent.ShowViewDialog -> {
