@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.umairansariii.campusconnect.data.local.enums.UserRole
 import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.viewmodel.AuthViewModel
 
@@ -68,15 +69,17 @@ fun ProfileBar(navController: NavController) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(
-                onClick = {
-                    navController.navigate("notification/${authState.id}")
+            if (authState.role !== UserRole.ADMIN) {
+                IconButton(
+                    onClick = {
+                        navController.navigate("notification/${authState.id}")
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Notifications,
+                        contentDescription = "notification-icon",
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Notifications,
-                    contentDescription = "notification-icon",
-                )
             }
             Avatar(name = "${authState.firstName} ${authState.lastName}")
         }
