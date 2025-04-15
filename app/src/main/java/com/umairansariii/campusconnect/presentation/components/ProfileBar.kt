@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.NotificationsActive
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,12 +28,26 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.umairansariii.campusconnect.data.local.enums.UserRole
 import com.umairansariii.campusconnect.data.store.auth.AuthState
+import com.umairansariii.campusconnect.presentation.animations.WigglingIcon
 import com.umairansariii.campusconnect.viewmodel.AuthViewModel
+import com.umairansariii.campusconnect.viewmodel.NotificationViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun ProfileBar(navController: NavController) {
+    val notificationViewModel: NotificationViewModel = hiltViewModel()
     val authViewModel: AuthViewModel = hiltViewModel()
     val authState by authViewModel.authState.collectAsStateWithLifecycle(initialValue = AuthState())
+    val notifications by notificationViewModel.getNotificationsByStudent(authState.id?: -1).collectAsStateWithLifecycle(initialValue = emptyList())
+
+    val currentDateString = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
+    val isAlert = notifications.any { notification ->
+        val notificationDateString = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(notification.updatedAt)
+        notificationDateString == currentDateString
+    }
 
     Row(
         modifier = Modifier
@@ -75,10 +90,19 @@ fun ProfileBar(navController: NavController) {
                         navController.navigate("notification/${authState.id}")
                     }
                 ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Notifications,
-                        contentDescription = "notification-icon",
-                    )
+                    if (isAlert) {
+                        WigglingIcon(
+                            icon = Icons.Outlined.NotificationsActive,
+                            rotationRange = Pair(-10f, 10f),
+                            rotationDuration = 400,
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Outlined.Notifications,
+                            contentDescription = "notification-icon",
+                        )
+                    }
+
                 }
             }
             Avatar(name = "${authState.firstName} ${authState.lastName}")
