@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Mail
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -32,6 +32,7 @@ import com.umairansariii.campusconnect.viewmodel.NotificationViewModel
 @Composable
 fun BroadcastScreen(universityId: Int) {
     val viewModel: NotificationViewModel = hiltViewModel()
+    val state = viewModel.state
     val notifications by viewModel.getNotificationsByUniversity(universityId).collectAsState(initial = emptyList())
 
     Scaffold(
@@ -41,7 +42,7 @@ fun BroadcastScreen(universityId: Int) {
                     viewModel.onEvent(NotificationFormEvent.ShowUpdateDialog(id = null))
                 },
             ) {
-                Icon(Icons.Outlined.Mail, contentDescription = "notification-broadcast-icon")
+                Icon(Icons.Filled.Add, contentDescription = "notification-add-icon")
             }
         }
     ) { innerPadding ->
@@ -50,8 +51,10 @@ fun BroadcastScreen(universityId: Int) {
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.notificationQuery,
+                onValueChange = {
+                    viewModel.onEvent(NotificationFormEvent.NotificationQueryChanged(it))
+                },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
                 placeholder = { Text(text = "Search") },
                 leadingIcon = {

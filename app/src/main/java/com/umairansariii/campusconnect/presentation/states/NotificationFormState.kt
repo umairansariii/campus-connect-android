@@ -13,4 +13,5 @@ data class NotificationFormState (
     val notificationTitleError: String? = null,
     val notificationDescription: String = "",
     val notificationDescriptionError: String? = null,
+    val notificationQuery: String = "",
 )

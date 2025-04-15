@@ -19,8 +19,12 @@ interface NotificationDao {
     @Query("SELECT * FROM notification WHERE id = :notificationId")
     suspend fun getNotificationById(notificationId: Int): Notification
 
-    @Query("SELECT * FROM notification WHERE universityId = :universityId")
-    fun getAllNotificationsByUniversity(universityId: Int): Flow<List<Notification>>
+    @Query("""
+        SELECT * FROM notification
+        WHERE universityId = :universityId
+        AND (:searchQuery IS NULL OR title LIKE '%' || :searchQuery || '%')
+    """)
+    fun getAllNotificationsByUniversity(universityId: Int, searchQuery: String): Flow<List<Notification>>
 
     @Query("""
         SELECT n.*

@@ -7,5 +7,6 @@ sealed interface NotificationFormEvent {
     class DismissUpdateDialog: NotificationFormEvent
     data class NotificationTitleChanged(val notificationTitle: String): NotificationFormEvent
     data class NotificationDescriptionChanged(val notificationDescription: String): NotificationFormEvent
+    data class NotificationQueryChanged(val notificationQuery: String): NotificationFormEvent
     data class SubmitUpdate(val universityId: Int): NotificationFormEvent
 }

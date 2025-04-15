@@ -24,7 +24,7 @@ class NotificationViewModel @Inject constructor(
     var state by mutableStateOf(NotificationFormState())
 
     fun getNotificationsByUniversity(universityId: Int): Flow<List<Notification>> {
-        return notificationDao.getAllNotificationsByUniversity(universityId)
+        return notificationDao.getAllNotificationsByUniversity(universityId, state.notificationQuery)
     }
 
     fun getNotificationByStudent(studentId: Int): Flow<List<Notification>> {
@@ -79,7 +79,9 @@ class NotificationViewModel @Inject constructor(
                     showUpdateDialogId = null,
                     createdAt = null,
                     notificationTitle = "",
+                    notificationTitleError = null,
                     notificationDescription = "",
+                    notificationDescriptionError = null,
                 )
             }
 
@@ -89,6 +91,10 @@ class NotificationViewModel @Inject constructor(
 
             is NotificationFormEvent.NotificationDescriptionChanged -> {
                 state = state.copy(notificationDescription = event.notificationDescription, notificationDescriptionError = null)
+            }
+
+            is NotificationFormEvent.NotificationQueryChanged -> {
+                state = state.copy(notificationQuery = event.notificationQuery)
             }
 
             is NotificationFormEvent.SubmitUpdate -> {
