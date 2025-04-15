@@ -22,7 +22,7 @@ import com.umairansariii.campusconnect.viewmodel.NotificationViewModel
 @Composable
 fun NotificationScreen(studentId: Int) {
     val viewModel: NotificationViewModel = hiltViewModel()
-    val notifications by viewModel.getNotificationByStudent(studentId).collectAsState(initial = emptyList())
+    val notifications by viewModel.getNotificationsByStudent(studentId).collectAsState(initial = emptyList())
 
     Surface(
         modifier = Modifier.fillMaxSize(),

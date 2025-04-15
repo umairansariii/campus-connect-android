@@ -27,7 +27,7 @@ class NotificationViewModel @Inject constructor(
         return notificationDao.getAllNotificationsByUniversity(universityId, state.notificationQuery)
     }
 
-    fun getNotificationByStudent(studentId: Int): Flow<List<Notification>> {
+    fun getNotificationsByStudent(studentId: Int): Flow<List<Notification>> {
         return notificationDao.getNotificationsByStudent(studentId)
     }
 
