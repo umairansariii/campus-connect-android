@@ -24,6 +24,7 @@ import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.presentation.components.BottomNavigationBar
 import com.umairansariii.campusconnect.presentation.components.ProfileBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
+import com.umairansariii.campusconnect.presentation.screens.BroadcastScreen
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollPendingScreen
@@ -31,6 +32,7 @@ import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
 import com.umairansariii.campusconnect.presentation.screens.HomeScreen
 import com.umairansariii.campusconnect.presentation.screens.LoadingScreen
 import com.umairansariii.campusconnect.presentation.screens.LoginScreen
+import com.umairansariii.campusconnect.presentation.screens.NotificationScreen
 import com.umairansariii.campusconnect.presentation.screens.RegisterScreen
 import com.umairansariii.campusconnect.presentation.screens.StudentScreen
 import com.umairansariii.campusconnect.presentation.screens.UniversityDetailScreen
@@ -113,6 +115,26 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
 
             StudentScreen(universityId = universityId)
         }
+        composable(
+            route = "broadcast/{universityId}",
+            arguments = listOf(
+                navArgument(name = "universityId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+            BroadcastScreen(universityId = universityId)
+        }
+        composable(
+            route = "notification/{studentId}",
+            arguments = listOf(
+                navArgument(name = "studentId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val studentId = backStackEntry.arguments?.getInt("studentId") ?: -1
+
+            NotificationScreen(studentId = studentId)
+        }
     }
 }
 
@@ -156,7 +178,7 @@ fun AppNavigation() {
                 TopNavigationBar(navController = navController)
             }
             if (shouldShowProfileBar(navController = navController)) {
-                ProfileBar()
+                ProfileBar(navController = navController)
             }
         },
         bottomBar = {
@@ -189,6 +211,8 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "student/{universityId}",
+        "broadcast/{universityId}",
+        "notification/{studentId}",
     )
 }
 
@@ -201,6 +225,8 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "student/{universityId}",
+        "broadcast/{universityId}",
+        "notification/{studentId}",
     )
 }
 
