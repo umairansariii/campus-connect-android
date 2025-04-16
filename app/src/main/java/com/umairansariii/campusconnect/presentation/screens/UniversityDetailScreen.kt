@@ -1,6 +1,8 @@
 package com.umairansariii.campusconnect.presentation.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -17,19 +21,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.umairansariii.campusconnect.R
 
 @Composable
 fun UniversityDetailScreen(universityId: Int, navController: NavController) {
+    val scrollState = rememberScrollState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(horizontal = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(10.dp))
@@ -39,24 +51,32 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                 ),
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    Text(
-                        text = "Manage Campuses",
-                        fontSize = 20.sp,
+                Box {
+                    Image(
+                        painter = painterResource(id = R.drawable.card_campus),
+                        contentDescription = "card-background-image",
+                        modifier = Modifier
+                            .alpha(0.2f)
+                            .align(Alignment.BottomStart),
+                        contentScale = ContentScale.Fit
                     )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
-                        Button(
-                            onClick = {
-                                navController.navigate("campus/$universityId")
-                            }
+                        Text(text = "Campuses", fontSize = 20.sp)
+                        Text(text = "Manage campuses with different locations.")
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
                         ) {
-                            Text(text = "Manage")
+                            Button(
+                                onClick = {
+                                    navController.navigate("campus/$universityId")
+                                }
+                            ) {
+                                Text(text = "Manage")
+                            }
                         }
                     }
                 }
@@ -68,24 +88,32 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                 ),
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    Text(
-                        text = "Manage Departments",
-                        fontSize = 20.sp,
+                Box {
+                    Image(
+                        painter = painterResource(id = R.drawable.card_department),
+                        contentDescription = "card-background-image",
+                        modifier = Modifier
+                            .alpha(0.2f)
+                            .align(Alignment.BottomStart),
+                        contentScale = ContentScale.Fit
                     )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
-                        Button(
-                            onClick = {
-                                navController.navigate("department/$universityId")
-                            }
+                        Text(text = "Departments", fontSize = 20.sp)
+                        Text(text = "Manage multiple departments by university.")
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
                         ) {
-                            Text(text = "Manage")
+                            Button(
+                                onClick = {
+                                    navController.navigate("department/$universityId")
+                                }
+                            ) {
+                                Text(text = "Manage")
+                            }
                         }
                     }
                 }
@@ -97,24 +125,32 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                 ),
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    Text(
-                        text = "Manage Students",
-                        fontSize = 20.sp,
+                Box {
+                    Image(
+                        painter = painterResource(id = R.drawable.card_student),
+                        contentDescription = "card-background-image",
+                        modifier = Modifier
+                            .alpha(0.2f)
+                            .align(Alignment.BottomStart),
+                        contentScale = ContentScale.Fit
                     )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
-                        Button(
-                            onClick = {
-                                navController.navigate("student/$universityId")
-                            }
+                        Text(text = "Students", fontSize = 20.sp)
+                        Text(text = "Manage student academic details.")
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
                         ) {
-                            Text(text = "Manage")
+                            Button(
+                                onClick = {
+                                    navController.navigate("student/$universityId")
+                                }
+                            ) {
+                                Text(text = "Manage")
+                            }
                         }
                     }
                 }
@@ -126,28 +162,37 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                 ),
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    Text(
-                        text = "Manage Notifications",
-                        fontSize = 20.sp,
+                Box {
+                    Image(
+                        painter = painterResource(id = R.drawable.card_notification),
+                        contentDescription = "card-background-image",
+                        modifier = Modifier
+                            .alpha(0.2f)
+                            .align(Alignment.BottomStart),
+                        contentScale = ContentScale.Fit
                     )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
-                        Button(
-                            onClick = {
-                                navController.navigate("broadcast/$universityId")
-                            }
+                        Text(text = "Notifications", fontSize = 20.sp)
+                        Text(text = "Broadcast notification to students.")
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
                         ) {
-                            Text(text = "Manage")
+                            Button(
+                                onClick = {
+                                    navController.navigate("broadcast/$universityId")
+                                }
+                            ) {
+                                Text(text = "Manage")
+                            }
                         }
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
