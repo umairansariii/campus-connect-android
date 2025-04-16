@@ -23,6 +23,7 @@ interface NotificationDao {
         SELECT * FROM notification
         WHERE universityId = :universityId
         AND (:searchQuery IS NULL OR title LIKE '%' || :searchQuery || '%')
+        ORDER BY updatedAt DESC
     """)
     fun getAllNotificationsByUniversity(universityId: Int, searchQuery: String): Flow<List<Notification>>
 
@@ -31,6 +32,7 @@ interface NotificationDao {
         FROM enrollment e
         JOIN notification n ON e.universityId = n.universityId
         WHERE e.studentId = :studentId
+        ORDER BY updatedAt DESC
     """)
     fun getNotificationsByStudent(studentId: Int): Flow<List<Notification>>
 }
