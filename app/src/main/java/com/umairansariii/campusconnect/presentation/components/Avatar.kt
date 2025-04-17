@@ -20,6 +20,7 @@ fun Avatar(
     name: String,
     size: Dp = 44.dp,
     fontSize: TextUnit = 16.sp,
+    modifier: Modifier,
 ) {
     val initials = name.split(" ")
         .take(n = 2)
@@ -27,7 +28,7 @@ fun Avatar(
         .joinToString(separator = "")
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(size)
             .background(color = MaterialTheme.colorScheme.primary, shape = CircleShape),
         contentAlignment = Alignment.Center,
