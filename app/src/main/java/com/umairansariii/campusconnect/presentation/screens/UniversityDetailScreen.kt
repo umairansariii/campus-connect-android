@@ -102,7 +102,7 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         Text(text = "Departments", fontSize = 20.sp)
-                        Text(text = "Manage multiple departments by university.")
+                        Text(text = "Manage multiple faculty departments.")
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End,
@@ -139,7 +139,7 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         Text(text = "Students", fontSize = 20.sp)
-                        Text(text = "Manage student academic details.")
+                        Text(text = "Manage student academic records.")
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End,
