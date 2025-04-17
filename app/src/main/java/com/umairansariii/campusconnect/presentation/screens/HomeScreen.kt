@@ -1,5 +1,6 @@
 package com.umairansariii.campusconnect.presentation.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -17,41 +20,96 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.umairansariii.campusconnect.viewmodel.AuthViewModel
+import com.umairansariii.campusconnect.presentation.components.ClubTile
+import com.umairansariii.campusconnect.presentation.components.EventTile
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    val authViewModel: AuthViewModel = hiltViewModel()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(40.dp))
-            Text(
-                text = "Campus Connect",
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "Welcome to Campus Connect, a platform to connect students and universities, this project is developed by Muhammad Umair (BC210402929).",
-                color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            // Upcoming Events
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp, horizontal = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = "Upcoming Events",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                Text(
+                    text = "See more",
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.clickable { /* Handle click */ },
+                )
+            }
+            LazyColumn {
+                item {
+                    EventTile()
+                    EventTile()
+                }
+            }
+            // Popular Clubs
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp, horizontal = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = "Popular Clubs",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                Text(
+                    text = "See more",
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.clickable { /* Handle click */ },
+                )
+            }
+            LazyRow {
+                item {
+                    ClubTile()
+                    ClubTile()
+                    ClubTile()
+                    ClubTile()
+                    ClubTile()
+                    ClubTile()
+                }
+            }
+            // Trending Discussions
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp, horizontal = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = "Trending Discussions",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                Text(
+                    text = "See more",
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.clickable { /* Handle click */ },
+                )
+            }
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -85,45 +143,6 @@ fun HomeScreen(navController: NavController) {
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                ),
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    Text(
-                        text = "Register Student",
-                        fontSize = 20.sp,
-                    )
-                    Text(
-                        text = "Authentication is under development, this feature is temporarily enabled for testing.",
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
-                    ) {
-                        Button(
-                            onClick = {
-                                navController.navigate("register")
-                            }
-                        ) {
-                            Text(text = "Test Register")
-                        }
-                        Button(
-                            onClick = {
-                                authViewModel.setLoggedOut()
-                            }
-                        ) {
-                            Text(text = "Logout")
-                        }
-                    }
-                }
-            }
         }
     }
 }
