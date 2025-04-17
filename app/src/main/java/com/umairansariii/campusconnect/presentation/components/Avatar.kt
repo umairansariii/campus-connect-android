@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Avatar(
+    modifier: Modifier = Modifier,
     name: String,
     size: Dp = 44.dp,
     fontSize: TextUnit = 16.sp,
-    modifier: Modifier,
 ) {
     val initials = name.split(" ")
         .take(n = 2)
