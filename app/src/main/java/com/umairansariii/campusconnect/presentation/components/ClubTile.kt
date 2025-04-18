@@ -35,7 +35,7 @@ fun ClubTile() {
             modifier = Modifier.fillMaxWidth().padding(10.dp),
         ) {
             Image(
-                painter = painterResource(id = R.drawable.profile),
+                painter = painterResource(id = R.drawable.image_placeholder),
                 contentDescription = "club-tile-banner-image",
                 modifier = Modifier
                     .height(130.dp)
