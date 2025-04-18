@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Avatar(
+    modifier: Modifier = Modifier,
     name: String,
     size: Dp = 44.dp,
     fontSize: TextUnit = 16.sp,
@@ -27,7 +28,7 @@ fun Avatar(
         .joinToString(separator = "")
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(size)
             .background(color = MaterialTheme.colorScheme.primary, shape = CircleShape),
         contentAlignment = Alignment.Center,
