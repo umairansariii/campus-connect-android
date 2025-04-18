@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.umairansariii.campusconnect.presentation.components.ClubTile
+import com.umairansariii.campusconnect.presentation.components.DiscussionTile
 import com.umairansariii.campusconnect.presentation.components.EventTile
 
 @Composable
@@ -36,7 +39,8 @@ fun HomeScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 8.dp),
+                .padding(horizontal = 8.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(32.dp))
@@ -58,9 +62,10 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.clickable { /* Handle click */ },
                 )
             }
-            LazyColumn {
-                item {
-                    EventTile()
+            LazyColumn(
+                modifier = Modifier.height(154.dp)
+            ) {
+                items(2) {
                     EventTile()
                 }
             }
@@ -82,13 +87,10 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.clickable { /* Handle click */ },
                 )
             }
-            LazyRow {
-                item {
-                    ClubTile()
-                    ClubTile()
-                    ClubTile()
-                    ClubTile()
-                    ClubTile()
+            LazyRow(
+                modifier = Modifier.height(200.dp)
+            ) {
+                items(6) {
                     ClubTile()
                 }
             }
@@ -110,38 +112,45 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.clickable { /* Handle click */ },
                 )
             }
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                ),
+            LazyColumn(
+                modifier = Modifier.height(318.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    Text(
-                        text = "Manage University",
-                        fontSize = 20.sp,
-                    )
-                    Text(
-                        text = "Only admin can manage universities, this feature is temporarily enabled for testing.",
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
-                    ) {
-                        Button(
-                            onClick = {
-                                navController.navigate("university")
-                            }
-                        ) {
-                            Text(text = "Manage")
-                        }
-                    }
+                items(4) {
+                    DiscussionTile()
                 }
             }
+//            Card(
+//                modifier = Modifier.fillMaxWidth(),
+//                colors = CardDefaults.cardColors(
+//                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+//                ),
+//            ) {
+//                Column(
+//                    modifier = Modifier.padding(16.dp),
+//                    verticalArrangement = Arrangement.spacedBy(16.dp),
+//                ) {
+//                    Text(
+//                        text = "Manage University",
+//                        fontSize = 20.sp,
+//                    )
+//                    Text(
+//                        text = "Only admin can manage universities, this feature is temporarily enabled for testing.",
+//                        color = MaterialTheme.colorScheme.secondary,
+//                    )
+//                    Row(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        horizontalArrangement = Arrangement.End,
+//                    ) {
+//                        Button(
+//                            onClick = {
+//                                navController.navigate("university")
+//                            }
+//                        ) {
+//                            Text(text = "Manage")
+//                        }
+//                    }
+//                }
+//            }
             Spacer(modifier = Modifier.height(10.dp))
         }
     }
