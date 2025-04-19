@@ -13,9 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.umairansariii.campusconnect.presentation.components.ClubTile
 import com.umairansariii.campusconnect.presentation.components.DiscussionTile
@@ -119,38 +115,6 @@ fun HomeScreen(navController: NavController) {
                     DiscussionTile()
                 }
             }
-//            Card(
-//                modifier = Modifier.fillMaxWidth(),
-//                colors = CardDefaults.cardColors(
-//                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
-//                ),
-//            ) {
-//                Column(
-//                    modifier = Modifier.padding(16.dp),
-//                    verticalArrangement = Arrangement.spacedBy(16.dp),
-//                ) {
-//                    Text(
-//                        text = "Manage University",
-//                        fontSize = 20.sp,
-//                    )
-//                    Text(
-//                        text = "Only admin can manage universities, this feature is temporarily enabled for testing.",
-//                        color = MaterialTheme.colorScheme.secondary,
-//                    )
-//                    Row(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        horizontalArrangement = Arrangement.End,
-//                    ) {
-//                        Button(
-//                            onClick = {
-//                                navController.navigate("university")
-//                            }
-//                        ) {
-//                            Text(text = "Manage")
-//                        }
-//                    }
-//                }
-//            }
             Spacer(modifier = Modifier.height(10.dp))
         }
     }

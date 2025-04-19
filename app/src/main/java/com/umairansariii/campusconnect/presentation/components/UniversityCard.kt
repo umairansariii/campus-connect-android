@@ -11,18 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ImportContacts
-import androidx.compose.material.icons.outlined.LocationOn
-import androidx.compose.material.icons.outlined.School
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,42 +52,13 @@ fun UniversityCard(university: University, navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.profile),
+                    painter = painterResource(id = R.drawable.image_placeholder),
                     contentDescription = "university-card-profile-icon",
                     modifier = Modifier.size(50.dp).clip(CircleShape),
                     contentScale = ContentScale.Crop,
                 )
                 Text(text = university.title, fontSize = 18.sp)
             }
-//            Row(
-//                Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.spacedBy(10.dp),
-//                verticalAlignment = Alignment.CenterVertically,
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Outlined.School,
-//                    contentDescription = "university-card-stats-icon",
-//                )
-//                Text(text = "4800+", fontSize = 18.sp)
-//                VerticalDivider(
-//                    modifier = Modifier.height(12.dp),
-//                    thickness = 2.dp,
-//                )
-//                Icon(
-//                    imageVector = Icons.Outlined.ImportContacts,
-//                    contentDescription = "university-card-stats-icon",
-//                )
-//                Text(text = "24", fontSize = 18.sp)
-//                VerticalDivider(
-//                    modifier = Modifier.height(12.dp),
-//                    thickness = 2.dp,
-//                )
-//                Icon(
-//                    imageVector = Icons.Outlined.LocationOn,
-//                    contentDescription = "university-card-stats-icon",
-//                )
-//                Text(text = "14", fontSize = 18.sp)
-//            }
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
