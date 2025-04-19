@@ -26,9 +26,12 @@ import com.umairansariii.campusconnect.presentation.components.ProfileBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.BroadcastScreen
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
+import com.umairansariii.campusconnect.presentation.screens.ClubScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
+import com.umairansariii.campusconnect.presentation.screens.DiscussionScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollPendingScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
+import com.umairansariii.campusconnect.presentation.screens.EventScreen
 import com.umairansariii.campusconnect.presentation.screens.HomeScreen
 import com.umairansariii.campusconnect.presentation.screens.LoadingScreen
 import com.umairansariii.campusconnect.presentation.screens.LoginScreen
@@ -135,6 +138,15 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
 
             NotificationScreen(studentId = studentId)
         }
+        composable(route = "events") {
+            EventScreen()
+        }
+        composable(route = "discussions") {
+            DiscussionScreen()
+        }
+        composable(route = "clubs") {
+            ClubScreen()
+        }
     }
 }
 
@@ -183,7 +195,7 @@ fun AppNavigation() {
         },
         bottomBar = {
             if (shouldShowBottomBar(navController = navController)) {
-                BottomNavigationBar()
+                BottomNavigationBar(navController = navController, authState = authState)
             }
         }
     ) { innerPadding ->
@@ -213,6 +225,9 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "student/{universityId}",
         "broadcast/{universityId}",
         "notification/{studentId}",
+        "events",
+        "discussions",
+        "clubs",
     )
 }
 
@@ -220,7 +235,6 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
 fun shouldShowTopBar(navController: NavController): Boolean {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     return currentRoute in listOf(
-        "university",
         "university-detail/{universityId}",
         "campus/{universityId}",
         "department/{universityId}",
@@ -235,5 +249,9 @@ fun shouldShowProfileBar(navController: NavController): Boolean {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     return currentRoute in listOf(
         "home",
+        "university",
+        "events",
+        "discussions",
+        "clubs",
     )
 }

@@ -49,6 +49,7 @@ fun UniversityScreen(navController: NavController) {
         Column(
             modifier = Modifier.fillMaxSize(),
         ) {
+            Spacer(modifier = Modifier.height(32.dp))
             LazyColumn(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
             ) {

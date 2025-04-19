@@ -1,7 +1,9 @@
 package com.umairansariii.campusconnect.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,15 +12,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.NotificationsActive
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -41,6 +49,7 @@ fun ProfileBar(navController: NavController) {
     val authViewModel: AuthViewModel = hiltViewModel()
     val authState by authViewModel.authState.collectAsStateWithLifecycle(initialValue = AuthState())
     val notifications by notificationViewModel.getNotificationsByStudent(authState.id?: -1).collectAsStateWithLifecycle(initialValue = emptyList())
+    var expanded by remember { mutableStateOf(false) }
 
     val currentDateString = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
@@ -105,7 +114,26 @@ fun ProfileBar(navController: NavController) {
 
                 }
             }
-            Avatar(name = "${authState.firstName} ${authState.lastName}")
+            Box {
+                Avatar(
+                    name = "${authState.firstName} ${authState.lastName}",
+                    modifier = Modifier.clickable { expanded = !expanded },
+                )
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(text = "Logout") },
+                        leadingIcon = {
+                            Icon(Icons.AutoMirrored.Outlined.Logout, contentDescription = "logout-icon")
+                        },
+                        onClick = {
+                            authViewModel.setLoggedOut()
+                        }
+                    )
+                }
+            }
         }
     }
 }
