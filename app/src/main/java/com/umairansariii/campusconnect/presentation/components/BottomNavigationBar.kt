@@ -6,11 +6,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SportsBaseball
 import androidx.compose.material.icons.outlined.Event
 import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.SportsBaseball
 import androidx.compose.material3.Badge
@@ -26,6 +28,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import com.umairansariii.campusconnect.data.local.enums.UserRole
+import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.presentation.states.BottomNavigationItem
 
 val items = listOf(
@@ -46,8 +51,16 @@ val items = listOf(
         badgeCount = 3,
     ),
     BottomNavigationItem(
-        title = "Groups",
-        route = "groups",
+        title = "University",
+        route = "university",
+        selectedIcon = Icons.Filled.School,
+        unselectedIcon = Icons.Outlined.School,
+        hasNews = false,
+        badgeCount = 0,
+    ),
+    BottomNavigationItem(
+        title = "Discussions",
+        route = "discussions",
         selectedIcon = Icons.Filled.Group,
         unselectedIcon = Icons.Outlined.Group,
         hasNews = false,
@@ -72,7 +85,7 @@ val items = listOf(
 )
 
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(navController: NavController, authState: AuthState) {
     var selected by remember {
         mutableIntStateOf(0)
     }
@@ -82,10 +95,17 @@ fun BottomNavigationBar() {
             modifier = Modifier.background(MaterialTheme.colorScheme.inverseOnSurface)
         ) {
             items.forEachIndexed { index, item ->
+                if (authState.role == UserRole.ADMIN && item.title == "Events") {
+                    return@forEachIndexed
+                } else if (authState.role == UserRole.STUDENT && item.title == "University") {
+                    return@forEachIndexed
+                }
+
                 NavigationBarItem(
                     selected = index == selected,
                     onClick = {
                         selected = index
+                        navController.navigate(item.route)
                     },
                     icon = {
                         BadgedBox(
