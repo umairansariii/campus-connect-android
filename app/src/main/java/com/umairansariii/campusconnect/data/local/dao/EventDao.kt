@@ -16,6 +16,9 @@ interface EventDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateEvent(event: Event)
 
+    @Query("SELECT * FROM event WHERE id = :id")
+    suspend fun getEventById(id: Int): Event
+
     @Query("SELECT * FROM event WHERE universityId = :universityId")
     fun getEventsByUniversity(universityId: Int): Flow<List<Event>>
 }
