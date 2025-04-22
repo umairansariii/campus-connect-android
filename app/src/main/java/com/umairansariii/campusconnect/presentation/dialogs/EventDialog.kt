@@ -14,6 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.data.local.enums.EventType
+import com.umairansariii.campusconnect.presentation.components.DateSelector
+import com.umairansariii.campusconnect.presentation.components.ListSelector
 import com.umairansariii.campusconnect.presentation.events.EventFormEvent
 import com.umairansariii.campusconnect.viewmodel.EventViewModel
 
@@ -21,6 +24,15 @@ import com.umairansariii.campusconnect.viewmodel.EventViewModel
 fun EventDialog(universityId: Int) {
     val viewModel: EventViewModel = hiltViewModel()
     val state = viewModel.state
+
+    val eventTypes = listOf(
+        EventType.Alumni,
+        EventType.Orientation,
+        EventType.Social,
+        EventType.Speaker,
+        EventType.Sports,
+        EventType.Workshop,
+    )
 
     if (state.showDialog) {
         Dialog(
@@ -94,6 +106,27 @@ fun EventDialog(universityId: Int) {
                             },
                             isError = state.eventVenueError != null,
                             singleLine = true,
+                        )
+                        DateSelector(
+                            label = "Date",
+                            onDateSelected = {
+                                viewModel.onEvent(EventFormEvent.EventDateChanged(it))
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            supportingText = state.eventDateError,
+                            isError = state.eventDateError != null,
+                        )
+                        ListSelector(
+                            value = state.eventType,
+                            label = "Type",
+                            options = eventTypes,
+                            itemToString = { it.name },
+                            onItemSelected = {
+                                viewModel.onEvent(EventFormEvent.EventTypeChanged(it))
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            supportingText = state.eventTypeError,
+                            isError = state.eventTypeError != null,
                         )
                     }
                 }
