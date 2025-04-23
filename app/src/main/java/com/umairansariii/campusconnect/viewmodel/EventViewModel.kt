@@ -25,7 +25,7 @@ class EventViewModel @Inject constructor(
     var state by mutableStateOf(EventFormState())
 
     fun getEventsByUniversity(universityId: Int): Flow<List<Event>> {
-        return eventDao.getEventsByUniversity(universityId)
+        return eventDao.getEventsByUniversity(universityId, state.eventQuery)
     }
 
     fun onEvent(event: EventFormEvent) {
@@ -90,6 +90,10 @@ class EventViewModel @Inject constructor(
 
             is EventFormEvent.EventStateChanged -> {
                 state = state.copy(eventIsActive = event.eventIsActive)
+            }
+
+            is EventFormEvent.EventQueryChanged -> {
+                state = state.copy(eventQuery = event.eventQuery)
             }
 
             is EventFormEvent.Submit -> {

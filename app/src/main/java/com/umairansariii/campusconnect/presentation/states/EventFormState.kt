@@ -17,4 +17,5 @@ data class EventFormState (
     val eventType: EventType? = null,
     val eventTypeError: String? = null,
     val eventIsActive: Boolean = true,
+    val eventQuery: String = "",
 )

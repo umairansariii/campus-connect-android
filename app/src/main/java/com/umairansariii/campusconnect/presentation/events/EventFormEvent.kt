@@ -12,5 +12,6 @@ sealed interface EventFormEvent {
     data class EventDateChanged(val eventDate: Date): EventFormEvent
     data class EventTypeChanged(val eventType: EventType): EventFormEvent
     data class EventStateChanged(val eventIsActive: Boolean): EventFormEvent
+    data class EventQueryChanged(val eventQuery: String): EventFormEvent
     data class Submit(val universityId: Int): EventFormEvent
 }

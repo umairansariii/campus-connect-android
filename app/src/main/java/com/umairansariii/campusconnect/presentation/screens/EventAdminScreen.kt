@@ -50,8 +50,10 @@ fun EventAdminScreen(universityId: Int) {
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.eventQuery,
+                onValueChange = {
+                    viewModel.onEvent(EventFormEvent.EventQueryChanged(it))
+                },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
                 placeholder = { Text(text = "Search") },
                 leadingIcon = {

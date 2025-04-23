@@ -19,6 +19,11 @@ interface EventDao {
     @Query("SELECT * FROM event WHERE id = :id")
     suspend fun getEventById(id: Int): Event
 
-    @Query("SELECT * FROM event WHERE universityId = :universityId")
-    fun getEventsByUniversity(universityId: Int): Flow<List<Event>>
+    @Query("""
+        SELECT * FROM event
+        WHERE universityId = :universityId
+        AND (:searchQuery IS NULL OR title LIKE '%' || :searchQuery || '%')
+        ORDER BY date DESC
+    """)
+    fun getEventsByUniversity(universityId: Int, searchQuery: String): Flow<List<Event>>
 }
