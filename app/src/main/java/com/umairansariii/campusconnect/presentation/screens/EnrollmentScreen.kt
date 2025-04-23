@@ -151,6 +151,7 @@ fun EnrollmentScreen(userId: Long) {
                 singleLine = true,
             )
             DateSelector(
+                value = state.dob,
                 label = "Date of Birth",
                 onDateSelected = {
                     viewModel.onEvent(EnrollmentFormEvent.DobChanged(it))

@@ -126,6 +126,7 @@ fun EventDialog(universityId: Int) {
                             singleLine = true,
                         )
                         DateSelector(
+                            value = state.eventDate,
                             label = "Date",
                             onDateSelected = {
                                 viewModel.onEvent(EventFormEvent.EventDateChanged(it))
