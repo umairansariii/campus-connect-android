@@ -69,7 +69,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
     }
 }
 
-fun NavGraphBuilder.appGraph(navController: NavHostController) {
+fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthState) {
     navigation(
         route = "app", startDestination = "home"
     ) {
@@ -150,7 +150,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             NotificationScreen(studentId = studentId)
         }
         composable(route = "events") {
-            EventScreen()
+            EventScreen(studentId = authState.id?: -1)
         }
         composable(route = "discussions") {
             DiscussionScreen()
@@ -219,7 +219,7 @@ fun AppNavigation() {
                 LoadingScreen()
             }
             authGraph(navController = navController)
-            appGraph(navController = navController)
+            appGraph(navController = navController, authState = authState)
         }
     }
 }

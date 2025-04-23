@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.EventDao
+import com.umairansariii.campusconnect.data.local.dto.EventUniversity
 import com.umairansariii.campusconnect.data.local.entities.Event
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmpty
 import com.umairansariii.campusconnect.domain.usecase.ValidateNull
@@ -26,6 +27,10 @@ class EventViewModel @Inject constructor(
 
     fun getEventsByUniversity(universityId: Int): Flow<List<Event>> {
         return eventDao.getEventsByUniversity(universityId, state.eventQuery)
+    }
+
+    fun getEventsByStudent(studentId: Int): Flow<List<EventUniversity>> {
+        return eventDao.getEventsByStudent(studentId)
     }
 
     fun onEvent(event: EventFormEvent) {

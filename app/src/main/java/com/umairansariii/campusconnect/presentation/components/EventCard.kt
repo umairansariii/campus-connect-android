@@ -23,9 +23,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.umairansariii.campusconnect.R
+import com.umairansariii.campusconnect.data.local.dto.EventUniversity
 
 @Composable
-fun EventCard() {
+fun EventCard(event: EventUniversity) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -47,9 +48,9 @@ fun EventCard() {
                     contentScale = ContentScale.Crop,
                 )
                 Column {
-                    Text(text = "Virtual University")
+                    Text(text = event.universityName)
                     Text(
-                        text = "North Nazimabad Campus",
+                        text = event.campusName,
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -63,10 +64,10 @@ fun EventCard() {
             Column(
                 modifier = Modifier.fillMaxWidth().padding(16.dp)
             ) {
-                Text(text = "Planting for Tomorrow: Earth Day 2025")
-                Text(text = "Bagh-e-Jinnah, Karachi.")
+                Text(text = event.title)
+                Text(text = event.venue)
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Join us in celebrating Earth Day by planting trees and flowers around campus! Help beautify our surroundings and contribute to a greener future.")
+                Text(text = event.description)
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
