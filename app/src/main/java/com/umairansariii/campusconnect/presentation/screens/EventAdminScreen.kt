@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.components.EventAdminCard
 import com.umairansariii.campusconnect.presentation.dialogs.EventDialog
 import com.umairansariii.campusconnect.presentation.events.EventFormEvent
 import com.umairansariii.campusconnect.viewmodel.EventViewModel
@@ -65,7 +66,7 @@ fun EventAdminScreen(universityId: Int) {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 items(events) { event ->
-                    //TODO: EventCard(event)
+                    EventAdminCard(event)
                 }
             }
             EventDialog(universityId = universityId)

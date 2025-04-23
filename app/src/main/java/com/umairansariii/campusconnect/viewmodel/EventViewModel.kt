@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.EventDao
 import com.umairansariii.campusconnect.data.local.entities.Event
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmpty
-import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyAlpha
 import com.umairansariii.campusconnect.domain.usecase.ValidateNull
 import com.umairansariii.campusconnect.presentation.events.EventFormEvent
 import com.umairansariii.campusconnect.presentation.states.EventFormState
@@ -21,7 +20,6 @@ import javax.inject.Inject
 class EventViewModel @Inject constructor(
     private val eventDao: EventDao,
 ): ViewModel() {
-    private val validateEmptyAlpha = ValidateEmptyAlpha()
     private val validateEmpty = ValidateEmpty()
     private val validateNull = ValidateNull()
     var state by mutableStateOf(EventFormState())
@@ -101,9 +99,9 @@ class EventViewModel @Inject constructor(
     }
 
     private fun submit(universityId: Int) {
-        val titleResult = validateEmptyAlpha.execute(value = state.eventTitle, fieldName = "Title")
-        val descriptionResult = validateEmptyAlpha.execute(value = state.eventDescription, fieldName = "Description")
-        val venueResult = validateEmptyAlpha.execute(value = state.eventVenue, fieldName = "Venue")
+        val titleResult = validateEmpty.execute(value = state.eventTitle, fieldName = "Title")
+        val descriptionResult = validateEmpty.execute(value = state.eventDescription, fieldName = "Description")
+        val venueResult = validateEmpty.execute(value = state.eventVenue, fieldName = "Venue")
         val dateResult = validateNull.execute(value = state.eventDate, fieldName = "Date")
         val typeResult = validateNull.execute(value = state.eventType, fieldName = "Type")
 
@@ -125,5 +123,50 @@ class EventViewModel @Inject constructor(
             )
             return
         }
+
+        viewModelScope.launch {
+            if (state.showDialogId !== null) {
+                eventDao.updateEvent(
+                    Event(
+                        id = state.showDialogId!!,
+                        universityId = universityId,
+                        title = state.eventTitle,
+                        description = state.eventDescription,
+                        venue = state.eventVenue,
+                        date = state.eventDate!!,
+                        type = state.eventType!!,
+                        isActive = state.eventIsActive,
+                    )
+                )
+            } else {
+                eventDao.insertEvent(
+                    Event(
+                        universityId = universityId,
+                        title = state.eventTitle,
+                        description = state.eventDescription,
+                        venue = state.eventVenue,
+                        date = state.eventDate!!,
+                        type = state.eventType!!,
+                        isActive = state.eventIsActive,
+                    )
+                )
+            }
+        }
+
+        state = state.copy(
+            showDialog = false,
+            showDialogId = null,
+            eventTitle = "",
+            eventTitleError = null,
+            eventDescription = "",
+            eventDescriptionError = null,
+            eventVenue = "",
+            eventVenueError = null,
+            eventDate = null,
+            eventDateError = null,
+            eventType = null,
+            eventTypeError = null,
+            eventIsActive = true,
+        )
     }
 }
