@@ -26,13 +26,13 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateSelector(
+    value: Date?,
     label: String,
     onDateSelected: (Date) -> Unit,
     modifier: Modifier = Modifier,
     supportingText: String? = null,
     isError: Boolean = false,
 ) {
-    var selectedDateMillis by remember { mutableStateOf<Long?>(null) }
     var showDialog by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
 
@@ -40,8 +40,8 @@ fun DateSelector(
         modifier = modifier
     ) {
         OutlinedTextField(
-            value = selectedDateMillis?.let { millis ->
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(millis))
+            value = value?.let { date ->
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
             } ?: "",
             onValueChange = { /* Do nothing */ },
             modifier = Modifier.fillMaxWidth(),
@@ -73,7 +73,6 @@ fun DateSelector(
                     TextButton(
                         onClick = {
                             datePickerState.selectedDateMillis?.let { millis ->
-                                selectedDateMillis = millis
                                 onDateSelected(Date(millis))
                             }
                             showDialog = false

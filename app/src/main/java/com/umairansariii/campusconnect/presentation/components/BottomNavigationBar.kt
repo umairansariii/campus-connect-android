@@ -48,7 +48,7 @@ val items = listOf(
         selectedIcon = Icons.Filled.Event,
         unselectedIcon = Icons.Outlined.Event,
         hasNews = false,
-        badgeCount = 3,
+        badgeCount = 0,
     ),
     BottomNavigationItem(
         title = "University",
@@ -79,7 +79,7 @@ val items = listOf(
         route = "settings",
         selectedIcon = Icons.Filled.Settings,
         unselectedIcon = Icons.Outlined.Settings,
-        hasNews = true,
+        hasNews = false,
         badgeCount = 0
     ),
 )

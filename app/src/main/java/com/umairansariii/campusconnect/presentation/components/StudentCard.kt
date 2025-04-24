@@ -61,11 +61,11 @@ fun StudentCard(student: UserStudent) {
                 )
             }
             Row {
-                if (student.status == UserStatus.PENDING) {
+                if (student.status == UserStatus.ENROLLED) {
                     SuggestionChip(
                         onClick = { /* Do nothing */ },
                         label = {
-                            Text("${student.status}", style = MaterialTheme.typography.bodySmall)
+                            Text("PENDING", style = MaterialTheme.typography.bodySmall)
                         }
                     )
                 }

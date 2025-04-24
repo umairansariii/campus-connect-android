@@ -31,6 +31,7 @@ import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollPendingScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
+import com.umairansariii.campusconnect.presentation.screens.EventAdminScreen
 import com.umairansariii.campusconnect.presentation.screens.EventScreen
 import com.umairansariii.campusconnect.presentation.screens.HomeScreen
 import com.umairansariii.campusconnect.presentation.screens.LoadingScreen
@@ -68,7 +69,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
     }
 }
 
-fun NavGraphBuilder.appGraph(navController: NavHostController) {
+fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthState) {
     navigation(
         route = "app", startDestination = "home"
     ) {
@@ -109,6 +110,16 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             DepartmentScreen(universityId = universityId)
         }
         composable(
+            route = "admin/event/{universityId}",
+            arguments = listOf(
+                navArgument(name = "universityId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+            EventAdminScreen(universityId = universityId)
+        }
+        composable(
             route = "student/{universityId}",
             arguments = listOf(
                 navArgument(name = "universityId") { type = NavType.IntType }
@@ -139,7 +150,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController) {
             NotificationScreen(studentId = studentId)
         }
         composable(route = "events") {
-            EventScreen()
+            EventScreen(studentId = authState.id?: -1)
         }
         composable(route = "discussions") {
             DiscussionScreen()
@@ -208,7 +219,7 @@ fun AppNavigation() {
                 LoadingScreen()
             }
             authGraph(navController = navController)
-            appGraph(navController = navController)
+            appGraph(navController = navController, authState = authState)
         }
     }
 }
@@ -222,6 +233,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "university-detail/{universityId}",
         "campus/{universityId}",
         "department/{universityId}",
+        "admin/event/{universityId}",
         "student/{universityId}",
         "broadcast/{universityId}",
         "notification/{studentId}",
@@ -238,6 +250,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "university-detail/{universityId}",
         "campus/{universityId}",
         "department/{universityId}",
+        "admin/event/{universityId}",
         "student/{universityId}",
         "broadcast/{universityId}",
         "notification/{studentId}",

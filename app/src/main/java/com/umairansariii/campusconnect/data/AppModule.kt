@@ -8,6 +8,7 @@ import com.umairansariii.campusconnect.data.local.AppDatabase
 import com.umairansariii.campusconnect.data.local.dao.CampusDao
 import com.umairansariii.campusconnect.data.local.dao.DepartmentDao
 import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
+import com.umairansariii.campusconnect.data.local.dao.EventDao
 import com.umairansariii.campusconnect.data.local.dao.NotificationDao
 import com.umairansariii.campusconnect.data.local.dao.StudentDao
 import com.umairansariii.campusconnect.data.local.dao.UniversityDao
@@ -62,6 +63,11 @@ object AppModule {
     @Provides
     fun provideNotificationDao(database: AppDatabase): NotificationDao {
         return database.notificationDao()
+    }
+
+    @Provides
+    fun provideEventDao(database: AppDatabase): EventDao {
+        return database.eventDao()
     }
 
     @Provides
