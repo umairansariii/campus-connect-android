@@ -24,5 +24,5 @@ interface ClubDao {
         WHERE universityId = :universityId
         AND (:searchQuery IS NULL OR title LIKE '%' || :searchQuery || '%')
     """)
-    suspend fun getClubsByUniversity(universityId: Int, searchQuery: String): Flow<List<Club>>
+    fun getClubsByUniversity(universityId: Int, searchQuery: String): Flow<List<Club>>
 }
