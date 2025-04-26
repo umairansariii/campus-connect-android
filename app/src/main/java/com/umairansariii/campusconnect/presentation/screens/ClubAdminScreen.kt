@@ -23,6 +23,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.components.ClubAdminCard
+import com.umairansariii.campusconnect.presentation.dialogs.ClubDialog
 import com.umairansariii.campusconnect.presentation.events.ClubFormEvent
 import com.umairansariii.campusconnect.viewmodel.ClubViewModel
 
@@ -66,10 +68,10 @@ fun ClubAdminScreen(universityId: Int) {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 items(clubs) { club ->
-                    //TODO: ClubAdminCard(club)
+                    ClubAdminCard(club)
                 }
             }
-            //TODO: ClubDialog(universityId = universityId)
+            ClubDialog(universityId = universityId)
         }
     }
 }
