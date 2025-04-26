@@ -175,6 +175,43 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
                         modifier = Modifier.padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
+                        Text(text = "Clubs", fontSize = 20.sp)
+                        Text(text = "Manage your clubs and activities.")
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
+                        ) {
+                            Button(
+                                onClick = {
+                                    navController.navigate("admin/club/$universityId")
+                                }
+                            ) {
+                                Text(text = "Manage")
+                            }
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                ),
+            ) {
+                Box {
+                    Image(
+                        painter = painterResource(id = R.drawable.card_event),
+                        contentDescription = "card-background-image",
+                        modifier = Modifier
+                            .alpha(0.2f)
+                            .align(Alignment.BottomStart),
+                        contentScale = ContentScale.Fit
+                    )
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                    ) {
                         Text(text = "Events", fontSize = 20.sp)
                         Text(text = "Manage your upcoming events.")
                         Row(
