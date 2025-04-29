@@ -6,6 +6,7 @@ import androidx.datastore.dataStore
 import androidx.room.Room
 import com.umairansariii.campusconnect.data.local.AppDatabase
 import com.umairansariii.campusconnect.data.local.dao.CampusDao
+import com.umairansariii.campusconnect.data.local.dao.ClubDao
 import com.umairansariii.campusconnect.data.local.dao.DepartmentDao
 import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
 import com.umairansariii.campusconnect.data.local.dao.EventDao
@@ -68,6 +69,11 @@ object AppModule {
     @Provides
     fun provideEventDao(database: AppDatabase): EventDao {
         return database.eventDao()
+    }
+
+    @Provides
+    fun provideClubDao(database: AppDatabase): ClubDao {
+        return database.clubDao()
     }
 
     @Provides

@@ -26,6 +26,7 @@ import com.umairansariii.campusconnect.presentation.components.ProfileBar
 import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.BroadcastScreen
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
+import com.umairansariii.campusconnect.presentation.screens.ClubAdminScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionScreen
@@ -120,6 +121,16 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
             EventAdminScreen(universityId = universityId)
         }
         composable(
+            route = "admin/club/{universityId}",
+            arguments = listOf(
+                navArgument(name = "universityId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+            ClubAdminScreen(universityId = universityId)
+        }
+        composable(
             route = "student/{universityId}",
             arguments = listOf(
                 navArgument(name = "universityId") { type = NavType.IntType }
@@ -156,7 +167,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
             DiscussionScreen()
         }
         composable(route = "clubs") {
-            ClubScreen()
+            ClubScreen(studentId = authState.id?: -1)
         }
     }
 }
@@ -234,6 +245,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "admin/event/{universityId}",
+        "admin/club/{universityId}",
         "student/{universityId}",
         "broadcast/{universityId}",
         "notification/{studentId}",
@@ -251,6 +263,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "admin/event/{universityId}",
+        "admin/club/{universityId}",
         "student/{universityId}",
         "broadcast/{universityId}",
         "notification/{studentId}",
