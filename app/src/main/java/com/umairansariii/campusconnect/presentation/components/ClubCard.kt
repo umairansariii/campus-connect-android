@@ -25,9 +25,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.umairansariii.campusconnect.R
+import com.umairansariii.campusconnect.data.local.dto.ClubUniversity
 
 @Composable
-fun ClubCard() {
+fun ClubCard(club: ClubUniversity) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -49,9 +50,9 @@ fun ClubCard() {
                     contentScale = ContentScale.Crop,
                 )
                 Column {
-                    Text(text = "Virtual University")
+                    Text(text = club.universityName)
                     Text(
-                        text = "North Nazimabad Campus",
+                        text = club.campusName,
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -65,9 +66,9 @@ fun ClubCard() {
             Column(
                 modifier = Modifier.fillMaxWidth().padding(16.dp)
             ) {
-                Text(text = "Trail Blazers (Hiking/Outdoor)")
+                Text(text = club.title)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Explore nature's beauty! We organize hiking trips, outdoor adventures, and promote healthy lifestyle.")
+                Text(text = club.description)
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),

@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.ClubDao
+import com.umairansariii.campusconnect.data.local.dto.ClubUniversity
 import com.umairansariii.campusconnect.data.local.entities.Club
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmpty
 import com.umairansariii.campusconnect.presentation.events.ClubFormEvent
@@ -24,6 +25,10 @@ class ClubViewModel @Inject constructor(
 
     fun getClubsByUniversity(universityId: Int): Flow<List<Club>> {
         return clubDao.getClubsByUniversity(universityId, state.clubQuery)
+    }
+
+    fun getClubsByStudent(studentId: Int): Flow<List<ClubUniversity>> {
+        return clubDao.getClubsByStudent(studentId)
     }
 
     fun onEvent(event: ClubFormEvent) {
