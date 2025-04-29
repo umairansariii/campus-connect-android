@@ -45,7 +45,7 @@ fun ClubAdminCard(club: Club) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 12.dp)
+                .padding(vertical = 8.dp)
                 .padding(start = 18.dp, end = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
