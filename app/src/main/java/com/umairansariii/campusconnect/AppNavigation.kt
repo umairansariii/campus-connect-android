@@ -27,6 +27,7 @@ import com.umairansariii.campusconnect.presentation.components.TopNavigationBar
 import com.umairansariii.campusconnect.presentation.screens.BroadcastScreen
 import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubAdminScreen
+import com.umairansariii.campusconnect.presentation.screens.ClubChatroomScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionScreen
@@ -169,6 +170,9 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
         composable(route = "clubs") {
             ClubScreen(studentId = authState.id?: -1)
         }
+        composable(route = "club-chatroom") {
+            ClubChatroomScreen(userId = authState.id?: -1)
+        }
     }
 }
 
@@ -267,6 +271,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "student/{universityId}",
         "broadcast/{universityId}",
         "notification/{studentId}",
+        "club-chatroom",
     )
 }
 
