@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.umairansariii.campusconnect.data.local.converters.DateConverter
 import com.umairansariii.campusconnect.data.local.dao.CampusDao
+import com.umairansariii.campusconnect.data.local.dao.ClubChatDao
 import com.umairansariii.campusconnect.data.local.dao.ClubDao
 import com.umairansariii.campusconnect.data.local.dao.DepartmentDao
 import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
@@ -16,6 +17,7 @@ import com.umairansariii.campusconnect.data.local.dao.UserDao
 import com.umairansariii.campusconnect.data.local.entities.Academic
 import com.umairansariii.campusconnect.data.local.entities.Campus
 import com.umairansariii.campusconnect.data.local.entities.Club
+import com.umairansariii.campusconnect.data.local.entities.ClubChat
 import com.umairansariii.campusconnect.data.local.entities.Department
 import com.umairansariii.campusconnect.data.local.entities.Enrollment
 import com.umairansariii.campusconnect.data.local.entities.Event
@@ -35,6 +37,7 @@ import com.umairansariii.campusconnect.data.local.entities.User
         Notification::class,
         Event::class,
         Club::class,
+        ClubChat::class,
     ],
     version = 1,
     exportSchema = false,
@@ -48,5 +51,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
     abstract fun eventDao(): EventDao
     abstract fun clubDao(): ClubDao
+    abstract fun clubChatDao(): ClubChatDao
     abstract fun studentDao(): StudentDao
 }
