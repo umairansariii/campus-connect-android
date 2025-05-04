@@ -16,11 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.umairansariii.campusconnect.presentation.components.ClubCard
 import com.umairansariii.campusconnect.viewmodel.ClubViewModel
 
 @Composable
-fun ClubScreen(studentId: Int) {
+fun ClubScreen(studentId: Int, navController: NavController) {
     val viewModel: ClubViewModel = hiltViewModel()
     val clubs by viewModel.getClubsByStudent(studentId).collectAsState(initial = emptyList())
 
@@ -40,7 +41,7 @@ fun ClubScreen(studentId: Int) {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 items(clubs) { club ->
-                    ClubCard(club)
+                    ClubCard(club, navController)
                 }
             }
         }

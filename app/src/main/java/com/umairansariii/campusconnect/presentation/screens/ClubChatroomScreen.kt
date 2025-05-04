@@ -29,7 +29,7 @@ import com.umairansariii.campusconnect.presentation.components.ChatBubble
 import java.util.Date
 
 @Composable
-fun ClubChatroomScreen(userId: Int) {
+fun ClubChatroomScreen(userId: Int, clubId: Int) {
 
     Scaffold(
         bottomBar = {

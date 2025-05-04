@@ -24,11 +24,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.umairansariii.campusconnect.R
 import com.umairansariii.campusconnect.data.local.dto.ClubUniversity
 
 @Composable
-fun ClubCard(club: ClubUniversity) {
+fun ClubCard(club: ClubUniversity, navController: NavController) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -81,7 +82,9 @@ fun ClubCard(club: ClubUniversity) {
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
-                        onClick = { /* Handle click */ }
+                        onClick = {
+                            navController.navigate("club-chatroom/${club.id}")
+                        },
                     ) {
                         Text(text = "Join")
                     }
