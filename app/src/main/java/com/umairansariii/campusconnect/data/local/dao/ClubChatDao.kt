@@ -18,7 +18,6 @@ interface ClubChatDao {
         FROM club_chat c
         JOIN user u ON c.senderId = u.id
         WHERE clubId = :clubId
-        ORDER BY timestamp DESC
     """)
     fun getChatsByClub(clubId: Int): Flow<List<ClubChatUser>>
 }

@@ -1,93 +1,67 @@
 package com.umairansariii.campusconnect.presentation.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.components.BottomMessageBar
 import com.umairansariii.campusconnect.presentation.components.ChatBubble
-import java.util.Date
+import com.umairansariii.campusconnect.presentation.events.ClubChatFormEvent
+import com.umairansariii.campusconnect.viewmodel.ClubChatViewModel
 
 @Composable
 fun ClubChatroomScreen(userId: Int, clubId: Int) {
+    val viewModel: ClubChatViewModel = hiltViewModel()
+    val state = viewModel.state
+    val messages by viewModel.getChatsByClub(clubId).collectAsState(initial = emptyList())
+
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(messages.size) {
+        if (messages.isNotEmpty()) {
+            listState.animateScrollToItem(index = messages.lastIndex)
+        }
+    }
 
     Scaffold(
         bottomBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.surfaceContainer)
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextField(
-                    value = "",
-                    onValueChange = { /* Handle change */ },
-                    modifier = Modifier.weight(1f),
-                    placeholder = {
-                        Text(text = "Type your message")
-                    },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
-                    ),
-                    shape = MaterialTheme.shapes.extraLarge,
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Box (
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .height(52.dp)
-                        .width(52.dp)
-                        .clip(RoundedCornerShape(50))
-                        .background(color = MaterialTheme.colorScheme.primary)
-                        .clickable {
-                            /* Handle click */
-                        },
-                ) {
-                    Icon(
-                        Icons.AutoMirrored.Filled.Send,
-                        tint = MaterialTheme.colorScheme.onPrimary,
-                        contentDescription = "message-send-icon",
-                    )
-                }
-            }
+            BottomMessageBar(
+                message = state.message,
+                onMessageChange = {
+                    viewModel.onEvent(ClubChatFormEvent.MessageChanged(it))
+                },
+                onSendClick = {
+                    viewModel.onEvent(ClubChatFormEvent.Submit(clubId, userId))
+                },
+            )
         }
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
+            state = listState,
         ) {
             item {
                 Spacer(modifier = Modifier.height(10.dp))
             }
-            items(5) {
+            items(messages) { message ->
                 ChatBubble(
-                    name = "User Name",
-                    text = "Hello! How are you doing?",
-                    date = Date(),
-                    isSender = true
+                    name = "${message.firstName} ${message.lastName}",
+                    text = message.message,
+                    date = message.timestamp,
+                    isSender = message.senderId == userId,
                 )
             }
             item {
