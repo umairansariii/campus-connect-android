@@ -18,14 +18,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.events.DiscussionFormEvent
+import com.umairansariii.campusconnect.viewmodel.DiscussionViewModel
 
 @Composable
 fun DiscussionDialog(universityId: Int) {
+    val viewModel: DiscussionViewModel = hiltViewModel()
+    val state = viewModel.state
 
-    if (false) {
+    if (state.showDialog) {
         Dialog(
             onDismissRequest = {
-                /* Handle dismiss */
+                viewModel.onEvent(DiscussionFormEvent.DismissDialog())
             }
         ) {
             Surface(
@@ -37,7 +42,7 @@ fun DiscussionDialog(universityId: Int) {
                     modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    if (false) {
+                    if (state.showDialogId !== null) {
                         Text(
                             text = "Update Discussion",
                             style = MaterialTheme.typography.titleLarge,
@@ -56,40 +61,40 @@ fun DiscussionDialog(universityId: Int) {
                         ) {
                             Text(text = "Marked as active?")
                             Switch(
-                                checked = false,
+                                checked = state.discussionIsActive,
                                 onCheckedChange = {
-                                    /* Handle change */
+                                    viewModel.onEvent(DiscussionFormEvent.DiscussionStateChanged(it))
                                 },
                             )
                         }
                         OutlinedTextField(
-                            value = "",
+                            value = state.discussionTitle,
                             onValueChange = {
-                                /* Handle change */
+                                viewModel.onEvent(DiscussionFormEvent.DiscussionTitleChanged(it))
                             },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Title") },
                             supportingText = {
-                                if (false) {
-                                    Text(text = "")
+                                if (state.discussionTitleError != null) {
+                                    Text(text = state.discussionTitleError)
                                 }
                             },
-                            isError = false,
+                            isError = state.discussionTitleError != null,
                             singleLine = true,
                         )
                         OutlinedTextField(
-                            value = "",
+                            value = state.discussionDescription,
                             onValueChange = {
-                                /* Handle change */
+                                viewModel.onEvent(DiscussionFormEvent.DiscussionDescriptionChanged(it))
                             },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text(text = "Description") },
                             supportingText = {
-                                if (false) {
-                                    Text(text = "")
+                                if (state.discussionTitleError != null) {
+                                    Text(text = state.discussionTitleError)
                                 }
                             },
-                            isError = false,
+                            isError = state.discussionTitleError != null,
                             minLines = 2,
                             maxLines = 3,
                         )
@@ -99,11 +104,11 @@ fun DiscussionDialog(universityId: Int) {
                     ) {
                         Button(
                             onClick = {
-                                /* Handle click */
+                                viewModel.onEvent(DiscussionFormEvent.Submit(universityId))
                             },
                             modifier = Modifier.fillMaxWidth().height(50.dp)
                         ) {
-                            if (false) {
+                            if (state.showDialogId !== null) {
                                 Text(
                                     text = "Update",
                                     style = MaterialTheme.typography.titleMedium

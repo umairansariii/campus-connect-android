@@ -26,9 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.data.local.entities.Discussion
+import com.umairansariii.campusconnect.presentation.events.DiscussionFormEvent
+import com.umairansariii.campusconnect.viewmodel.DiscussionViewModel
 
 @Composable
-fun DiscussionAdminCard() {
+fun DiscussionAdminCard(discussion: Discussion) {
+    val viewModel: DiscussionViewModel = hiltViewModel()
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -46,7 +51,7 @@ fun DiscussionAdminCard() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column {
-                Text(text = "Future of Quantum Computing")
+                Text(text = discussion.title)
             }
             Box {
                 IconButton(onClick = { expanded = !expanded }) {
@@ -59,7 +64,7 @@ fun DiscussionAdminCard() {
                     DropdownMenuItem(
                         text = { Text(text = "Edit") },
                         onClick = {
-                            /* Handle click */
+                            viewModel.onEvent(DiscussionFormEvent.ShowDialog(id = discussion.id))
                         },
                     )
                 }
