@@ -19,6 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.umairansariii.campusconnect.presentation.components.DiscussionAdminCard
+import com.umairansariii.campusconnect.presentation.dialogs.DiscussionDialog
 
 @Composable
 fun DiscussionAdminScreen(universityId: Int) {
@@ -57,10 +59,10 @@ fun DiscussionAdminScreen(universityId: Int) {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 items(5) {
-                    //TODO: DiscussionAdminCard(discussion)
+                    DiscussionAdminCard()
                 }
             }
-            //TODO: DiscussionDialog(universityId = universityId)
+            DiscussionDialog(universityId = universityId)
         }
     }
 }
