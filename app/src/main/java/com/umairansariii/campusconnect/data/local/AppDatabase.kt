@@ -8,6 +8,7 @@ import com.umairansariii.campusconnect.data.local.dao.CampusDao
 import com.umairansariii.campusconnect.data.local.dao.ClubChatDao
 import com.umairansariii.campusconnect.data.local.dao.ClubDao
 import com.umairansariii.campusconnect.data.local.dao.DepartmentDao
+import com.umairansariii.campusconnect.data.local.dao.DiscussionDao
 import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
 import com.umairansariii.campusconnect.data.local.dao.EventDao
 import com.umairansariii.campusconnect.data.local.dao.NotificationDao
@@ -19,6 +20,7 @@ import com.umairansariii.campusconnect.data.local.entities.Campus
 import com.umairansariii.campusconnect.data.local.entities.Club
 import com.umairansariii.campusconnect.data.local.entities.ClubChat
 import com.umairansariii.campusconnect.data.local.entities.Department
+import com.umairansariii.campusconnect.data.local.entities.Discussion
 import com.umairansariii.campusconnect.data.local.entities.Enrollment
 import com.umairansariii.campusconnect.data.local.entities.Event
 import com.umairansariii.campusconnect.data.local.entities.Notification
@@ -36,6 +38,7 @@ import com.umairansariii.campusconnect.data.local.entities.User
         Campus::class,
         Notification::class,
         Event::class,
+        Discussion::class,
         Club::class,
         ClubChat::class,
     ],
@@ -50,6 +53,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun campusDao(): CampusDao
     abstract fun notificationDao(): NotificationDao
     abstract fun eventDao(): EventDao
+    abstract fun discussionDao(): DiscussionDao
     abstract fun clubDao(): ClubDao
     abstract fun clubChatDao(): ClubChatDao
     abstract fun studentDao(): StudentDao
