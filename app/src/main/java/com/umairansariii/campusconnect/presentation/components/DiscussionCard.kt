@@ -31,7 +31,7 @@ fun DiscussionCard(discussion: DiscussionUniversity, navController: NavControlle
         ) {
             Text(
                 text = discussion.title,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineSmall,
             )
             Text(text = discussion.universityName)
             Spacer(modifier = Modifier.height(18.dp))
