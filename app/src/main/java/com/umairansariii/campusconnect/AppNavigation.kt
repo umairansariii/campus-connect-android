@@ -30,6 +30,8 @@ import com.umairansariii.campusconnect.presentation.screens.ClubAdminScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubChatroomScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
+import com.umairansariii.campusconnect.presentation.screens.DiscussionAdminScreen
+import com.umairansariii.campusconnect.presentation.screens.DiscussionChatroomScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollPendingScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
@@ -122,6 +124,16 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
             EventAdminScreen(universityId = universityId)
         }
         composable(
+            route = "admin/discussion/{universityId}",
+            arguments = listOf(
+                navArgument(name = "universityId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+            DiscussionAdminScreen(universityId = universityId)
+        }
+        composable(
             route = "admin/club/{universityId}",
             arguments = listOf(
                 navArgument(name = "universityId") { type = NavType.IntType }
@@ -165,7 +177,17 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
             EventScreen(studentId = authState.id?: -1)
         }
         composable(route = "discussions") {
-            DiscussionScreen()
+            DiscussionScreen(studentId = authState.id?: -1, navController = navController)
+        }
+        composable(
+            route = "discussion-chatroom/{discussionId}",
+            arguments = listOf(
+                navArgument(name = "discussionId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val discussionId = backStackEntry.arguments?.getInt("discussionId") ?: -1
+
+            DiscussionChatroomScreen(userId = authState.id?: -1, discussionId = discussionId)
         }
         composable(route = "clubs") {
             ClubScreen(studentId = authState.id?: -1, navController = navController)
@@ -256,6 +278,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "admin/event/{universityId}",
+        "admin/discussion/{universityId}",
         "admin/club/{universityId}",
         "student/{universityId}",
         "broadcast/{universityId}",
@@ -274,10 +297,12 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "campus/{universityId}",
         "department/{universityId}",
         "admin/event/{universityId}",
+        "admin/discussion/{universityId}",
         "admin/club/{universityId}",
         "student/{universityId}",
         "broadcast/{universityId}",
         "notification/{studentId}",
+        "discussion-chatroom/{discussionId}",
         "club-chatroom/{clubId}",
     )
 }
