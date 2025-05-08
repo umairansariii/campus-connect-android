@@ -9,6 +9,7 @@ import com.umairansariii.campusconnect.data.local.dao.CampusDao
 import com.umairansariii.campusconnect.data.local.dao.ClubChatDao
 import com.umairansariii.campusconnect.data.local.dao.ClubDao
 import com.umairansariii.campusconnect.data.local.dao.DepartmentDao
+import com.umairansariii.campusconnect.data.local.dao.DiscussionChatDao
 import com.umairansariii.campusconnect.data.local.dao.DiscussionDao
 import com.umairansariii.campusconnect.data.local.dao.EnrollmentDao
 import com.umairansariii.campusconnect.data.local.dao.EventDao
@@ -76,6 +77,11 @@ object AppModule {
     @Provides
     fun provideDiscussionDao(database: AppDatabase): DiscussionDao {
         return database.discussionDao()
+    }
+
+    @Provides
+    fun provideDiscussionChatDao(database: AppDatabase): DiscussionChatDao {
+        return database.discussionChatDao()
     }
 
     @Provides
