@@ -176,7 +176,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
             EventScreen(studentId = authState.id?: -1)
         }
         composable(route = "discussions") {
-            DiscussionScreen()
+            DiscussionScreen(studentId = authState.id?: -1, navController = navController)
         }
         composable(route = "clubs") {
             ClubScreen(studentId = authState.id?: -1, navController = navController)

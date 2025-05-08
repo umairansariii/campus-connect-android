@@ -15,10 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.umairansariii.campusconnect.data.local.dto.DiscussionUniversity
 
 @Composable
-fun DiscussionCard() {
-
+fun DiscussionCard(discussion: DiscussionUniversity, navController: NavController) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -29,12 +30,12 @@ fun DiscussionCard() {
             modifier = Modifier.fillMaxWidth().padding(16.dp)
         ) {
             Text(
-                text = "Data and Machine Learning",
+                text = discussion.title,
                 style = MaterialTheme.typography.headlineMedium,
             )
-            Text(text = "Virtual University of Pakistan")
+            Text(text = discussion.universityName)
             Spacer(modifier = Modifier.height(18.dp))
-            Text(text = "Dive into the world of data and machine learning! Explore algorithms, models, and real-world applications. Join us to learn, discuss, and innovate.")
+            Text(text = discussion.description)
             Spacer(modifier = Modifier.height(10.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -42,7 +43,7 @@ fun DiscussionCard() {
             ) {
                 Button(
                     onClick = {
-                        /* Handle click */
+                        navController.navigate("discussion-chatroom/${discussion.id}")
                     },
                 ) {
                     Text(text = "Discuss")
