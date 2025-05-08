@@ -31,6 +31,7 @@ import com.umairansariii.campusconnect.presentation.screens.ClubChatroomScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionAdminScreen
+import com.umairansariii.campusconnect.presentation.screens.DiscussionChatroomScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollPendingScreen
 import com.umairansariii.campusconnect.presentation.screens.EnrollmentScreen
@@ -178,6 +179,16 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
         composable(route = "discussions") {
             DiscussionScreen(studentId = authState.id?: -1, navController = navController)
         }
+        composable(
+            route = "discussion-chatroom/{discussionId}",
+            arguments = listOf(
+                navArgument(name = "discussionId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val discussionId = backStackEntry.arguments?.getInt("discussionId") ?: -1
+
+            DiscussionChatroomScreen(userId = authState.id?: -1, discussionId = discussionId)
+        }
         composable(route = "clubs") {
             ClubScreen(studentId = authState.id?: -1, navController = navController)
         }
@@ -291,6 +302,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "student/{universityId}",
         "broadcast/{universityId}",
         "notification/{studentId}",
+        "discussion-chatroom/{discussionId}",
         "club-chatroom/{clubId}",
     )
 }
