@@ -28,9 +28,10 @@ fun TopNavigationBar(navController: NavController) {
         route?.startsWith("admin/event") == true -> "Event"
         route?.startsWith("admin/discussion") == true -> "Discussion"
         route?.startsWith("admin/club") == true -> "Club"
-        route?.startsWith("student") == true -> "Student"
+        route?.startsWith("student/") == true -> "Student"
         route?.startsWith("broadcast") == true -> "Notifications"
         route?.startsWith("notification") == true -> "Notifications"
+        route?.startsWith("student-profile") == true -> "Student Profile"
         else -> "Untitled"
     }
 
