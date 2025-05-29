@@ -295,6 +295,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "discussions",
         "clubs",
         "settings",
+        "student-profile",
     )
 }
 
@@ -313,6 +314,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "notification/{studentId}",
         "discussion-chatroom/{discussionId}",
         "club-chatroom/{clubId}",
+        "student-profile",
     )
 }
 
