@@ -47,7 +47,7 @@ fun SettingScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(32.dp))
             SettingMenuItem(
                 title = "Student Profile",
-                onClick = { navController.navigate("student-profile/${1}") }
+                onClick = { navController.navigate("student-profile") }
             )
             SettingMenuItem(
                 title = "Emergency Contacts",

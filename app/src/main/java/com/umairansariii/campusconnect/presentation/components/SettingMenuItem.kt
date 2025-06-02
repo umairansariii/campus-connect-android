@@ -25,7 +25,7 @@ fun SettingMenuItem(title: String, onClick: () -> Unit) {
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ),
-        onClick = { /* Disabled onClick() */ }
+        onClick = { onClick() }
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(14.dp),
