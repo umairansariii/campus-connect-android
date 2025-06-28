@@ -15,9 +15,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.viewmodel.StudentProfileViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun StudentProfileScreen(studentId: Int) {
+    val viewModel: StudentProfileViewModel = hiltViewModel()
+    val state = viewModel.state
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -38,28 +44,37 @@ fun StudentProfileScreen(studentId: Int) {
                     Row {
                         Text(text = "Name: ")
                         Text(
-                            text = "Muhammad Umair",
+                            text = "${state.firstName} ${state.lastName}",
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
                     Row {
                         Text(text = "Email: ")
                         Text(
-                            text = "umairansari.work@gmail.com",
+                            text = state.email,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
                     Row {
                         Text(text = "Enrollment: ")
                         Text(
-                            text = "BC210402929",
+                            text = state.rollNo,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
                     Row {
                         Text(text = "Birthday: ")
                         Text(
-                            text = "02/06/2000",
+                            text = state.dob?.let { date ->
+                                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+                            } ?: "N/A",
+                            color = MaterialTheme.colorScheme.secondary,
+                        )
+                    }
+                    Row {
+                        Text(text = "Gender: ")
+                        Text(
+                            text = state.gender.toString(),
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
@@ -78,28 +93,35 @@ fun StudentProfileScreen(studentId: Int) {
                     Row {
                         Text(text = "Department: ")
                         Text(
-                            text = "Computer Science",
+                            text = state.departmentName,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
                     Row {
                         Text(text = "Campus: ")
                         Text(
-                            text = "Nazimabad Campus",
+                            text = state.campusName,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
                     Row {
                         Text(text = "Semester No: ")
                         Text(
-                            text = "4",
+                            text = state.semester,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
                     Row {
                         Text(text = "CGPA: ")
                         Text(
-                            text = "3.2",
+                            text = state.cgpa,
+                            color = MaterialTheme.colorScheme.secondary,
+                        )
+                    }
+                    Row {
+                        Text(text = "Status: ")
+                        Text(
+                            text = state.status.toString(),
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }

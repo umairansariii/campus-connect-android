@@ -207,8 +207,15 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
         composable(route = "settings") {
             SettingScreen(user = authState, navController = navController)
         }
-        composable(route = "student-profile") {
-            StudentProfileScreen(studentId = authState.id?: -1)
+        composable(
+            route = "student-profile/{studentId}",
+            arguments = listOf(
+                navArgument(name = "studentId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val studentId = backStackEntry.arguments?.getInt("studentId") ?: -1
+
+            StudentProfileScreen(studentId = studentId)
         }
     }
 }
@@ -295,7 +302,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "discussions",
         "clubs",
         "settings",
-        "student-profile",
+        "student-profile/{studentId}",
     )
 }
 
@@ -314,7 +321,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "notification/{studentId}",
         "discussion-chatroom/{discussionId}",
         "club-chatroom/{clubId}",
-        "student-profile",
+        "student-profile/{studentId}",
     )
 }
 

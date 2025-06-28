@@ -48,7 +48,7 @@ fun SettingScreen(user: AuthState, navController: NavController) {
             Spacer(modifier = Modifier.height(32.dp))
             SettingMenuItem(
                 title = "Student Profile",
-                onClick = { navController.navigate("student-profile") }
+                onClick = { navController.navigate("student-profile/${user.id}") }
             )
             SettingMenuItem(
                 title = "Emergency Contacts",
