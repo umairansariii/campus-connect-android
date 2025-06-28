@@ -15,11 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.presentation.components.Avatar
 import com.umairansariii.campusconnect.presentation.components.SettingMenuItem
 
 @Composable
-fun SettingScreen(navController: NavController) {
+fun SettingScreen(user: AuthState, navController: NavController) {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -33,7 +34,7 @@ fun SettingScreen(navController: NavController) {
         ) {
             Spacer(modifier = Modifier.height(40.dp))
             Avatar(
-                name = "User Name",
+                name = "${user.firstName} ${user.lastName}",
                 size = 150.dp,
                 fontSize = 50.sp,
             )

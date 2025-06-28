@@ -205,7 +205,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
             ClubChatroomScreen(userId = authState.id?: -1, clubId = clubId)
         }
         composable(route = "settings") {
-            SettingScreen(navController = navController)
+            SettingScreen(user = authState, navController = navController)
         }
         composable(route = "student-profile") {
             StudentProfileScreen(studentId = authState.id?: -1)
