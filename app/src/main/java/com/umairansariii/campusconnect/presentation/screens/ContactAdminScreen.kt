@@ -19,6 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.umairansariii.campusconnect.presentation.components.ContactAdminCard
+import com.umairansariii.campusconnect.presentation.dialogs.ContactDialog
 
 @Composable
 fun ContactAdminScreen(universityId: Int) {
@@ -53,10 +55,10 @@ fun ContactAdminScreen(universityId: Int) {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 items(2) {
-                    //TODO: ContactCard(contact)
+                    ContactAdminCard()
                 }
             }
-            //TODO: ContactDialog(universityId = universityId)
+            ContactDialog(universityId = universityId)
         }
     }
 }
