@@ -29,6 +29,7 @@ import com.umairansariii.campusconnect.presentation.screens.CampusScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubAdminScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubChatroomScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubScreen
+import com.umairansariii.campusconnect.presentation.screens.ContactAdminScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionAdminScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionChatroomScreen
@@ -114,6 +115,16 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
             val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
 
             DepartmentScreen(universityId = universityId)
+        }
+        composable(
+            route = "admin/contact/{universityId}",
+            arguments = listOf(
+                navArgument(name = "universityId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val universityId = backStackEntry.arguments?.getInt("universityId") ?: -1
+
+            ContactAdminScreen(universityId = universityId)
         }
         composable(
             route = "admin/event/{universityId}",
@@ -292,6 +303,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "university-detail/{universityId}",
         "campus/{universityId}",
         "department/{universityId}",
+        "admin/contact/{universityId}",
         "admin/event/{universityId}",
         "admin/discussion/{universityId}",
         "admin/club/{universityId}",
@@ -313,6 +325,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "university-detail/{universityId}",
         "campus/{universityId}",
         "department/{universityId}",
+        "admin/contact/{universityId}",
         "admin/event/{universityId}",
         "admin/discussion/{universityId}",
         "admin/club/{universityId}",
