@@ -30,6 +30,7 @@ import com.umairansariii.campusconnect.presentation.screens.ClubAdminScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubChatroomScreen
 import com.umairansariii.campusconnect.presentation.screens.ClubScreen
 import com.umairansariii.campusconnect.presentation.screens.ContactAdminScreen
+import com.umairansariii.campusconnect.presentation.screens.ContactScreen
 import com.umairansariii.campusconnect.presentation.screens.DepartmentScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionAdminScreen
 import com.umairansariii.campusconnect.presentation.screens.DiscussionChatroomScreen
@@ -228,6 +229,9 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
 
             StudentProfileScreen(studentId = studentId)
         }
+        composable(route = "contacts") {
+            ContactScreen()
+        }
     }
 }
 
@@ -315,6 +319,7 @@ fun shouldShowBottomBar(navController: NavController): Boolean {
         "clubs",
         "settings",
         "student-profile/{studentId}",
+        "contacts",
     )
 }
 
@@ -335,6 +340,7 @@ fun shouldShowTopBar(navController: NavController): Boolean {
         "discussion-chatroom/{discussionId}",
         "club-chatroom/{clubId}",
         "student-profile/{studentId}",
+        "contacts",
     )
 }
 
