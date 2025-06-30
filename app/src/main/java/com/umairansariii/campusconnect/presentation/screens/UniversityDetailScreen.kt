@@ -127,7 +127,7 @@ fun UniversityDetailScreen(universityId: Int, navController: NavController) {
             ) {
                 Box {
                     Image(
-                        painter = painterResource(id = R.drawable.card_department),
+                        painter = painterResource(id = R.drawable.card_contact),
                         contentDescription = "card-background-image",
                         modifier = Modifier
                             .alpha(0.2f)
