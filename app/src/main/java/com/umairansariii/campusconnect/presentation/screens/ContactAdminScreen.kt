@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Search
@@ -17,18 +18,28 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.presentation.components.ContactAdminCard
 import com.umairansariii.campusconnect.presentation.dialogs.ContactDialog
+import com.umairansariii.campusconnect.presentation.events.ContactFormEvent
+import com.umairansariii.campusconnect.viewmodel.ContactViewModel
 
 @Composable
 fun ContactAdminScreen(universityId: Int) {
+    val viewModel: ContactViewModel = hiltViewModel()
+    val state = viewModel.state
+    val contacts by viewModel.getContactsByUniversity(universityId).collectAsState(initial = emptyList())
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Handle click */ },
+                onClick = {
+                    viewModel.onEvent(ContactFormEvent.ShowDialog(id = null))
+                },
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "contact-add-icon")
             }
@@ -39,8 +50,10 @@ fun ContactAdminScreen(universityId: Int) {
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
-                value = "",
-                onValueChange = { /* Handle change */ },
+                value = state.contactQuery,
+                onValueChange = {
+                    viewModel.onEvent(ContactFormEvent.ContactQueryChanged(it))
+                },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
                 placeholder = { Text(text = "Search") },
                 leadingIcon = {
@@ -54,8 +67,8 @@ fun ContactAdminScreen(universityId: Int) {
                 item {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
-                items(2) {
-                    ContactAdminCard()
+                items(contacts) { contact ->
+                    ContactAdminCard(contact)
                 }
             }
             ContactDialog(universityId = universityId)

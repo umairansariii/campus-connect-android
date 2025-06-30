@@ -26,9 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.data.local.entities.Contact
+import com.umairansariii.campusconnect.presentation.events.ContactFormEvent
+import com.umairansariii.campusconnect.viewmodel.ContactViewModel
 
 @Composable
-fun ContactAdminCard() {
+fun ContactAdminCard(contact: Contact) {
+    val viewModel: ContactViewModel = hiltViewModel()
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -46,9 +51,9 @@ fun ContactAdminCard() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column {
-                Text(text = "Faculty Department")
+                Text(text = contact.name)
                 Text(
-                    text = "faculty@vu.edu.pk",
+                    text = contact.email,
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -63,7 +68,9 @@ fun ContactAdminCard() {
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "Edit") },
-                        onClick = { /* Handle click */ },
+                        onClick = {
+                            viewModel.onEvent(ContactFormEvent.ShowDialog(id = contact.id))
+                        },
                     )
                 }
             }
