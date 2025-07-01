@@ -21,6 +21,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.umairansariii.campusconnect.data.local.enums.EventType
 import com.umairansariii.campusconnect.presentation.components.DateSelector
+import com.umairansariii.campusconnect.presentation.components.ImagePicker
 import com.umairansariii.campusconnect.presentation.components.ListSelector
 import com.umairansariii.campusconnect.presentation.events.EventFormEvent
 import com.umairansariii.campusconnect.viewmodel.EventViewModel
@@ -146,6 +147,11 @@ fun EventDialog(universityId: Int) {
                             modifier = Modifier.fillMaxWidth(),
                             supportingText = state.eventTypeError,
                             isError = state.eventTypeError != null,
+                        )
+                        ImagePicker(
+                            onImageSelected = {
+                                viewModel.onEvent(EventFormEvent.EventBannerChanged(it))
+                            }
                         )
                     }
                     Row(

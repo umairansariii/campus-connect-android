@@ -12,6 +12,7 @@ data class EventUniversity (
     val date: Date,
     val type: EventType,
     val isActive: Boolean,
+    val bannerUrl: String,
     val universityName: String,
     val campusName: String,
 )

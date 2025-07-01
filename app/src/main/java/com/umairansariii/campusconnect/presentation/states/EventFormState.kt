@@ -1,5 +1,6 @@
 package com.umairansariii.campusconnect.presentation.states
 
+import android.net.Uri
 import com.umairansariii.campusconnect.data.local.enums.EventType
 import java.util.Date
 
@@ -17,5 +18,6 @@ data class EventFormState (
     val eventType: EventType? = null,
     val eventTypeError: String? = null,
     val eventIsActive: Boolean = true,
+    val eventBannerUrl: Uri? = null,
     val eventQuery: String = "",
 )

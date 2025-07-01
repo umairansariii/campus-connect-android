@@ -1,13 +1,16 @@
 package com.umairansariii.campusconnect.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.EventDao
 import com.umairansariii.campusconnect.data.local.dto.EventUniversity
 import com.umairansariii.campusconnect.data.local.entities.Event
+import com.umairansariii.campusconnect.domain.libs.saveImageToInternalStorage
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmpty
 import com.umairansariii.campusconnect.domain.usecase.ValidateNull
 import com.umairansariii.campusconnect.presentation.events.EventFormEvent
@@ -20,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EventViewModel @Inject constructor(
     private val eventDao: EventDao,
+    private val application: Application,
 ): ViewModel() {
     private val validateEmpty = ValidateEmpty()
     private val validateNull = ValidateNull()
@@ -48,6 +52,7 @@ class EventViewModel @Inject constructor(
                             eventDate = eventData.date,
                             eventType = eventData.type,
                             eventIsActive = eventData.isActive,
+                            eventBannerUrl = eventData.bannerUrl.toUri(),
                         )
                     }
                 } else {
@@ -70,6 +75,7 @@ class EventViewModel @Inject constructor(
                     eventType = null,
                     eventTypeError = null,
                     eventIsActive = true,
+                    eventBannerUrl = null,
                 )
             }
 
@@ -95,6 +101,10 @@ class EventViewModel @Inject constructor(
 
             is EventFormEvent.EventStateChanged -> {
                 state = state.copy(eventIsActive = event.eventIsActive)
+            }
+
+            is EventFormEvent.EventBannerChanged -> {
+                state = state.copy(eventBannerUrl = event.eventBanner)
             }
 
             is EventFormEvent.EventQueryChanged -> {
@@ -133,6 +143,8 @@ class EventViewModel @Inject constructor(
             return
         }
 
+        val imagePath = state.eventBannerUrl?.let { saveImageToInternalStorage(application, it) }
+
         viewModelScope.launch {
             if (state.showDialogId !== null) {
                 eventDao.updateEvent(
@@ -145,6 +157,7 @@ class EventViewModel @Inject constructor(
                         date = state.eventDate!!,
                         type = state.eventType!!,
                         isActive = state.eventIsActive,
+                        bannerUrl = imagePath?: state.eventBannerUrl.toString(),
                     )
                 )
             } else {
@@ -157,6 +170,7 @@ class EventViewModel @Inject constructor(
                         date = state.eventDate!!,
                         type = state.eventType!!,
                         isActive = state.eventIsActive,
+                        bannerUrl = imagePath?: "",
                     )
                 )
             }
@@ -176,6 +190,7 @@ class EventViewModel @Inject constructor(
             eventType = null,
             eventTypeError = null,
             eventIsActive = true,
+            eventBannerUrl = null,
         )
     }
 }
