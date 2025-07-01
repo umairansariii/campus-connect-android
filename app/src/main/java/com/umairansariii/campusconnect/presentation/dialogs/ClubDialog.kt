@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.components.ImagePicker
 import com.umairansariii.campusconnect.presentation.events.ClubFormEvent
 import com.umairansariii.campusconnect.viewmodel.ClubViewModel
 
@@ -97,6 +98,11 @@ fun ClubDialog(universityId: Int) {
                             isError = state.clubDescriptionError != null,
                             minLines = 2,
                             maxLines = 3,
+                        )
+                        ImagePicker(
+                            onImageSelected = {
+                                viewModel.onEvent(ClubFormEvent.ClubBannerChanged(it))
+                            }
                         )
                     }
                     Row(

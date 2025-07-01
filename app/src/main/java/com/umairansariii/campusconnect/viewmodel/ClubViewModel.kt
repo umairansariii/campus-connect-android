@@ -1,13 +1,16 @@
 package com.umairansariii.campusconnect.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.ClubDao
 import com.umairansariii.campusconnect.data.local.dto.ClubUniversity
 import com.umairansariii.campusconnect.data.local.entities.Club
+import com.umairansariii.campusconnect.domain.libs.saveImageToInternalStorage
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmpty
 import com.umairansariii.campusconnect.presentation.events.ClubFormEvent
 import com.umairansariii.campusconnect.presentation.states.ClubFormState
@@ -19,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ClubViewModel @Inject constructor(
     private val clubDao: ClubDao,
+    private val application: Application,
 ): ViewModel() {
     private val validateEmpty = ValidateEmpty()
     var state by mutableStateOf(ClubFormState())
@@ -43,6 +47,7 @@ class ClubViewModel @Inject constructor(
                             clubTitle = club.title,
                             clubDescription = club.description,
                             clubIsActive = club.isActive,
+                            clubBannerUrl = club.bannerUrl.toUri(),
                         )
                     }
                 } else {
@@ -59,6 +64,7 @@ class ClubViewModel @Inject constructor(
                     clubDescription = "",
                     clubDescriptionError = null,
                     clubIsActive = true,
+                    clubBannerUrl = null,
                 )
             }
 
@@ -72,6 +78,10 @@ class ClubViewModel @Inject constructor(
 
             is ClubFormEvent.ClubStateChanged -> {
                 state = state.copy(clubIsActive = event.clubIsActive)
+            }
+
+            is ClubFormEvent.ClubBannerChanged -> {
+                state = state.copy(clubBannerUrl = event.clubBanner)
             }
 
             is ClubFormEvent.ClubQueryChanged -> {
@@ -101,6 +111,8 @@ class ClubViewModel @Inject constructor(
             return
         }
 
+        val imagePath = state.clubBannerUrl?.let { saveImageToInternalStorage(application, it) }
+
         viewModelScope.launch {
             if (state.showDialogId !== null) {
                 clubDao.updateClub(
@@ -110,6 +122,7 @@ class ClubViewModel @Inject constructor(
                         title = state.clubTitle,
                         description = state.clubDescription,
                         isActive = state.clubIsActive,
+                        bannerUrl = imagePath?: state.clubBannerUrl.toString(),
                     )
                 )
             } else {
@@ -119,6 +132,7 @@ class ClubViewModel @Inject constructor(
                         title = state.clubTitle,
                         description = state.clubDescription,
                         isActive = state.clubIsActive,
+                        bannerUrl = imagePath?: "",
                     )
                 )
             }
@@ -132,6 +146,7 @@ class ClubViewModel @Inject constructor(
             clubDescription = "",
             clubDescriptionError = null,
             clubIsActive = true,
+            clubBannerUrl = null,
         )
     }
 }
