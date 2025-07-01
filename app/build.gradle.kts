@@ -81,4 +81,6 @@ dependencies {
     implementation(libs.google.dagger.hilt)
     kapt(libs.google.dagger.hilt.compiler)
     implementation(libs.androidx.hilt.compose.navigation)
+    // Coil
+    implementation(libs.coil.compose)
 }
