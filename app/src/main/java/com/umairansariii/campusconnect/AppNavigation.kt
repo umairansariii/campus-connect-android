@@ -230,7 +230,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
             StudentProfileScreen(studentId = studentId)
         }
         composable(route = "contacts") {
-            ContactScreen()
+            ContactScreen(studentId = authState.id?: -1)
         }
     }
 }
