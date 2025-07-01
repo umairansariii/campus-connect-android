@@ -15,4 +15,5 @@ data class Event (
     val date: Date,
     val type: EventType,
     val isActive: Boolean,
+    val bannerUrl: String,
 )

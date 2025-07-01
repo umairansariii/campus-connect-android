@@ -6,6 +6,7 @@ data class ClubUniversity (
     val title: String,
     val description: String,
     val isActive: Boolean,
+    val bannerUrl: String,
     val universityName: String,
     val campusName: String,
 )

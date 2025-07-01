@@ -1,12 +1,15 @@
 package com.umairansariii.campusconnect.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.umairansariii.campusconnect.data.local.dao.UniversityDao
 import com.umairansariii.campusconnect.data.local.entities.University
+import com.umairansariii.campusconnect.domain.libs.saveImageToInternalStorage
 import com.umairansariii.campusconnect.domain.usecase.ValidateEmptyAlpha
 import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
 import com.umairansariii.campusconnect.presentation.states.UniversityFormState
@@ -17,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UniversityViewModel @Inject constructor(
-    private val universityDao: UniversityDao
+    private val universityDao: UniversityDao,
+    private val application: Application,
 ): ViewModel() {
     private val validateEmptyAlpha = ValidateEmptyAlpha()
     var state by mutableStateOf(UniversityFormState())
@@ -35,7 +39,8 @@ class UniversityViewModel @Inject constructor(
                         state = state.copy(
                             showDialog = true,
                             showDialogId = event.id,
-                            universityTitle = university.title
+                            universityTitle = university.title,
+                            universityAvatarUrl = university.avatarUrl.toUri(),
                         )
                     }
                 } else {
@@ -48,12 +53,17 @@ class UniversityViewModel @Inject constructor(
                     showDialog = false,
                     showDialogId = null,
                     universityTitle = "",
-                    universityTitleError = null
+                    universityTitleError = null,
+                    universityAvatarUrl = null,
                 )
             }
 
             is UniversityFormEvent.UniversityTitleChanged -> {
                 state = state.copy(universityTitle = event.universityTitle, universityTitleError = null)
+            }
+
+            is UniversityFormEvent.UniversityAvatarChanged -> {
+                state = state.copy(universityAvatarUrl = event.universityAvatar)
             }
 
             is UniversityFormEvent.Submit -> {
@@ -76,6 +86,8 @@ class UniversityViewModel @Inject constructor(
             return
         }
 
+        val imagePath = state.universityAvatarUrl?.let { saveImageToInternalStorage(application, it) }
+
         viewModelScope.launch {
             if (state.showDialogId !== null) {
                 universityDao.updateUniversity(
@@ -83,7 +95,7 @@ class UniversityViewModel @Inject constructor(
                         id = state.showDialogId!!,
                         adminId = adminId,
                         title = state.universityTitle,
-                        avatarUrl = "",
+                        avatarUrl = imagePath?: state.universityAvatarUrl.toString(),
                     )
                 )
             } else {
@@ -91,7 +103,7 @@ class UniversityViewModel @Inject constructor(
                     University(
                         adminId = adminId,
                         title = state.universityTitle,
-                        avatarUrl = "",
+                        avatarUrl = imagePath?: "",
                     )
                 )
             }
@@ -101,7 +113,8 @@ class UniversityViewModel @Inject constructor(
             showDialog = false,
             showDialogId = null,
             universityTitle = "",
-            universityTitleError = null
+            universityTitleError = null,
+            universityAvatarUrl = null,
         )
     }
 }

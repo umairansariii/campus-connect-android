@@ -1,5 +1,7 @@
 package com.umairansariii.campusconnect.presentation.states
 
+import android.net.Uri
+
 data class ClubFormState (
     val showDialog: Boolean = false,
     val showDialogId: Int? = null,
@@ -8,5 +10,6 @@ data class ClubFormState (
     val clubDescription: String = "",
     val clubDescriptionError: String? = null,
     val clubIsActive: Boolean = true,
+    val clubBannerUrl: Uri? = null,
     val clubQuery: String = "",
 )

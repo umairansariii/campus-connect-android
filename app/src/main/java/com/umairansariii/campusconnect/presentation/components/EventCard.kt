@@ -1,6 +1,5 @@
 package com.umairansariii.campusconnect.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,21 +7,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.umairansariii.campusconnect.R
 import com.umairansariii.campusconnect.data.local.dto.EventUniversity
 
 @Composable
@@ -34,32 +26,30 @@ fun EventCard(event: EventUniversity) {
         ),
     ) {
         Column {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 12.dp, horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.image_placeholder),
-                    contentDescription = "event-card-university-icon",
-                    modifier = Modifier.size(50.dp).clip(CircleShape),
-                    contentScale = ContentScale.Crop,
-                )
-                Column {
-                    Text(text = event.universityName)
-                    Text(
-                        text = event.campusName,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-            }
+//            Row(
+//                Modifier
+//                    .fillMaxWidth()
+//                    .padding(vertical = 12.dp, horizontal = 16.dp),
+//                horizontalArrangement = Arrangement.spacedBy(16.dp),
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.image_placeholder),
+//                    contentDescription = "event-card-university-icon",
+//                    modifier = Modifier.size(50.dp).clip(CircleShape),
+//                    contentScale = ContentScale.Crop,
+//                )
+//                Column {
+//                    Text(text = event.universityName)
+//                    Text(
+//                        text = event.campusName,
+//                        style = MaterialTheme.typography.bodyMedium,
+//                    )
+//                }
+//            }
             Image(
-                painter = painterResource(id = R.drawable.image_placeholder),
-                contentDescription = "event-card-banner-image",
-                modifier = Modifier.fillMaxWidth().height(200.dp),
-                contentScale = ContentScale.Crop,
+                imagePath = event.bannerUrl,
+                modifier = Modifier.fillMaxWidth().height(220.dp),
             )
             Column(
                 modifier = Modifier.fillMaxWidth().padding(16.dp)
