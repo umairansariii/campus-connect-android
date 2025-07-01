@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.umairansariii.campusconnect.presentation.components.ImagePicker
 import com.umairansariii.campusconnect.presentation.events.UniversityFormEvent
 import com.umairansariii.campusconnect.viewmodel.UniversityViewModel
 
@@ -66,6 +67,11 @@ fun UniversityDialog(adminId: Int?) {
                             },
                             isError = state.universityTitleError != null,
                             singleLine = true,
+                        )
+                        ImagePicker(
+                            onImageSelected = {
+                                viewModel.onEvent(UniversityFormEvent.UniversityAvatarChanged(it))
+                            }
                         )
                     }
                     Row(
