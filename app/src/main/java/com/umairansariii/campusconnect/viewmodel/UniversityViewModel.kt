@@ -103,7 +103,7 @@ class UniversityViewModel @Inject constructor(
                     University(
                         adminId = adminId,
                         title = state.universityTitle,
-                        avatarUrl = imagePath ?: "",
+                        avatarUrl = imagePath?: "",
                     )
                 )
             }
@@ -113,7 +113,8 @@ class UniversityViewModel @Inject constructor(
             showDialog = false,
             showDialogId = null,
             universityTitle = "",
-            universityTitleError = null
+            universityTitleError = null,
+            universityAvatarUrl = null,
         )
     }
 }
