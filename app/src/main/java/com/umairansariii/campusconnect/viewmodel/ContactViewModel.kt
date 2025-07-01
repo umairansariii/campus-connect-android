@@ -28,6 +28,10 @@ class ContactViewModel @Inject constructor(
         return contactDao.getContactsByUniversity(universityId, state.contactQuery)
     }
 
+    fun getContactsByStudent(studentId: Int): Flow<List<Contact>> {
+        return contactDao.getContactsByStudent(studentId, state.contactQuery)
+    }
+
     fun onEvent(event: ContactFormEvent) {
         when(event) {
             is ContactFormEvent.ShowDialog -> {

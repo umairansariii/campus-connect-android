@@ -26,4 +26,14 @@ interface ContactDao {
         ORDER BY name ASC
     """)
     fun getContactsByUniversity(universityId: Int, searchQuery: String): Flow<List<Contact>>
+
+    @Query("""
+        SELECT ct.*
+        FROM enrollment e
+        JOIN contact ct ON e.universityId = ct.universityId
+        WHERE e.studentId = :studentId
+        AND (:searchQuery IS NULL OR ct.name LIKE '%' || :searchQuery || '%')
+        ORDER BY ct.name ASC
+    """)
+    fun getContactsByStudent(studentId: Int, searchQuery: String): Flow<List<Contact>>
 }
