@@ -11,22 +11,31 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.umairansariii.campusconnect.presentation.components.ClubTile
 import com.umairansariii.campusconnect.presentation.components.DiscussionTile
 import com.umairansariii.campusconnect.presentation.components.EventTile
+import com.umairansariii.campusconnect.viewmodel.HomeViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(studentId: Int, navController: NavController) {
+    val viewModel: HomeViewModel = hiltViewModel()
+    val events by viewModel.getEventsByStudent(studentId).collectAsState(initial = emptyList())
+    val discussions by viewModel.getDiscussionsByStudent(studentId).collectAsState(initial = emptyList())
+    val clubs by viewModel.getClubsByStudent(studentId).collectAsState(initial = emptyList())
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -55,14 +64,16 @@ fun HomeScreen(navController: NavController) {
                     text = "See more",
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.clickable { /* Handle click */ },
+                    modifier = Modifier.clickable {
+                        navController.navigate("events")
+                    },
                 )
             }
             LazyColumn(
                 modifier = Modifier.height(154.dp)
             ) {
-                items(2) {
-                    EventTile()
+                items(events) { event ->
+                    EventTile(event)
                 }
             }
             // Popular Clubs
@@ -80,14 +91,16 @@ fun HomeScreen(navController: NavController) {
                     text = "See more",
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.clickable { /* Handle click */ },
+                    modifier = Modifier.clickable {
+                        navController.navigate("clubs")
+                    },
                 )
             }
             LazyRow(
                 modifier = Modifier.height(200.dp)
             ) {
-                items(6) {
-                    ClubTile()
+                items(clubs) { club ->
+                    ClubTile(club)
                 }
             }
             // Trending Discussions
@@ -105,14 +118,16 @@ fun HomeScreen(navController: NavController) {
                     text = "See more",
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.clickable { /* Handle click */ },
+                    modifier = Modifier.clickable {
+                        navController.navigate("discussions")
+                    },
                 )
             }
             LazyColumn(
                 modifier = Modifier.height(318.dp)
             ) {
-                items(4) {
-                    DiscussionTile()
+                items(discussions) { discussion ->
+                    DiscussionTile(discussion)
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))

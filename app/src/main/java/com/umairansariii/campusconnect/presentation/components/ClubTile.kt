@@ -1,6 +1,5 @@
 package com.umairansariii.campusconnect.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,13 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.umairansariii.campusconnect.R
+import com.umairansariii.campusconnect.data.local.dto.ClubUniversity
 
 @Composable
-fun ClubTile() {
+fun ClubTile(club: ClubUniversity) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable(
             onClick = { /* Handle click */ }
@@ -35,18 +32,16 @@ fun ClubTile() {
             modifier = Modifier.fillMaxWidth().padding(10.dp),
         ) {
             Image(
-                painter = painterResource(id = R.drawable.image_placeholder),
-                contentDescription = "club-tile-banner-image",
+                imagePath = club.bannerUrl,
                 modifier = Modifier
                     .height(130.dp)
                     .width(130.dp)
                     .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.FillBounds,
             )
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Trail Blazers")
+            Text(text = club.title)
             Text(
-                text = "Hiking/Outdoor",
+                text = club.description,
                 style = MaterialTheme.typography.bodySmall,
             )
         }

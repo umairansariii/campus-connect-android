@@ -84,7 +84,7 @@ fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthSt
         route = "app", startDestination = startDestination
     ) {
         composable(route = "home") {
-            HomeScreen(navController = navController)
+            HomeScreen(studentId = authState.id?: -1, navController = navController)
         }
         composable(route = "university") {
             UniversityScreen(navController = navController)
