@@ -5,16 +5,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.umairansariii.campusconnect.data.local.enums.UserRole
 import com.umairansariii.campusconnect.data.store.auth.AuthState
 import com.umairansariii.campusconnect.presentation.components.Avatar
 import com.umairansariii.campusconnect.presentation.components.SettingMenuItem
@@ -39,21 +38,23 @@ fun SettingScreen(user: AuthState, navController: NavController) {
                 fontSize = 50.sp,
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                modifier = Modifier.height(44.dp),
-                onClick = { /* Handle click */ }
-            ) {
-                Text(text = "Edit Profile")
-            }
+//            Button(
+//                modifier = Modifier.height(44.dp),
+//                onClick = { /* Handle click */ }
+//            ) {
+//                Text(text = "Edit Profile")
+//            }
             Spacer(modifier = Modifier.height(32.dp))
-            SettingMenuItem(
-                title = "Student Profile",
-                onClick = { navController.navigate("student-profile/${user.id}") }
-            )
-            SettingMenuItem(
-                title = "Emergency Contacts",
-                onClick = { navController.navigate("contacts") }
-            )
+            if (user.role == UserRole.STUDENT) {
+                SettingMenuItem(
+                    title = "Student Profile",
+                    onClick = { navController.navigate("student-profile/${user.id}") }
+                )
+                SettingMenuItem(
+                    title = "Emergency Contacts",
+                    onClick = { navController.navigate("contacts") }
+                )
+            }
             SettingMenuItem(
                 title = "Privacy",
                 onClick = { navController.navigate("privacy") }
