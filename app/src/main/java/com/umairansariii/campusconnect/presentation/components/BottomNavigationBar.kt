@@ -89,15 +89,17 @@ fun BottomNavigationBar(navController: NavController, authState: AuthState) {
     var selected by remember {
         mutableIntStateOf(0)
     }
+    val adminHiddenTabs = arrayListOf("Home","Events","Discussions","Clubs")
+    val studentHiddenTabs = arrayListOf("University")
 
     NavigationBar {
         Row(
             modifier = Modifier.background(MaterialTheme.colorScheme.inverseOnSurface)
         ) {
             items.forEachIndexed { index, item ->
-                if (authState.role == UserRole.ADMIN && item.title == "Events") {
+                if (authState.role == UserRole.ADMIN && adminHiddenTabs.contains(item.title)) {
                     return@forEachIndexed
-                } else if (authState.role == UserRole.STUDENT && item.title == "University") {
+                } else if (authState.role == UserRole.STUDENT && studentHiddenTabs.contains(item.title)) {
                     return@forEachIndexed
                 }
 

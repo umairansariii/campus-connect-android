@@ -78,8 +78,10 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
 }
 
 fun NavGraphBuilder.appGraph(navController: NavHostController, authState: AuthState) {
+    val startDestination = if (authState.role == UserRole.ADMIN) "university" else "home"
+
     navigation(
-        route = "app", startDestination = "home"
+        route = "app", startDestination = startDestination
     ) {
         composable(route = "home") {
             HomeScreen(navController = navController)
