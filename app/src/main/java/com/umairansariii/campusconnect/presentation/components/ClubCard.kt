@@ -76,7 +76,7 @@ fun ClubCard(club: ClubUniversity, navController: NavController) {
                             navController.navigate("club-chatroom/${club.id}")
                         },
                     ) {
-                        Text(text = "Join")
+                        Text(text = "Discuss")
                     }
                 }
             }

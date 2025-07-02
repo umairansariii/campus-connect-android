@@ -20,9 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.umairansariii.campusconnect.data.local.dto.DiscussionUniversity
 
 @Composable
-fun DiscussionTile() {
+fun DiscussionTile(discussion: DiscussionUniversity) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable(
             onClick = { /* Handle click */ }
@@ -39,8 +40,8 @@ fun DiscussionTile() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column {
-                Text(text = "The Ethics of AI in Software")
-                Text(text = "Virtual University")
+                Text(text = discussion.title)
+                Text(text = discussion.description)
             }
             Icon(
                 imageVector = Icons.Outlined.ArrowOutward,

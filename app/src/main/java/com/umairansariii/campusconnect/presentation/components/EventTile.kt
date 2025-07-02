@@ -21,9 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.umairansariii.campusconnect.data.local.dto.EventUniversity
 
 @Composable
-fun EventTile() {
+fun EventTile(event: EventUniversity) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable(
             onClick = { /* Handle click */ }
@@ -40,11 +41,11 @@ fun EventTile() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Row {
-                Avatar(name = "Virtual University")
+                Avatar(name = event.universityName)
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
-                    Text(text = "Planting for Tomorrow")
-                    Text(text = "Bagh-e-Jinnah, Karachi.")
+                    Text(text = event.title)
+                    Text(text = event.venue)
                 }
             }
             Icon(
