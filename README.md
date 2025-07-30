@@ -15,7 +15,7 @@
 
 ![Campus Connect Logo](https://raw.githubusercontent.com/umairansariii/campus-connect-android/refs/heads/docs/update-readme/.media/register-home-discussion-page.png)
 
-## Technologies Used
+## ⚙️ Technologies
 
 ### Programming Languages & Frameworks
 
@@ -56,7 +56,7 @@
 | Accept enrollments         | Approve or reject student enrollment requests    |         |  ✅   |
 | Manage notifications       | Send and control app notifications               |         |  ✅   |
 
-## Installation & Setup
+## 🛠️ Installation & Setup
 
 1. Clone the repository:
    ```bash
@@ -66,7 +66,7 @@
 3. Sync the project with Gradle.
 4. Build and run the application on an emulator or a physical device.
 
-## Contribution Guidelines
+## 🤝 Contribution Guidelines
 
 We welcome contributions to improve Campus Connect. Follow these steps to contribute:
 
@@ -78,10 +78,10 @@ We welcome contributions to improve Campus Connect. Follow these steps to contri
 3. Commit your changes and push to your fork.
 4. Create a pull request for review.
 
-## License
+## 📜 License
 
 This project is licensed under the [MIT License](LICENSE).
 
-## Contact
+## ✉️ Contact
 
 For queries and discussions, reach out to us via email at **umairansari.work@gmail.com**.
