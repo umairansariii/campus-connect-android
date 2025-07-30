@@ -1,6 +1,6 @@
 <div align="center">
    <h1>
-      <img src="https://raw.githubusercontent.com/umairansariii/campus-connect-android/refs/heads/docs/update-readme/.media/project-cover.png" alt="campus-connect-project-cover"/>
+      <img src="https://raw.githubusercontent.com/umairansariii/campus-connect-android/refs/heads/main/.media/project-cover.png" alt="campus-connect-project-cover"/>
    </h1>
    <p>A mobile app designed to enhance campus life and student engagement by offering a centralized platform for accessing resources, events, services, discussions, and club activities.</p>
    <img src="https://img.shields.io/badge/platform-android-green?style=flat-square&logo=android" />
@@ -13,7 +13,7 @@
    <img src="https://img.shields.io/badge/jetpack_compose-1.6.0-4285F4?style=flat-square&logo=jetpack-compose" />
 </div>
 
-![Campus Connect Logo](https://raw.githubusercontent.com/umairansariii/campus-connect-android/refs/heads/docs/update-readme/.media/register-home-discussion-page.png)
+![campus-connect-screenshots](https://raw.githubusercontent.com/umairansariii/campus-connect-android/refs/heads/main/.media/register-home-discussion-page.png)
 
 ## ⚙️ Technologies
 
