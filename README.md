@@ -1,5 +1,7 @@
 <div align="center">
-   <h1>Campus Connect</h1>
+   <h1>
+      <img src="https://raw.githubusercontent.com/umairansariii/campus-connect-android/refs/heads/docs/update-readme/.media/project-cover.png" alt="campus-connect-project-cover"/>
+   </h1>
    <p>A mobile app designed to enhance campus life and student engagement by offering a centralized platform for accessing resources, events, services, discussions, and club activities.</p>
    <img src="https://img.shields.io/badge/platform-android-green?style=flat-square&logo=android" />
    <img src="https://img.shields.io/badge/language-kotlin-blueviolet?style=flat-square&logo=kotlin" />
@@ -12,6 +14,19 @@
 </div>
 
 ![Campus Connect Logo](https://raw.githubusercontent.com/umairansariii/campus-connect-android/refs/heads/docs/update-readme/.media/register-home-discussion-page.png)
+
+## Technologies Used
+
+### Programming Languages & Frameworks
+
+- **Kotlin** - Primary language for Android app development
+- **Jetpack Compose** - UI toolkit for modern, declarative UI design
+- **Dagger Hilt** - Dependency injection framework for better modularity
+- **Room Database** - Local database for efficient data storage and retrieval
+
+### Development Tools
+
+- **Android Studio** - Integrated development environment (IDE) for Android app development
 
 ## 🚀 Features
 
@@ -40,29 +55,6 @@
 | Manage student profile     | Edit student data and academic status            |         |  ✅   |
 | Accept enrollments         | Approve or reject student enrollment requests    |         |  ✅   |
 | Manage notifications       | Send and control app notifications               |         |  ✅   |
-
-## University
-
-Virtual University of Pakistan
-
-## Project Details
-
-- **App Title:** Campus Connect
-- **Project Domain / Category:** Mobile Apps
-- **Group ID:** F24PROJECTE53A5
-
-## Technologies Used
-
-### Programming Languages & Frameworks
-
-- **Kotlin** - Primary language for Android app development
-- **Jetpack Compose** - UI toolkit for modern, declarative UI design
-- **Dagger Hilt** - Dependency injection framework for better modularity
-- **Room Database** - Local database for efficient data storage and retrieval
-
-### Development Tools
-
-- **Android Studio** - Integrated development environment (IDE) for Android app development
 
 ## Installation & Setup
 
